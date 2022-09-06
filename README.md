@@ -1,11 +1,19 @@
 <h4 align="center"> 
-	🚧 React Router 🚧
+	🚧 React Router 🚀
 </h4>   
 
-## 💻 Tarefas para construir calculadora 🚀
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;"> 
+  <img alt="NavagacaoReactRouter" title="#NavagacaoReactRouter" src="./.github/tela.jpg" width="600px"> 
+</p> 
 
-- [x] 1. Instalação de dependências
-- [x] 2. Criação de Projeto
+## 🎨 Projeto
+
+- Criado um layout para demonstrar os fundamentos do react router na prática.
+
+## 💻 Tarefas
+
+- [x] 1. Instalação de dependências: `npm i -g create-react-app`
+- [x] 2. Criação de Projeto: `npx create-react-app react-router` e `npm i react-router-dom`
 - [x] 3. Estrutura de Projeto
 - [x] 4. Aplicação de estilo
 - [x] 5. Navegação simples
@@ -14,21 +22,16 @@
 - [x] 8. Página não encontrada
 - [x] 9. Detalhes finais do módulo
 
-## 🎨 Layout
+## 🚀 Seções 
 
-<p align="center" style="display: flex; align-items: flex-start; justify-content: center;"> 
-  <img alt="NavagacaoReactRouter" title="#NavagacaoReactRouter" src="./.github/tela.jpg" width="600px"> 
-</p> 
+- [x] Layout e lógica [50 - 59] 
 
-## 🚀 Desafios 
+## 🚀 Construído o projeto 
 
-- [x] Layout e lógica [50 - 58] 
-
-## 🚀 Construído projeto 
-
-- `npm i -g create-react-app`
-- `create-react-app navagacao-react-router`
-- `npm i react-router-dom`
+- favicon navegação
+- título da página
+- idioma da página
+- fonts google roboto via link
  
 ## 📝 Licença
 
