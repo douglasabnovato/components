@@ -32,7 +32,7 @@
 - título da página
 - idioma da página
 - fonts google roboto via link
-- [react router](https://reactrouter.com/en/main) 
+- navegação em react com [react router](https://reactrouter.com/en/main) 
 ## 📝 Licença
 
 Este projeto esta sobe a licença MIT.
