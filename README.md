@@ -14,7 +14,7 @@
 
 - [x] 1. Instalação de dependências: `npm i -g create-react-app`
 - [x] 2. Criação de Projeto: `npx create-react-app react-router` e `npm i react-router-dom`
-- [x] 3. Estrutura de Projeto
+- [x] 3. Estrutura de Projeto: src, components, views
 - [x] 4. Aplicação de estilo
 - [x] 5. Navegação simples
 - [x] 6. Navegação com Parâmetro
@@ -32,7 +32,7 @@
 - título da página
 - idioma da página
 - fonts google roboto via link
- 
+- [react router](https://reactrouter.com/en/main) 
 ## 📝 Licença
 
 Este projeto esta sobe a licença MIT.
