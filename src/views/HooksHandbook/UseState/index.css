@@ -1,0 +1,20 @@
+.HooksHandbook .UseState {
+    text-align: center;
+}
+
+.HooksHandbook .UseState .container {
+    display: inline-flex;
+}
+
+.HooksHandbook .UseState .container button{
+    height: 3rem;
+    cursor: pointer;
+}
+
+.HooksHandbook .UseState .container button:hover {
+    cursor: pointer;
+}
+
+.HooksHandbook .UseState .container h4 {
+    padding: 0 1rem .3rem;
+}

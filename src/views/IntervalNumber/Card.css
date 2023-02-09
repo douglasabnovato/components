@@ -1,0 +1,56 @@
+.CardInterval {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+}
+
+.CardInterval .Header {
+  display: flex;
+  justify-content: center;
+}
+
+.CardInterval .Header .Title {
+  flex: 1;
+  padding: 5px;
+}
+
+.CardInterval .Content {
+  padding: 20px;
+}
+
+.CardInterval.Red .Header {
+  color: #fff;
+  background-color: #c62828;
+}
+
+.CardInterval.Red .Content {
+  background-color: #f44336;
+}
+
+.CardInterval.Green .Header {
+  color: #fff;
+  background-color: #2e7d32;
+}
+
+.CardInterval.Green .Content {
+  background-color: #4caf50;
+}
+
+.CardInterval.Blue .Header {
+  color: #fff;
+  background-color: #1565c0;
+}
+
+.CardInterval.Blue .Content {
+  background-color: #2196f3;
+}
+
+.CardInterval.Purple .Header {
+  color: #fff;
+  background-color: #6a1bb0;
+}
+
+.CardInterval.Purple .Content {
+  background-color: #9c27b0;
+}

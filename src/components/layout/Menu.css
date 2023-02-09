@@ -1,34 +1,32 @@
-.Menu{
-    display: flex;
-    flex-basis: 250px;
-    background-color: #1e90ff;
+.App .MenuApp {
+  display: flex;
+  flex-basis: 250px;
+  background-color: #1e90ff;
+  min-width: 250px;
 }
 
-.Menu nav{
-    flex: 1;
-} 
-
-.Menu ul{
-    list-style: none;
-    padding: 0;
-} 
-  
-.Menu li{
-    display: flex;
+.App .MenuApp nav {
+  flex: 1;
 }
 
-.Menu li a {
-    flex: 1;
-    padding: 10px;
-    margin-bottom: 10px;
-    flex: 1;
-    padding: 10px;
-    margin-bottom: 10px;
-    color: #fff;
-    font-size: 1.5rem;
-    text-decoration: none;
+.App .MenuApp ul {
+  list-style: none;
+  padding: 0;
 }
 
-.Menu li a:hover {
-    background:#00000020;
+.App .MenuApp li {
+  display: flex;
+}
+
+.App .MenuApp li a {
+  flex: 1;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #d8cdcd;
+}
+
+.App .MenuApp li a:hover {
+  background: #00000020;
 }

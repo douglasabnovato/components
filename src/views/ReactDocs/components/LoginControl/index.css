@@ -1,0 +1,14 @@
+.alert_wrapper .alert_item .data{
+	margin: 0 50px;
+}
+.alert_wrapper .alert_item .data .title{
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+.alert_wrapper .alert_item .data span{
+	font-weight: 700;
+}
+.alert_wrapper .alert_item .data .sub{
+	font-size: 14px;
+	font-weight: 100;
+}
