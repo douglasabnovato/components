@@ -303,7 +303,7 @@ Fonte do projeto Por Leonardo Moura Leitão no [Curso React + Redux: Fundamentos
 </h4>
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;">
-  <img alt="voss-coder" title="#voss-coder" src="./.github/desktop-main-2.jpg">
+  <img alt="voss-coder" title="#voss-coder" src="./.github/ReactFundamentals-1.jpg">
 </p>  
 
 Uma aplicação com funcionalidades demonstrando pílulas de fundamentos em reactjs.
