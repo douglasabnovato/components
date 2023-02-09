@@ -5,16 +5,16 @@ import Media from "./Media";
 import Soma from "./Soma";
 import Sorteio from "./Sorteio";
 
-import "./index.css";
+import "./IntervalNumber.css";
 
 function IntervalNumber() {
   return (
     <div className="IntervalNumber">
       <h1>Exercício React-Redux (Simples)</h1>
-      <div className="linha">
+      <div className="linha-card">
         <Intervalo />
       </div>
-      <div className="linha">
+      <div className="linha-card">
         <Media />
         <Soma />
         <Sorteio />

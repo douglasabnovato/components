@@ -1,12 +1,11 @@
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
-import "./index.css";
 
 function UseImperativeHandle() {
   const formRef = useRef(null);
 
   function handleSubmit() {
     console.log(formRef);
-    formRef.current.submit()
+    formRef.current.submit();
   }
 
   return (
@@ -20,8 +19,8 @@ function UseImperativeHandle() {
 const Form = forwardRef((props, ref) => {
   const inputRef = useRef(null);
 
-  function handleSubmit(){
-    alert(inputRef.current.value)
+  function handleSubmit() {
+    alert(inputRef.current.value);
   }
 
   useImperativeHandle(
@@ -31,7 +30,7 @@ const Form = forwardRef((props, ref) => {
         submit: handleSubmit,
       };
     },
-    [],
+    []
   );
 
   return (

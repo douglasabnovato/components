@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./styles/App.css";
+import "./styles/HooksHandbook.css";
 
 import Card from "./Card";
 import UseState from "./UseState";
@@ -18,9 +18,6 @@ import UseDebugValue from "./UseDebugValue";
 export default function HooksHandbook(props) {
   return (
     <div className="HooksHandbook">
-      <div className="Header">
-        <h1 className="TitleTop">Hooks React</h1>
-      </div>
       <div className="Main">
         <div className="Cards">
           <Card titulo="#00 - Hooks useState" color="#E7E014">

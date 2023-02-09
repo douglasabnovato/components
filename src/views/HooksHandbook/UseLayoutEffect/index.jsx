@@ -1,5 +1,4 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import "./index.css";
 
 function UseLayoutEffect() {
   return (
@@ -35,20 +34,20 @@ function UseEffectLater() {
   const [counter, setCounter] = useState(0);
 
   useEffect(() => {
-    console.log("UseEffectLater useEffect 1")
-  }, [])
-  
+    console.log("UseEffectLater useEffect 1");
+  }, []);
+
   useEffect(() => {
-    console.log("UseEffectLater useEffect 2")
-  }, [])
-  
+    console.log("UseEffectLater useEffect 2");
+  }, []);
+
   useEffect(() => {
-    console.log("UseEffectLater useEffect 3")
-  }, [])
-  
+    console.log("UseEffectLater useEffect 3");
+  }, []);
+
   useLayoutEffect(() => {
-    console.log("UseEffectLater useLayoutEffect")
-  }, [])
+    console.log("UseEffectLater useLayoutEffect");
+  }, []);
 
   function handlePlus() {
     setCounter((prevState) => prevState + 1);
@@ -61,6 +60,5 @@ function UseEffectLater() {
     </div>
   );
 }
-
 
 export default UseLayoutEffect;

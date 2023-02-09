@@ -1,7 +1,7 @@
 import React from "react";
-import IntervalNumber from "./../IntervalNumber";
-import Game from "./../TicTacToe/Game";
-import HooksHandbook from "./../HooksHandbook";
+import IntervalNumber from "../IntervalNumber";
+import Game from "../TicTacToe/Game";
+import HooksHandbook from "../HooksHandbook";
 import { useParams } from "react-router-dom";
 
 const Param = (props) => {
@@ -18,8 +18,6 @@ const Param = (props) => {
 
   return (
     <div className="Param">
-      <h1>Param</h1>
-      <p>Valor: {id}</p>
       {component}
     </div>
   );

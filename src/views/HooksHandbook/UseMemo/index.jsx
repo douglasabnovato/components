@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from "react";
-import "./index.css";
 
 function UseMemo() {
   const [counter, setCounter] = useState(1);

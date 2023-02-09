@@ -1,6 +1,8 @@
-.Content{
+.App .ContentApp{
     display: flex;
     flex-grow: 1;
     background-color: #ddd;
-    padding: 30px;
+}
+
+.App .ContentApp .Param{
 }

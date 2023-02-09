@@ -1,22 +1,20 @@
-import React, { createContext, useContext } from 'react'
-import './index.css'
+import React, { createContext, useContext } from "react";
+import "./index.css";
 
-const ThemeContext = createContext()
+const ThemeContext = createContext();
 
 function UseContext() {
-    return (
-        <ThemeContext.Provider value={{ mode: 'dark'}}>
-            <Button />
-        </ThemeContext.Provider>
-    )
+  return (
+    <ThemeContext.Provider value={{ mode: "dark" }}>
+      <Button />
+    </ThemeContext.Provider>
+  );
 }
 
-function Button(){
-    const theme = useContext(ThemeContext)
+function Button() {
+  const theme = useContext(ThemeContext);
 
-    return (
-        <button className="UseContext">{theme.mode}</button>
-    )
+  return <button className="UseContext">{theme.mode}</button>;
 }
 
 export default UseContext;

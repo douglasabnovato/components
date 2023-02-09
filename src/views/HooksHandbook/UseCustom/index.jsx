@@ -1,35 +1,32 @@
-import React, { useEffect, useState} from "react";
-import "./index.css";
+import React, { useEffect, useState } from "react";
 
 function UseCustom() {
-  const [loading, response] = useFetch('https://api.github.com/users/maateusilva')
+  const [loading, response] = useFetch(
+    "https://api.github.com/users/maateusilva"
+  );
 
-  if(loading){
-    return <h1>Loading ...</h1>
+  if (loading) {
+    return <h1>Loading ...</h1>;
   }
 
-  return (
-    <div className="UseCustom">
-      {JSON.stringify(response)}
-    </div>
-  );
+  return <div className="UseCustom">{JSON.stringify(response)}</div>;
 }
 
-function useFetch(url){
-  const [loading, setLoading] = useState(true)
-  const [response, setResponse] = useState(null)
+function useFetch(url) {
+  const [loading, setLoading] = useState(true);
+  const [response, setResponse] = useState(null);
 
   useEffect(() => {
     (async () => {
-      const resp = await fetch(url)
-      const json = await resp.json()
+      const resp = await fetch(url);
+      const json = await resp.json();
 
-      setLoading(false)
-      setResponse(json)
-    })()
-  }, [url])
+      setLoading(false);
+      setResponse(json);
+    })();
+  }, [url]);
 
-  return [loading, response]
+  return [loading, response];
 }
 
 export default UseCustom;

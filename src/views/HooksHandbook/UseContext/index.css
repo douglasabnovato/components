@@ -1,7 +1,7 @@
-.UseContext{
-    cursor: pointer;
+.HooksHandbook .UseContext {
+  cursor: pointer;
 }
 
-.UseContext:hover{
-    opacity: .5;
+.HooksHandbook .UseContext:hover {
+  opacity: 0.5;
 }

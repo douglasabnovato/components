@@ -1,13 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import './Content.css';
-import About from "../../views/examples/About";
-import Home from "../../views/examples/Home";
-import Param from '../../views/examples/Param';
-import NotFound from '../../views/examples/NotFound';
+import About from "../../views/ReactRouter/About";
+import Home from "../../views/ReactRouter/Home";
+import Param from '../../views/ReactRouter/Param';
+import NotFound from '../../views/ReactRouter/NotFound';
 
 const Content = props => (
-    <main className="Content">
+    <main className="ContentApp">
         <Switch>
             <Route path="/about">
                 <About/>

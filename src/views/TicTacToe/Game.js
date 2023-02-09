@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 import Board from "./Board";
-import "./index.css";
+import "./tictactoe.css";
 
 const reducer = (state, action) => {
   switch (action.type) {

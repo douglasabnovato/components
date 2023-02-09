@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "./Menu.css";
 
 const Menu = props => (
-    <aside className="Menu">
+    <aside className="MenuApp">
         <nav>
             <ul>
                 <li>

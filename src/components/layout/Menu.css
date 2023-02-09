@@ -1,34 +1,32 @@
-.Menu{
+.App .MenuApp{
     display: flex;
     flex-basis: 250px;
     background-color: #1e90ff;
+    min-width: 250px;
 }
 
-.Menu nav{
+.App .MenuApp nav{
     flex: 1;
 } 
 
-.Menu ul{
+.App .MenuApp ul{
     list-style: none;
     padding: 0;
 } 
   
-.Menu li{
+.App .MenuApp li{
     display: flex;
 }
 
-.Menu li a {
+.App .MenuApp li a {
     flex: 1;
     padding: 10px;
-    margin-bottom: 10px;
-    flex: 1;
-    padding: 10px;
-    margin-bottom: 10px;
-    color: #fff;
+    margin-bottom: 10px; 
     font-size: 1.5rem;
-    text-decoration: none;
+    text-decoration: none; 
+    color: #d8cdcd;     
 }
 
-.Menu li a:hover {
+.App .MenuApp li a:hover {
     background:#00000020;
 }

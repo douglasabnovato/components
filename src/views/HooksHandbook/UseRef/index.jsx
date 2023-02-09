@@ -12,7 +12,7 @@ function UseRef() {
 
 function UseRefInput() {
   console.log("rendered UseRefInput");
-  const inputRef = useRef(null)
+  const inputRef = useRef(null);
 
   function handlePrintName() {
     alert(inputRef.current.value);
