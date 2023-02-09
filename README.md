@@ -8,6 +8,23 @@
 
 ## 🎨 Projeto
 
+Construindo um projeto com diversos partes de outras atividades
+
+## 💻 Tarefas
+
+- [x] 1. reunir um a um
+- [ ] 2. revisar o css para não dar conflito com os nomes de classes
+
+<h4 align="center"> 
+	🚧 React Router 🚀
+</h4>   
+
+<p align="center" style="display: flex; align-items: flex-start; justify-content: center;"> 
+  <img alt="NavagacaoReactRouter" title="#NavagacaoReactRouter" src="./.github/tela-1.jpg" width="600px"> 
+</p> 
+
+## 🎨 Projeto
+
 - Criado um layout para demonstrar os fundamentos do react router na prática.
 
 ## 💻 Tarefas

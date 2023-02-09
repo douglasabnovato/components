@@ -1,15 +1,9 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.App {
+.HooksHandbook {
     height: 100vh;
     text-align: center;
 }
 
-.App .Header {
+.HooksHandbook .Header {
     overflow: hidden;
     background-color: #333;
     position: fixed;
@@ -17,22 +11,22 @@
     width: 100%;
 }
 
-.App .Header .TitleTop {
+.HooksHandbook .Header .TitleTop {
     color: antiquewhite;
 }
 
-.App .Main {
+.HooksHandbook .Main {
     padding: 16px;
     margin-top: 30px;
 }
 
-.App .Main .Cards {
+.HooksHandbook .Main .Cards {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
-.App .Footer h5 {
+.HooksHandbook .Footer h5 {
     left: 0;
     bottom: 0;
     width: 100%;

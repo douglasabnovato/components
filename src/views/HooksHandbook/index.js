@@ -2,22 +2,22 @@ import React from "react";
 
 import "./styles/App.css";
 
-import Card from "./components/Card";
-import UseState from "./components/UseState";
-import UseEffect from "./components/UseEffect";
-import UseContext from "./components/UseContext";
-import UseReducer from "./components/UseReducer";
-import UseCallback from "./components/UseCallback";
-import UseMemo from "./components/UseMemo";
-import UseRef from "./components/UseRef";
-import UseImperativeHandle from "./components/UseImperativeHandle";
-import UseLayoutEffec from "./components/UseLayoutEffect";
-import UseCustom from "./components/UseCustom";
-import UseDebugValue from "./components/UseDebugValue";
+import Card from "./Card";
+import UseState from "./UseState";
+import UseEffect from "./UseEffect";
+import UseContext from "./UseContext";
+import UseReducer from "./UseReducer";
+import UseCallback from "./UseCallback";
+import UseMemo from "./UseMemo";
+import UseRef from "./UseRef";
+import UseImperativeHandle from "./UseImperativeHandle";
+import UseLayoutEffec from "./UseLayoutEffect";
+import UseCustom from "./UseCustom";
+import UseDebugValue from "./UseDebugValue";
 
-export default function App(props) {
+export default function HooksHandbook(props) {
   return (
-    <div className="App">
+    <div className="HooksHandbook">
       <div className="Header">
         <h1 className="TitleTop">Hooks React</h1>
       </div>

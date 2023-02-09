@@ -2,19 +2,19 @@
     text-align: center;
 }
 
-.container {
+.Counter .container {
     display: inline-flex;
 }
 
-.container button{
+.Counter .container button{
     height: 3rem;
     cursor: pointer;
 }
 
-.container button:hover {
+.Counter .container button:hover {
     cursor: pointer;
 }
 
-.container h4 {
+.Counter .container h4 {
     padding: 0 1rem .3rem;
 }
