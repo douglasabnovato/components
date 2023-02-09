@@ -1,0 +1,13 @@
+.IntervalNumber{
+    display: flex;
+    flex-direction: column; 
+    text-align: center;
+}
+
+.IntervalNumber h1{
+    font-weight: 200;
+}
+
+.IntervalNumber .linha{
+    display: flex;
+}
