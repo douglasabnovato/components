@@ -46,6 +46,12 @@ const Menu = (props) => (
           <Link to="/useCustom">useMyHook()</Link>
         </li>
         <li>
+          <Link to="/react">React Fundamentos</Link>
+        </li>
+        <li>
+          <Link to="/docs">React Docs</Link>
+        </li>
+        <li>
           <Link to="/about">Sobre</Link>
         </li>
         <li>

@@ -19,6 +19,9 @@ import UseContext from '../../views/HooksCoder/views/examples/UseContext'
 import UseReducer from '../../views/HooksCoder/views/examples/UseReducer'
 import UseCustom from '../../views/HooksCoder/views/examples/UseCustom'
 
+import ReactFundamentals from "../../views/ReactFundamentals"
+import ReactDocs from "../../views/ReactDocs"
+
 const Content = (props) => (
   <main className="ContentApp">
     <Switch>
@@ -54,6 +57,12 @@ const Content = (props) => (
       </Route>
       <Route path="/useCustom">
         <UseCustom />
+      </Route>
+      <Route path="/react">
+        <ReactFundamentals />
+      </Route>
+      <Route path="/docs">
+        <ReactDocs />
       </Route>
       <Route exact path="/">
         <Inicio />
