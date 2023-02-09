@@ -457,13 +457,13 @@ Vamos registrar a maneira como estamos fazendo as coisas nesse projeto.
 - versão 3: desktop - header, main.
 
 <p align="left" style="display: flex; align-items: flex-start; justify-content: left;">
-  <img alt="voss-coder" title="#voss-coder" src="./.github/desktop-header-1.jpg" width="400px">
+  <img alt="voss-coder" title="#voss-coder" src="./.github/ReactFundamentals-0.jpg" width="400px">
 </p>
 
 - versão 3: mobile - header, main.
 
 <p align="left" style="display: flex; align-items: flex-start; justify-content: left;">
-  <img alt="voss-coder" title="#voss-coder" src="./.github/mobile-header-1.jpg" height="400px">
+  <img alt="voss-coder" title="#voss-coder" src="./.github/ReactFundamentals-4.jpg" height="400px">
 </p>
 
 ## Branches
