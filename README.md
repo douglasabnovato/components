@@ -1,9 +1,9 @@
 <h4 align="center"> 
-	🚧 React Router 🚀
+	🚧 React 🚀
 </h4>   
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;"> 
-  <img alt="NavagacaoReactRouter" title="#NavagacaoReactRouter" src="./.github/tela-1.jpg" width="600px"> 
+  <img alt="NavagacaoReactRouter" title="#NavagacaoReactRouter" src="./.github/dev-react.jpg" width="600px"> 
 </p> 
 
 ## 🎨 Projeto
