@@ -1,8 +1,6 @@
-.App .ContentApp{
-    display: flex;
-    flex-grow: 1;
-    background-color: #ddd;
-}
-
-.App .ContentApp .Param{
+.App .ContentApp {
+  display: flex;
+  flex-grow: 1;
+  background-color: #ddd;
+  height: 100vh;
 }

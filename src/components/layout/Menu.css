@@ -1,32 +1,32 @@
-.App .MenuApp{
-    display: flex;
-    flex-basis: 250px;
-    background-color: #1e90ff;
-    min-width: 250px;
+.App .MenuApp {
+  display: flex;
+  flex-basis: 250px;
+  background-color: #1e90ff;
+  min-width: 250px;
 }
 
-.App .MenuApp nav{
-    flex: 1;
-} 
+.App .MenuApp nav {
+  flex: 1;
+}
 
-.App .MenuApp ul{
-    list-style: none;
-    padding: 0;
-} 
-  
-.App .MenuApp li{
-    display: flex;
+.App .MenuApp ul {
+  list-style: none;
+  padding: 0;
+}
+
+.App .MenuApp li {
+  display: flex;
 }
 
 .App .MenuApp li a {
-    flex: 1;
-    padding: 10px;
-    margin-bottom: 10px; 
-    font-size: 1.5rem;
-    text-decoration: none; 
-    color: #d8cdcd;     
+  flex: 1;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: #d8cdcd;
 }
 
 .App .MenuApp li a:hover {
-    background:#00000020;
+  background: #00000020;
 }
