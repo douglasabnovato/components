@@ -1,7 +1,7 @@
 .IntervalNumber{
     display: flex;
     flex-direction: column; 
-    text-align: center;
+    text-align: center; 
 }
 
 .IntervalNumber h1{

@@ -1,0 +1,7 @@
+.UseContext{
+    cursor: pointer;
+}
+
+.UseContext:hover{
+    opacity: .5;
+}
