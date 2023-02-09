@@ -3,7 +3,7 @@
 </h4>   
 
 <p align="center" style="display: flex; align-items: flex-start; justify-content: center;"> 
-  <img alt="NavagacaoReactRouter" title="#NavagacaoReactRouter" src="./.github/dev-react.jpg" width="600px"> 
+  <img alt="NavagacaoReactRouter" title="#NavagacaoReactRouter" src="./.github/dev-react.jpg"> 
 </p> 
 
 ## 🎨 Projeto
