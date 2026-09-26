@@ -1,0 +1,116 @@
+/* Estilos da seção Flix: pôsteres com gradiente e trilho de vídeos. */
+.destaque {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: clamp(18rem, 42vw, 26rem);
+  padding: clamp(var(--esp-6), 4vw, var(--esp-12));
+  overflow: hidden;
+  border-radius: var(--raio-g);
+  background: linear-gradient(135deg, var(--c1), var(--c2));
+  color: #ffffff;
+}
+
+.padrao {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.textoDestaque {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: var(--esp-4);
+  max-width: 30rem;
+}
+
+.categoria {
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tituloDestaque {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+}
+
+.progresso {
+  position: absolute;
+  inset: auto 0 0;
+  height: 4px;
+  background: rgb(255 255 255 / 0.2);
+}
+
+.progresso span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: #ffffff;
+}
+
+.progresso[data-tocando='true'] span {
+  animation: tocar 8s linear forwards;
+}
+
+@keyframes tocar {
+  to {
+    width: 100%;
+  }
+}
+
+.categorias {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.subtitulo {
+  font-size: 1.5rem;
+}
+
+.trilho {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(15rem, 1fr);
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0 0 var(--esp-2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+}
+
+.video {
+  display: grid;
+  gap: var(--esp-2);
+  scroll-snap-align: start;
+}
+
+.miniatura {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--raio-m);
+  background: linear-gradient(135deg, #2a2d36, #15161a);
+  color: #ffffff;
+}
+
+.miniatura[data-variacao='1'] {
+  background: linear-gradient(135deg, var(--acento), #5b0b1e);
+}
+
+.miniatura[data-variacao='2'] {
+  background: linear-gradient(135deg, #52555e, #15161a);
+}
+
+.tituloVideo {
+  font-size: 1rem;
+}
+
+.duracao {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+/* Fim dos estilos da seção Flix. */

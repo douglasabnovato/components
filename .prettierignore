@@ -1,0 +1,12 @@
+node_modules
+dist
+coverage
+pnpm-lock.yaml
+alura-flix
+cadastro
+components
+marvel
+node-ejs-forms
+todo-app
+to-do-list
+_referencia

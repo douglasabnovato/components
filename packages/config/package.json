@@ -1,0 +1,14 @@
+{
+  "name": "@components/config",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Configurações compartilhadas de TypeScript do monorepo.",
+  "files": [
+    "tsconfig.base.json",
+    "tsconfig.react.json"
+  ],
+  "exports": {
+    "./tsconfig.base.json": "./tsconfig.base.json",
+    "./tsconfig.react.json": "./tsconfig.react.json"
+  }
+}

@@ -1,0 +1,87 @@
+/* Estilos da seção Cadastro: faixa preta, tabela e cards. */
+section.secao {
+  --fundo: #050506;
+  --superficie: #111214;
+  --superficie-2: #1b1c20;
+}
+
+.demo {
+  display: grid;
+  gap: var(--esp-6);
+  width: min(100%, 48rem);
+  margin-inline: auto;
+}
+
+.barraTopo {
+  display: flex;
+  justify-content: center;
+}
+
+.painel {
+  min-height: 15rem;
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--esp-3) var(--esp-4);
+  border-bottom: 1px solid var(--borda);
+  text-align: left;
+}
+
+.tabela th {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tabela tbody tr:nth-child(even) {
+  background: var(--superficie-2);
+}
+
+.acoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--esp-2);
+}
+
+.acoes button {
+  min-height: 2.25rem;
+  padding: var(--esp-1) var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.acoes button:hover {
+  border-color: var(--acento);
+  color: var(--acento-texto);
+}
+
+.vazio {
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.formulario {
+  background: var(--superficie);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--esp-6);
+  width: min(100%, 48rem);
+  margin-inline: auto;
+}
+/* Fim dos estilos da seção Cadastro. */

@@ -1,0 +1,17 @@
+/*
+ * Ajustes globais do hub sobre os tokens: acento ativo inicial,
+ * foco do <main> e seleção de texto.
+ */
+:root {
+  --acento-ativo: #c4f042;
+}
+
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--acento-ativo);
+  color: #0b0c10;
+}
+/* Fim dos ajustes globais. */

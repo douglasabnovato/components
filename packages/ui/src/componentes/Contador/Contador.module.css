@@ -1,0 +1,50 @@
+/* Estilos do Contador. */
+.contador {
+  display: grid;
+  gap: var(--esp-1);
+}
+
+.rotulo {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+.botao {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1px solid var(--borda);
+  border-radius: 50%;
+  background: var(--superficie);
+  font-size: 1.25rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.botao:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.valor {
+  min-width: 3.5rem;
+  text-align: center;
+  font-family: var(--fonte-titulo);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.unidade {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--texto-suave);
+}
+/* Fim dos estilos do Contador. */
