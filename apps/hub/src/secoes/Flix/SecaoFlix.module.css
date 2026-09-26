@@ -1,0 +1,129 @@
+/* Estilos da seção Flix: capas reais dos vídeos e trilho por categoria. */
+.destaque {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: clamp(18rem, 42vw, 26rem);
+  overflow: hidden;
+  border-radius: var(--raio-g);
+  border-bottom: 4px solid var(--cor-categoria);
+  background: #000000;
+  color: #ffffff;
+}
+
+.fundo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.veu {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(0 0 0 / 0.85), rgb(0 0 0 / 0.35) 60%, transparent),
+    linear-gradient(0deg, rgb(0 0 0 / 0.6), transparent 50%);
+}
+
+.textoDestaque {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: var(--esp-4);
+  max-width: 30rem;
+  padding: clamp(var(--esp-6), 4vw, var(--esp-12));
+}
+
+.rotulos {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+.rotulo {
+  padding: 2px var(--esp-3);
+  border-radius: var(--raio-pilula);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.selo {
+  padding: 2px var(--esp-3);
+  border: 1px solid rgb(255 255 255 / 0.6);
+  border-radius: var(--raio-pilula);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tituloDestaque {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+}
+
+.categorias {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.subtitulo {
+  font-size: 1.5rem;
+}
+
+.trilho {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(15rem, 1fr);
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0 0 var(--esp-2);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  list-style: none;
+}
+
+.video {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--esp-2);
+  scroll-snap-align: start;
+}
+
+.miniatura {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--raio-m);
+  border-bottom: 3px solid var(--cor-categoria);
+  transition: transform var(--duracao) var(--curva);
+}
+
+.video:hover .miniatura,
+.video:focus-within .miniatura {
+  transform: translateY(-4px);
+}
+
+.tituloVideo {
+  font-size: 1rem;
+}
+
+.linkVideo {
+  text-decoration: none;
+}
+
+.linkVideo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.canal {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+/* Fim dos estilos da seção Flix. */

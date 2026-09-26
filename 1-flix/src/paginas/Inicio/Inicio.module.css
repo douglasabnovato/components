@@ -1,0 +1,107 @@
+/* Estilos da Início do Flix. */
+.slide {
+  position: relative;
+  display: grid;
+  align-items: end;
+  min-height: clamp(22rem, 48vw, 32rem);
+  overflow: hidden;
+  border-radius: var(--raio-g);
+  border-bottom: 4px solid var(--cor-categoria);
+  background: #000000;
+  color: #ffffff;
+}
+
+.fundo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.veu {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgb(0 0 0 / 0.88) 0%, rgb(0 0 0 / 0.55) 55%, rgb(0 0 0 / 0.15) 100%),
+    linear-gradient(0deg, rgb(0 0 0 / 0.7), transparent 50%);
+}
+
+.textoSlide {
+  position: relative;
+  display: grid;
+  justify-items: start;
+  gap: var(--esp-4);
+  max-width: 36rem;
+  padding: clamp(var(--esp-6), 4vw, var(--esp-12));
+}
+
+.rotulos {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+.selo {
+  padding: 2px var(--esp-3);
+  border: 1px solid rgb(255 255 255 / 0.6);
+  border-radius: var(--raio-pilula);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tituloSlide {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+}
+
+.descricao {
+  display: -webkit-box;
+  overflow: hidden;
+  color: rgb(255 255 255 / 0.85);
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.bloco {
+  display: grid;
+  gap: var(--esp-4);
+  margin-top: var(--esp-12);
+}
+
+.cabecalhoBloco {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-3) var(--esp-6);
+}
+
+.titulo {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.contagem {
+  color: var(--texto-suave);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.botaoTexto {
+  min-height: 2.75rem;
+  padding: var(--esp-2) var(--esp-4);
+  border: 0;
+  background: transparent;
+  color: var(--acento-texto);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+/* Fim dos estilos da Início. */

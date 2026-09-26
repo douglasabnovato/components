@@ -1,0 +1,21 @@
+/* Estilos do SkipLink: fora da tela até receber foco. */
+.link {
+  position: fixed;
+  top: var(--esp-3);
+  left: 50%;
+  z-index: 100;
+  translate: -50% -200%;
+  padding: var(--esp-3) var(--esp-6);
+  border-radius: var(--raio-pilula);
+  background: var(--foco);
+  color: #0b0c10;
+  font-weight: 700;
+  text-decoration: none;
+  transition: translate var(--duracao) var(--curva);
+}
+
+.link:focus-visible {
+  translate: -50% 0;
+  outline-color: var(--texto);
+}
+/* Fim dos estilos do SkipLink. */

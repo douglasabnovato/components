@@ -1,0 +1,4 @@
+# Saídas locais do Flix (o .gitignore da raiz já cobre node_modules e dist)
+node_modules/
+dist/
+coverage/

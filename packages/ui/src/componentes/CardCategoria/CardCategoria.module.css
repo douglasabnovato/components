@@ -1,0 +1,37 @@
+/* Estilos do CardCategoria: mídia com margem negativa acima do card. */
+.card {
+  display: grid;
+  gap: var(--esp-2);
+  margin-top: var(--esp-12);
+  padding: 0 var(--esp-6) var(--esp-6);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+  transition: transform var(--duracao) var(--curva);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.midia {
+  width: min(11rem, 70%);
+  margin: calc(var(--esp-12) * -1) auto var(--esp-2);
+  filter: drop-shadow(0 1rem 1.5rem rgb(0 0 0 / 0.35));
+  transition: transform var(--duracao) var(--curva);
+}
+
+.card:hover .midia {
+  transform: translateY(-6px) rotate(-2deg);
+}
+
+.titulo {
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.descricao {
+  color: var(--texto-suave);
+  text-align: center;
+}
+/* Fim dos estilos do CardCategoria. */

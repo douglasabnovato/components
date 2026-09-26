@@ -1,0 +1,100 @@
+/* Estilos do Carrossel: viewport, trilho, slides, setas e paginação em pílulas. */
+.carrossel {
+  --largura-slide: 82%;
+  --vao: var(--esp-4);
+  display: grid;
+  gap: var(--esp-6);
+}
+
+.trilho {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: calc(var(--vao) * -1);
+}
+
+.viewport {
+  overflow: hidden;
+  border-radius: var(--raio-g);
+}
+
+.slide {
+  flex: 0 0 var(--largura-slide);
+  min-width: 0;
+  padding-left: var(--vao);
+  transition:
+    opacity var(--duracao) var(--curva),
+    transform var(--duracao) var(--curva);
+}
+
+[data-variante='espiar'] .slide[data-ativo='false'] {
+  opacity: 0.55;
+  transform: scale(0.94);
+}
+
+[data-variante='trilho'] {
+  --largura-slide: min(21rem, 85%);
+}
+
+[data-variante='trilho'] .viewport {
+  border-radius: var(--raio-m);
+}
+
+.controles {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+}
+
+.paginacao {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+}
+
+.ponto {
+  width: 0.75rem;
+  height: 0.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: var(--borda);
+  cursor: pointer;
+  transition:
+    width var(--duracao) var(--curva),
+    background-color var(--duracao) var(--curva);
+}
+
+.ponto[aria-current='true'] {
+  width: 2.25rem;
+  background: var(--texto);
+}
+
+.setas {
+  display: flex;
+  gap: var(--esp-2);
+}
+
+.seta {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--borda);
+  border-radius: 50%;
+  background: var(--superficie);
+  font-size: 1.25rem;
+  cursor: pointer;
+  transition: background-color var(--duracao) var(--curva);
+}
+
+.seta:hover:not(:disabled) {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.seta:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+/* Fim dos estilos do Carrossel. */

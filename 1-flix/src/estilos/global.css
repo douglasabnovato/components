@@ -1,0 +1,21 @@
+/*
+ * Tema do Flix sobre os tokens compartilhados: acento vermelho do produto
+ * (preenchimento com texto branco e versão clara para texto em fundo escuro).
+ */
+:root {
+  --acento: #c8183f;
+  --sobre-acento: #ffffff;
+  --acento-texto: #ff5c7a;
+  --fundo: #0b0c10;
+  --largura-max: 80rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--acento);
+  color: #ffffff;
+}
+/* Fim do tema do Flix. */

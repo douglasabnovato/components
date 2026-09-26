@@ -1,0 +1,105 @@
+/* Estilos da seção Formulários no Servidor: editorial escuro e passos numerados. */
+section.secao {
+  --fundo: #0a0d18;
+  --superficie: #121729;
+  --superficie-2: #1a2036;
+  --borda: #2a3150;
+}
+
+.dividido {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: var(--esp-12);
+}
+
+.comparativo {
+  display: grid;
+  justify-items: start;
+  gap: var(--esp-6);
+}
+
+.passos {
+  display: grid;
+  gap: var(--esp-3);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: passo;
+}
+
+.passo {
+  position: relative;
+  display: grid;
+  gap: var(--esp-1);
+  padding: var(--esp-4) var(--esp-4) var(--esp-4) 4rem;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+  counter-increment: passo;
+}
+
+.passo::before {
+  content: counter(passo, decimal-leading-zero);
+  position: absolute;
+  top: var(--esp-4);
+  left: var(--esp-4);
+  font-family: var(--fonte-codigo);
+  font-weight: 700;
+  color: var(--acento-texto);
+}
+
+.tituloPasso {
+  font-size: 1.0625rem;
+}
+
+.detalhe {
+  color: var(--texto-suave);
+  font-size: 0.9375rem;
+}
+
+.paginas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pagina {
+  display: grid;
+  align-content: start;
+  gap: var(--esp-3);
+  padding: var(--esp-6);
+  border-radius: var(--raio-g);
+  background: linear-gradient(160deg, var(--superficie-2), var(--superficie));
+}
+
+.rota {
+  justify-self: start;
+  padding: var(--esp-1) var(--esp-3);
+  border-radius: var(--raio-pilula);
+  background: var(--fundo);
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+}
+
+.nomePagina {
+  font-family: var(--fonte-editorial);
+  font-size: 1.75rem;
+  font-weight: 500;
+}
+
+.textoPagina {
+  color: var(--texto-suave);
+}
+
+@media (max-width: 56rem) {
+  .dividido {
+    grid-template-columns: 1fr;
+  }
+}
+/* Fim dos estilos da seção Formulários no Servidor. */

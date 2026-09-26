@@ -1,0 +1,131 @@
+/* Estilos da NavPilula: pílula flutuante e painel do celular. */
+.cabecalho {
+  position: fixed;
+  inset: var(--esp-4) var(--esp-4) auto;
+  z-index: 50;
+  display: grid;
+  justify-items: center;
+  pointer-events: none;
+}
+
+.pilula {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  width: min(100%, 60rem);
+  padding: var(--esp-2);
+  padding-left: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: color-mix(in srgb, var(--superficie) 82%, transparent);
+  box-shadow: var(--sombra);
+  backdrop-filter: blur(14px) saturate(1.4);
+  pointer-events: auto;
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  margin-right: auto;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.desktop {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-1);
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: var(--esp-2) var(--esp-4);
+  border-radius: var(--raio-pilula);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  background: var(--superficie-2);
+}
+
+.indicador {
+  padding-inline: var(--esp-2);
+}
+
+.menu {
+  display: none;
+  min-height: 2.5rem;
+  padding: var(--esp-2) var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie-2);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.painel {
+  width: min(100%, 60rem);
+  max-height: calc(100dvh - 6rem);
+  margin-top: var(--esp-2);
+  padding: var(--esp-4);
+  overflow-y: auto;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+  pointer-events: auto;
+}
+
+.painel[hidden] {
+  display: none;
+}
+
+.tituloPainel {
+  padding: var(--esp-2) var(--esp-3);
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.linksPainel {
+  display: grid;
+  gap: var(--esp-1);
+  margin: var(--esp-2) 0 0;
+  padding: var(--esp-2) 0 0;
+  border-top: 1px solid var(--borda);
+  list-style: none;
+}
+
+.linksPainel a {
+  display: block;
+  padding: var(--esp-3);
+  border-radius: var(--raio-m);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 56rem) {
+  .desktop,
+  .indicador {
+    display: none;
+  }
+
+  .menu {
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
+@media (min-width: 56.0625rem) {
+  .painel {
+    display: none;
+  }
+}
+/* Fim dos estilos da NavPilula. */

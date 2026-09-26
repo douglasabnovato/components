@@ -1,0 +1,278 @@
+/* Estilos do Painel do Flix e dos formulários de categoria. */
+.painel {
+  display: grid;
+  gap: var(--esp-8);
+}
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-4);
+}
+
+.titulo {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+}
+
+.subtitulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.aba {
+  display: grid;
+  gap: var(--esp-6);
+}
+
+.topoAba {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+}
+
+.caixa {
+  display: grid;
+  gap: var(--esp-4);
+  padding: var(--esp-6);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.dica {
+  color: var(--texto-suave);
+  font-size: 0.9375rem;
+}
+
+.formCategoria {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(14rem, 1fr) auto;
+  align-items: start;
+  gap: var(--esp-4);
+}
+
+.formCategoria input:not([type='color']) {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-p);
+  background: var(--fundo);
+}
+
+.acoesForm {
+  display: flex;
+  gap: var(--esp-2);
+  align-self: end;
+  padding-bottom: var(--esp-6);
+}
+
+.lista {
+  display: grid;
+  gap: var(--esp-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.lista legend {
+  margin-bottom: var(--esp-2);
+}
+
+.itens {
+  display: grid;
+  gap: var(--esp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(14rem, 1.4fr) auto auto;
+  align-items: center;
+  gap: var(--esp-4);
+  padding: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+}
+
+.identidade {
+  display: grid;
+  justify-items: start;
+  gap: var(--esp-1);
+}
+
+.qtd {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.controle {
+  display: grid;
+  gap: var(--esp-1);
+  min-width: 0;
+}
+
+.controle label {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.controle select {
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-p);
+  background: var(--fundo);
+}
+
+.banner {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.banner input {
+  width: 1.25rem;
+  height: 1.25rem;
+  accent-color: var(--acento);
+}
+
+.banner:has(input:disabled) {
+  color: var(--texto-suave);
+  cursor: not-allowed;
+}
+
+.acoesItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+.botaoPrimario,
+.botaoSecundario,
+.botaoPerigo,
+.botaoPerigoCheio {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: var(--esp-1) var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  color: var(--texto);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.botaoPrimario {
+  border-color: var(--acento);
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.botaoPrimario:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.botaoSecundario:hover {
+  border-color: var(--texto-suave);
+}
+
+.botaoPerigo {
+  color: var(--erro);
+}
+
+.botaoPerigo:hover {
+  border-color: var(--erro);
+}
+
+.botaoPerigoCheio {
+  border-color: var(--acento);
+  background: var(--acento);
+  color: #ffffff;
+}
+
+label.botaoSecundario:has(+ input:focus-visible) {
+  outline: 3px solid var(--foco);
+  outline-offset: 3px;
+}
+
+.rolagem {
+  overflow-x: auto;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+}
+
+.tabela {
+  width: 100%;
+  min-width: 40rem;
+  border-collapse: collapse;
+  background: var(--superficie);
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--esp-3) var(--esp-4);
+  border-bottom: 1px solid var(--borda);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tabela th {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.videoCelula {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.videoCelula img {
+  flex: none;
+  width: 6rem;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--raio-p);
+}
+
+.videoCelula a {
+  font-weight: 600;
+  text-underline-offset: 0.2em;
+}
+
+@media (max-width: 60rem) {
+  .formCategoria {
+    grid-template-columns: 1fr;
+  }
+
+  .acoesForm {
+    padding-bottom: 0;
+  }
+
+  .item {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+}
+/* Fim dos estilos do Painel. */

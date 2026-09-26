@@ -1,0 +1,161 @@
+/* Estilos do formulário de vídeo. */
+.pagina {
+  display: grid;
+  gap: var(--esp-6);
+}
+
+.cabecalho {
+  display: grid;
+  gap: var(--esp-2);
+}
+
+.titulo {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+}
+
+.dica {
+  color: var(--texto-suave);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(16rem, 1fr);
+  align-items: start;
+  gap: var(--esp-8);
+}
+
+.formulario {
+  display: grid;
+  gap: var(--esp-4);
+  padding: var(--esp-6);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.formulario input:not([type='color']),
+.formulario select,
+.formulario textarea {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-p);
+  background: var(--fundo);
+}
+
+.formulario textarea {
+  resize: vertical;
+}
+
+.formulario [aria-invalid='true'] {
+  border-color: var(--erro);
+}
+
+.erroGeral {
+  padding: var(--esp-3) var(--esp-4);
+  border: 1px solid var(--erro);
+  border-radius: var(--raio-m);
+  color: var(--erro);
+  font-weight: 600;
+}
+
+.novaCategoria {
+  padding: var(--esp-3) var(--esp-4);
+  border: 1px dashed var(--borda);
+  border-radius: var(--raio-m);
+}
+
+.novaCategoria summary {
+  color: var(--acento-texto);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.linhaCategoria {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: var(--esp-4);
+  margin-top: var(--esp-4);
+}
+
+.linhaCategoria > button {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--esp-3);
+}
+
+.primario,
+.secundario {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: var(--esp-2) var(--esp-6);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.primario {
+  border-color: var(--acento);
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.primario:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.previa {
+  position: sticky;
+  top: 6rem;
+  display: grid;
+  gap: var(--esp-3);
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.previa img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: var(--raio-g);
+  box-shadow: var(--sombra);
+}
+
+.semPrevia {
+  display: grid;
+  place-items: center;
+  gap: var(--esp-2);
+  aspect-ratio: 16 / 9;
+  border: 1px dashed var(--borda);
+  border-radius: var(--raio-g);
+}
+
+@media (max-width: 56rem) {
+  .grade {
+    grid-template-columns: 1fr;
+  }
+
+  .previa {
+    position: static;
+    order: -1;
+  }
+
+  .linhaCategoria {
+    grid-template-columns: 1fr;
+  }
+}
+/* Fim dos estilos do formulário de vídeo. */

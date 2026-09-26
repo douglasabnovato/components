@@ -1,0 +1,26 @@
+/* Estilos do indicador de seção ativa na pílula de navegação. */
+.indicador {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  color: var(--texto-suave);
+  white-space: nowrap;
+}
+
+.ponto {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--acento-ativo);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--acento-ativo) 25%, transparent);
+  transition: background-color var(--duracao) var(--curva);
+}
+
+@media (max-width: 68rem) {
+  .indicador {
+    display: none;
+  }
+}
+/* Fim dos estilos do indicador. */

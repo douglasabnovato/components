@@ -1,0 +1,23 @@
+/* Estilos do BotaoVoltar. */
+.voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  min-height: 2.75rem;
+  padding: var(--esp-2) var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: var(--sombra);
+}
+
+.fixo {
+  position: fixed;
+  top: var(--esp-4);
+  left: var(--esp-4);
+  z-index: 60;
+}
+/* Fim dos estilos do BotaoVoltar. */

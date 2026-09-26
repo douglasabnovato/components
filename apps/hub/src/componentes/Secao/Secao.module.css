@@ -1,0 +1,146 @@
+/* Estilos das peças comuns das seções de projeto. */
+.secao {
+  position: relative;
+  padding-block: clamp(var(--esp-16), 10vw, 9rem);
+  background: var(--fundo);
+  color: var(--texto);
+  overflow: clip;
+}
+
+.conteudo {
+  display: grid;
+  gap: clamp(var(--esp-8), 5vw, var(--esp-16));
+  width: min(100% - 2rem, var(--largura-max));
+  margin-inline: auto;
+}
+
+.total {
+  display: grid;
+  gap: clamp(var(--esp-8), 5vw, var(--esp-16));
+}
+
+.cabecalho {
+  display: grid;
+  gap: var(--esp-4);
+  max-width: 46rem;
+}
+
+.centro {
+  justify-items: center;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.rotulo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-3);
+  font-family: var(--fonte-titulo);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--acento-texto);
+}
+
+.numero {
+  display: inline-grid;
+  place-items: center;
+  min-width: 2.25rem;
+  height: 1.75rem;
+  padding-inline: var(--esp-2);
+  border-radius: var(--raio-pilula);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  letter-spacing: 0;
+}
+
+.titulo {
+  font-size: clamp(2rem, 4.6vw, 3.5rem);
+}
+
+.grande .titulo {
+  font-size: clamp(2.5rem, 6.5vw, 5rem);
+}
+
+.editorial .titulo {
+  font-family: var(--fonte-editorial);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.resumo {
+  max-width: 38rem;
+  color: var(--texto-suave);
+  font-size: clamp(1.0625rem, 1.6vw, 1.25rem);
+}
+
+.rodape {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: var(--esp-8);
+  padding-top: var(--esp-8);
+  border-top: 1px solid var(--borda);
+}
+
+.recursos {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: var(--esp-3) var(--esp-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recurso {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  font-weight: 500;
+}
+
+.recurso svg {
+  flex: none;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stack li {
+  padding: var(--esp-1) var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+}
+
+.chamada {
+  display: grid;
+  justify-items: start;
+  gap: var(--esp-2);
+}
+
+.meta {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 52rem) {
+  .rodape {
+    grid-template-columns: 1fr;
+  }
+}
+/* Fim dos estilos das seções. */

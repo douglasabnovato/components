@@ -1,0 +1,83 @@
+/* Estilos da página Assistir. */
+.pagina {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(16rem, 1fr);
+  align-items: start;
+  gap: var(--esp-8);
+}
+
+.info {
+  display: grid;
+  justify-items: start;
+  gap: var(--esp-4);
+}
+
+.rotulos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-2);
+}
+
+.selo {
+  padding: 2px var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  color: var(--texto-suave);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.titulo {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+}
+
+.canal {
+  color: var(--texto-suave);
+  font-weight: 600;
+}
+
+.descricao {
+  color: var(--texto-suave);
+  font-size: 1.0625rem;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-4);
+}
+
+.externo {
+  color: var(--acento-texto);
+  font-weight: 600;
+  text-underline-offset: 0.25em;
+}
+
+.mais {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: var(--esp-4);
+  margin-top: var(--esp-8);
+}
+
+.subtitulo {
+  font-size: 1.5rem;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (max-width: 56rem) {
+  .pagina {
+    grid-template-columns: 1fr;
+  }
+}
+/* Fim dos estilos da página Assistir. */

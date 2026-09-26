@@ -1,0 +1,35 @@
+{
+  "name": "components",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Hub em React com 7 projetos filhos reconstruídos num monorepo pnpm.",
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @components/hub dev",
+    "dev:flix": "pnpm --filter @components/flix dev",
+    "dev:tudo": "pnpm --parallel --filter @components/hub --filter @components/flix dev",
+    "build": "pnpm -r --if-present build",
+    "preview": "pnpm --filter @components/hub preview",
+    "test": "pnpm -r --if-present test",
+    "typecheck": "pnpm -r --if-present typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verificar": "pnpm lint && pnpm typecheck && pnpm test && pnpm build"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "eslint": "catalog:",
+    "eslint-plugin-jsx-a11y": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
+    "eslint-plugin-react-refresh": "catalog:",
+    "globals": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  }
+}

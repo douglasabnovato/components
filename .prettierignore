@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+pnpm-lock.yaml
+2-cadastro
+3-herois
+4-servidor
+5-tarefas
+6-pelada
+7-laboratorio
+_referencia

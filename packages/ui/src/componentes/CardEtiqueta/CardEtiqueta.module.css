@@ -1,0 +1,61 @@
+/* Estilos do CardEtiqueta. */
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+}
+
+.midia {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--superficie-2);
+}
+
+.midia > :first-child {
+  width: 100%;
+  height: 100%;
+}
+
+.destaque .midia {
+  aspect-ratio: 16 / 9;
+}
+
+.etiqueta {
+  position: absolute;
+  top: var(--esp-3);
+  left: var(--esp-3);
+  padding: var(--esp-1) var(--esp-3);
+  border-radius: var(--raio-pilula);
+  background: rgb(11 12 16 / 0.8);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+}
+
+.corpo {
+  display: grid;
+  gap: var(--esp-2);
+  padding: var(--esp-4) var(--esp-6) var(--esp-6);
+}
+
+.titulo {
+  font-size: 1.125rem;
+}
+
+.destaque .titulo {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+.descricao {
+  color: var(--texto-suave);
+  font-size: 0.9375rem;
+}
+/* Fim dos estilos do CardEtiqueta. */

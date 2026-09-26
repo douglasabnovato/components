@@ -1,0 +1,42 @@
+/* Estilos do SeletorPilula: grade de colunas iguais e indicador deslizante. */
+.seletor {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: repeat(var(--total), minmax(0, 1fr));
+  padding: var(--esp-1);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie);
+  isolation: isolate;
+}
+
+.indicador {
+  position: absolute;
+  inset-block: var(--esp-1);
+  left: var(--esp-1);
+  width: calc((100% - var(--esp-2)) / var(--total));
+  border-radius: var(--raio-pilula);
+  background: var(--texto);
+  transform: translateX(calc(100% * var(--indice)));
+  transition: transform var(--duracao) var(--curva);
+  z-index: -1;
+}
+
+.opcao {
+  min-height: 2.5rem;
+  padding: var(--esp-2) var(--esp-6);
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  color: var(--texto-suave);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--duracao) var(--curva);
+}
+
+.opcao[aria-pressed='true'] {
+  color: var(--fundo);
+}
+/* Fim dos estilos do SeletorPilula. */

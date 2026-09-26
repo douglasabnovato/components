@@ -1,0 +1,66 @@
+/* Estilos do Rodape. */
+.rodape {
+  padding-block: var(--esp-16) var(--esp-8);
+  border-top: 1px solid var(--borda);
+  background: var(--superficie);
+}
+
+.conteudo {
+  display: grid;
+  gap: var(--esp-8);
+  width: min(100% - 2rem, var(--largura-max));
+  margin-inline: auto;
+}
+
+.titulo {
+  font-size: 1.5rem;
+}
+
+.creditos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: var(--esp-4) var(--esp-8);
+  margin: 0;
+}
+
+.credito dt {
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+}
+
+.credito dd {
+  margin: 0;
+  color: var(--texto-suave);
+  font-size: 0.9375rem;
+}
+
+.pasta {
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.aviso {
+  max-width: 48rem;
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.base {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-4) var(--esp-8);
+  padding-top: var(--esp-6);
+  border-top: 1px solid var(--borda);
+  font-size: 0.875rem;
+}
+
+.base a {
+  text-underline-offset: 0.25em;
+}
+
+.base p {
+  margin-right: auto;
+}
+/* Fim dos estilos do Rodape. */

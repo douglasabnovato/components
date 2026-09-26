@@ -1,0 +1,119 @@
+/* Estilos do MegaMenu e da MegaMenuGrade. */
+.megamenu {
+  position: relative;
+}
+
+.gatilho {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-1);
+  min-height: 2.5rem;
+  padding: var(--esp-2) var(--esp-4);
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.gatilho:hover,
+.gatilho[aria-expanded='true'] {
+  background: var(--superficie-2);
+}
+
+.chevron {
+  transition: rotate var(--duracao) var(--curva);
+}
+
+.gatilho[aria-expanded='true'] .chevron {
+  rotate: 180deg;
+}
+
+.painel {
+  position: absolute;
+  top: calc(100% + var(--esp-3));
+  left: 50%;
+  translate: -50% 0;
+  width: min(44rem, 92vw);
+  padding: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+  box-shadow: var(--sombra);
+  animation: surgir var(--duracao) var(--curva);
+}
+
+.painel[hidden] {
+  display: none;
+}
+
+@keyframes surgir {
+  from {
+    opacity: 0;
+    translate: -50% -0.5rem;
+  }
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: var(--esp-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  gap: var(--esp-3);
+  height: 100%;
+  padding: var(--esp-3);
+  border-radius: var(--raio-m);
+  text-decoration: none;
+  transition: background-color var(--duracao) var(--curva);
+}
+
+.item:hover {
+  background: var(--superficie-2);
+}
+
+.icone {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--raio-p);
+  background: var(--superficie-2);
+}
+
+.textos {
+  display: grid;
+  gap: 2px;
+}
+
+.titulo {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-2);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+}
+
+.destaque {
+  padding: 0 var(--esp-2);
+  border-radius: var(--raio-pilula);
+  border: 1px solid var(--borda);
+  color: var(--texto-suave);
+  font-family: var(--fonte-texto);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.descricao {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+/* Fim dos estilos do MegaMenu. */
