@@ -10,6 +10,8 @@
   },
   "scripts": {
     "dev": "pnpm --filter @components/hub dev",
+    "dev:flix": "pnpm --filter @components/flix dev",
+    "dev:tudo": "pnpm --parallel --filter @components/hub --filter @components/flix dev",
     "build": "pnpm -r --if-present build",
     "preview": "pnpm --filter @components/hub preview",
     "test": "pnpm -r --if-present test",

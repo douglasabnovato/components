@@ -1,0 +1,90 @@
+/* Estilos do CardVideo: o link do título cobre o card inteiro. */
+.card {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+  transition:
+    transform var(--duracao) var(--curva),
+    border-color var(--duracao) var(--curva);
+}
+
+.card:hover,
+.card:focus-within {
+  transform: translateY(-4px);
+  border-color: var(--cor-categoria);
+}
+
+.capa {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-bottom: 3px solid var(--cor-categoria);
+  background: var(--superficie-2);
+}
+
+.capa img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.play {
+  position: absolute;
+  right: var(--esp-3);
+  bottom: var(--esp-3);
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgb(11 12 16 / 0.75);
+  color: #ffffff;
+  opacity: 0;
+  transition: opacity var(--duracao) var(--curva);
+}
+
+.card:hover .play,
+.card:focus-within .play {
+  opacity: 1;
+}
+
+.corpo {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--esp-2);
+  padding: var(--esp-3) var(--esp-4) var(--esp-4);
+}
+
+.titulo {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.link:focus-visible {
+  outline: none;
+}
+
+.card:has(.link:focus-visible) {
+  outline: 3px solid var(--foco);
+  outline-offset: 3px;
+}
+
+.canal {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+/* Fim dos estilos do CardVideo. */

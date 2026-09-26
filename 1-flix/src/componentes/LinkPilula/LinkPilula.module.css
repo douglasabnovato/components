@@ -1,0 +1,42 @@
+/* Estilos do LinkPilula (espelham o BotaoPilula do pacote de UI). */
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: 2.75rem;
+  padding: var(--esp-2) var(--esp-6);
+  border: 2px solid transparent;
+  border-radius: var(--raio-pilula);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform var(--duracao) var(--curva);
+}
+
+.pilula:hover {
+  transform: translateY(-2px);
+}
+
+.preenchido {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.vazado {
+  border-color: currentColor;
+  color: var(--texto);
+}
+
+.claro {
+  background: #ffffff;
+  color: #15161a;
+}
+
+.icone {
+  display: inline-grid;
+  place-items: center;
+}
+/* Fim dos estilos do LinkPilula. */

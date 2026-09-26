@@ -13,6 +13,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
+    "@components/flix": "workspace:*",
     "@components/ui": "workspace:*",
     "@fontsource-variable/fraunces": "catalog:",
     "@fontsource-variable/inter": "catalog:",

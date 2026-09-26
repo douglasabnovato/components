@@ -34,7 +34,9 @@ describe('Página do hub', () => {
     }
     await usuario.click(screen.getAllByRole('button', { name: 'Projetos' })[0]!)
     const nav = screen.getByRole('navigation', { name: 'Principal' })
-    expect(within(nav).getAllByRole('link', { name: /Fase \d/ }).length).toBeGreaterThanOrEqual(7)
+    expect(
+      within(nav).getAllByRole('link', { name: /Fase \d|No ar/ }).length,
+    ).toBeGreaterThanOrEqual(7)
   })
 
   it('não tem violações do axe', async () => {

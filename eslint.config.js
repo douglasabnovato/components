@@ -1,6 +1,6 @@
 /*
  * Configuração única do ESLint para todo o monorepo (flat config).
- * As pastas antigas dos filhos ficam fora da verificação até irem para _referencia/.
+ * Os filhos ainda não reconstruídos ficam fora da verificação até a vez de cada um.
  */
 import js from '@eslint/js'
 import globals from 'globals'
@@ -16,13 +16,12 @@ export default tseslint.config(
       '**/dist/**',
       '**/coverage/**',
       '_referencia/**',
-      'alura-flix/**',
-      'cadastro/**',
-      'components/**',
-      'marvel/**',
-      'node-ejs-forms/**',
-      'todo-app/**',
-      'to-do-list/**',
+      '2-cadastro/**',
+      '3-herois/**',
+      '4-servidor/**',
+      '5-tarefas/**',
+      '6-pelada/**',
+      '7-laboratorio/**',
     ],
   },
   {

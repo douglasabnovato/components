@@ -7,7 +7,12 @@ import { BarraWidget, Campo, CardCategoria, SeletorPilula } from '@components/ui
 import { useId, useState } from 'react'
 import { projeto } from '../../dados/projetos'
 import { CabecalhoSecao, RodapeSecao, Secao } from '../../componentes/Secao/Secao'
-import { criarRepositorioMemoria, validarCliente, type Cliente, type ErrosCliente } from './clientes'
+import {
+  criarRepositorioMemoria,
+  validarCliente,
+  type Cliente,
+  type ErrosCliente,
+} from './clientes'
 import styles from './SecaoCadastro.module.css'
 
 type Vista = 'tabela' | 'formulario'
