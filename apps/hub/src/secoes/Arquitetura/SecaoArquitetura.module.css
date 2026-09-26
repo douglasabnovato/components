@@ -1,0 +1,121 @@
+/* Estilos da seção Arquitetura: pilares e linha do tempo das fases. */
+.secao {
+  padding-block: clamp(var(--esp-16), 10vw, 9rem);
+  border-top: 1px solid var(--borda);
+}
+
+.conteudo {
+  display: grid;
+  gap: var(--esp-12);
+  width: min(100% - 2rem, var(--largura-max));
+  margin-inline: auto;
+}
+
+.cabecalho {
+  display: grid;
+  gap: var(--esp-3);
+  max-width: 44rem;
+}
+
+.rotulo {
+  font-family: var(--fonte-codigo);
+  font-size: 0.875rem;
+  color: var(--texto-suave);
+}
+
+.titulo {
+  font-size: clamp(2rem, 4.6vw, 3.25rem);
+}
+
+.pilares {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pilar {
+  display: grid;
+  align-content: start;
+  gap: var(--esp-3);
+  padding: var(--esp-6);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.codigo {
+  justify-self: start;
+  padding: var(--esp-1) var(--esp-3);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie-2);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+}
+
+.tituloPilar {
+  font-size: 1.25rem;
+}
+
+.texto {
+  color: var(--texto-suave);
+}
+
+.linha {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.subtitulo {
+  font-size: 1.25rem;
+}
+
+.fases {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: var(--esp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.fase {
+  display: grid;
+  gap: var(--esp-2);
+  padding: var(--esp-4);
+  border-top: 3px solid var(--borda);
+  background: var(--superficie);
+  border-radius: 0 0 var(--raio-m) var(--raio-m);
+}
+
+.fase[data-atual='true'] {
+  border-top-color: var(--acento-ativo, var(--acento));
+}
+
+.numeroFase {
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.75rem;
+}
+
+.nomeFase {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+a.nomeFase:hover {
+  text-decoration: underline;
+}
+
+.estado {
+  font-size: 0.8125rem;
+  color: var(--texto-suave);
+}
+/* Fim dos estilos da seção Arquitetura. */

@@ -1,0 +1,201 @@
+/* Estilos da seção Laboratório: índice, abas e bloco código + demo. */
+section.secao {
+  --fundo: #0f110c;
+  --superficie: #181b13;
+  --superficie-2: #22261a;
+  --borda: #343a27;
+}
+
+.bancada {
+  display: grid;
+  grid-template-columns: minmax(16rem, 22rem) 1fr;
+  align-items: start;
+  gap: var(--esp-8);
+}
+
+.indice {
+  display: grid;
+  gap: var(--esp-1);
+  margin: 0;
+  padding: var(--esp-2);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+  list-style: none;
+}
+
+.licao {
+  display: flex;
+  gap: var(--esp-3);
+  width: 100%;
+  padding: var(--esp-3);
+  border: 1px solid transparent;
+  border-radius: var(--raio-m);
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.licao:hover:not(:disabled) {
+  background: var(--superficie-2);
+}
+
+.licao[aria-current='true'] {
+  border-color: var(--acento);
+  background: var(--superficie-2);
+}
+
+.licao:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.simbolo {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--raio-p);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-family: var(--fonte-codigo);
+  font-weight: 700;
+}
+
+.licao:disabled .simbolo {
+  background: var(--superficie-2);
+  color: var(--texto-suave);
+}
+
+.textos {
+  display: grid;
+  gap: 2px;
+}
+
+.tituloLicao {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-2);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+}
+
+.breve {
+  padding: 0 var(--esp-2);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  color: var(--texto-suave);
+  font-family: var(--fonte-texto);
+  font-size: 0.6875rem;
+}
+
+.resumoLicao {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.painel {
+  display: grid;
+  gap: var(--esp-4);
+  min-width: 0;
+}
+
+.tituloAtiva {
+  font-family: var(--fonte-codigo);
+  font-size: 1rem;
+  color: var(--acento-texto);
+}
+
+.texto {
+  max-width: 40rem;
+  font-family: var(--fonte-editorial);
+  font-size: clamp(1.25rem, 2.2vw, 1.625rem);
+  line-height: 1.45;
+}
+
+.solucao {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: var(--esp-4);
+}
+
+.codigo {
+  margin: 0;
+  padding: var(--esp-6);
+  overflow-x: auto;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: #0a0b08;
+  font-family: var(--fonte-codigo);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+.demo {
+  display: grid;
+  align-content: start;
+  gap: var(--esp-4);
+  padding: var(--esp-6);
+  border-radius: var(--raio-m);
+  background: var(--superficie-2);
+}
+
+.rotuloDemo {
+  color: var(--texto-suave);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.demoCaixa {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-4);
+}
+
+.demoValor {
+  min-width: 4rem;
+  font-family: var(--fonte-titulo);
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.demoBotao {
+  min-height: 2.75rem;
+  padding: var(--esp-2) var(--esp-6);
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.demoCartao {
+  display: grid;
+  gap: var(--esp-3);
+  padding: var(--esp-4);
+  border-radius: var(--raio-m);
+  transition: background-color var(--duracao) var(--curva);
+}
+
+.demoCartao[data-tema-demo='escuro'] {
+  background: #0a0b08;
+  color: #f2f3f5;
+}
+
+.demoCartao[data-tema-demo='claro'] {
+  background: #f6f5f1;
+  color: #15161a;
+}
+
+@media (max-width: 60rem) {
+  .bancada,
+  .solucao {
+    grid-template-columns: 1fr;
+  }
+}
+/* Fim dos estilos da seção Laboratório. */

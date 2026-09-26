@@ -1,0 +1,21 @@
+/* Estilos do LinkSeta. */
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  color: var(--acento-texto);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+}
+
+.seta {
+  transition: translate var(--duracao) var(--curva);
+}
+
+.link:hover .seta {
+  translate: 0.3em 0;
+}
+/* Fim dos estilos do LinkSeta. */

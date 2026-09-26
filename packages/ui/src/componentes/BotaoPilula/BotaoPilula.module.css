@@ -1,0 +1,65 @@
+/* Estilos do BotaoPilula e suas variantes. */
+.pilula {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--esp-2);
+  min-height: 2.75rem;
+  padding: var(--esp-2) var(--esp-6);
+  border: 2px solid transparent;
+  border-radius: var(--raio-pilula);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  line-height: 1.2;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--duracao) var(--curva),
+    background-color var(--duracao) var(--curva),
+    color var(--duracao) var(--curva);
+}
+
+.pilula:hover {
+  transform: translateY(-2px);
+}
+
+.pilula:disabled,
+.pilula[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+
+.g {
+  min-height: 3.25rem;
+  padding-inline: var(--esp-8);
+  font-size: 1.0625rem;
+}
+
+.preenchido {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.vazado {
+  background: transparent;
+  border-color: currentColor;
+  color: var(--texto);
+}
+
+.vazado:hover {
+  background: color-mix(in srgb, var(--texto) 10%, transparent);
+}
+
+.claro {
+  background: #ffffff;
+  color: #15161a;
+}
+
+.icone {
+  display: inline-grid;
+  place-items: center;
+  width: 1.25em;
+  height: 1.25em;
+}
+/* Fim dos estilos do BotaoPilula. */

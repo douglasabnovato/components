@@ -1,0 +1,18 @@
+/* Estilos do BotaoPausa: círculo translúcido sobre mídia. */
+.botao {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid rgb(255 255 255 / 0.4);
+  border-radius: 50%;
+  background: rgb(11 12 16 / 0.6);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+}
+
+.botao:hover {
+  background: rgb(11 12 16 / 0.85);
+}
+/* Fim dos estilos do BotaoPausa. */

@@ -1,0 +1,110 @@
+/* Estilos da seção Tarefas: faixa com formulário sobreposto e grade com destaque. */
+.palco {
+  display: grid;
+}
+
+.faixa {
+  position: relative;
+  height: clamp(12rem, 26vw, 20rem);
+  overflow: hidden;
+  border-radius: var(--raio-g);
+}
+
+.faixa svg {
+  width: 100%;
+  height: 100%;
+}
+
+.frase {
+  position: absolute;
+  top: clamp(var(--esp-6), 4vw, var(--esp-12));
+  left: clamp(var(--esp-6), 4vw, var(--esp-12));
+  color: #ffffff;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.75rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.05;
+  max-width: 12ch;
+}
+
+.widget {
+  position: relative;
+  width: calc(100% - clamp(1rem, 6vw, 4rem));
+  margin: calc(clamp(3rem, 6vw, 4.5rem) * -1) auto 0;
+}
+
+.regra {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.destaque {
+  grid-column: 1 / -1;
+}
+
+.destaque > article {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+}
+
+.destaque > article > div:first-child {
+  aspect-ratio: auto;
+  min-height: 16rem;
+}
+
+.destaque > article > div:last-child {
+  align-content: center;
+  padding: var(--esp-8);
+}
+
+.item > article {
+  height: 100%;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  margin-top: var(--esp-2);
+}
+
+.acoes button {
+  min-height: 2.5rem;
+  padding: var(--esp-1) var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.acoes button:first-child {
+  border-color: var(--acento);
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.acoes button[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+@media (max-width: 52rem) {
+  .grade {
+    grid-template-columns: 1fr;
+  }
+
+  .destaque > article {
+    grid-template-columns: 1fr;
+  }
+}
+/* Fim dos estilos da seção Tarefas. */

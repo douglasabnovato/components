@@ -1,0 +1,46 @@
+/* Estilos da seção Lista da Pelada. */
+section.secao {
+  --fundo: #13111d;
+  --superficie: #1c1930;
+  --superficie-2: #252140;
+  --borda: #353058;
+  background:
+    radial-gradient(40rem 24rem at 90% 0%, rgb(234 76 137 / 0.16), transparent 70%), var(--fundo);
+}
+
+.organizador {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.organizador span {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+}
+
+.confirmar {
+  justify-self: start;
+  min-height: 2.75rem;
+  margin-top: var(--esp-2);
+  padding: var(--esp-2) var(--esp-6);
+  border: 2px solid var(--acento);
+  border-radius: var(--raio-pilula);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.confirmar[aria-pressed='true'] {
+  background: transparent;
+  color: var(--acento-texto);
+}
+
+.confirmar[aria-disabled='true'] {
+  border-color: var(--borda);
+  background: transparent;
+  color: var(--texto-suave);
+  cursor: not-allowed;
+}
+/* Fim dos estilos da seção Lista da Pelada. */

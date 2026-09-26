@@ -1,0 +1,99 @@
+/* Estilos do CardEvento. */
+.card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+}
+
+.corpo {
+  display: grid;
+  align-content: start;
+  gap: var(--esp-3);
+  flex: 1;
+  padding: var(--esp-6);
+}
+
+.categoria {
+  justify-self: start;
+  padding: var(--esp-1) var(--esp-3);
+  border-radius: var(--raio-pilula);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  font-size: 1.375rem;
+}
+
+.meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-3);
+  margin: 0;
+}
+
+.meta dt {
+  font-size: 0.75rem;
+  color: var(--texto-suave);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.meta dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.rodape {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--esp-2) var(--esp-3);
+  padding: var(--esp-3) var(--esp-6);
+  border-top: 1px solid var(--borda);
+  background: var(--superficie-2);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.barra {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 100%;
+  height: 0.5rem;
+  appearance: none;
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: var(--borda);
+  overflow: hidden;
+}
+
+.barra::-webkit-progress-bar {
+  background: var(--borda);
+}
+
+.barra::-webkit-progress-value {
+  background: var(--acento);
+  border-radius: var(--raio-pilula);
+}
+
+.barra::-moz-progress-bar {
+  background: var(--acento);
+}
+
+.situacao {
+  color: var(--texto-suave);
+}
+
+.rodape[data-lotado='true'] .situacao {
+  color: var(--acento-texto);
+}
+/* Fim dos estilos do CardEvento. */

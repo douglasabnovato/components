@@ -1,0 +1,34 @@
+/* Estilos dos estados de tela. */
+.estado {
+  padding: var(--esp-16) 0;
+  color: var(--texto-suave);
+  text-align: center;
+}
+
+.vazio {
+  display: grid;
+  justify-items: center;
+  gap: var(--esp-4);
+  max-width: 36rem;
+  margin: var(--esp-16) auto;
+  padding: var(--esp-8);
+  border: 1px dashed var(--borda);
+  border-radius: var(--raio-g);
+  text-align: center;
+}
+
+.titulo {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.texto {
+  color: var(--texto-suave);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--esp-3);
+}
+/* Fim dos estilos dos estados. */

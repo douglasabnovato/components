@@ -1,0 +1,40 @@
+/* Estilos das AbasSegmentadas: trilho em pílula com aba ativa preenchida. */
+.lista {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--esp-1);
+  padding: var(--esp-1);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie);
+}
+
+.aba {
+  min-height: 2.5rem;
+  padding: var(--esp-2) var(--esp-4);
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  color: var(--texto-suave);
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color var(--duracao) var(--curva),
+    color var(--duracao) var(--curva);
+}
+
+.aba:hover {
+  color: var(--texto);
+}
+
+.aba[aria-selected='true'] {
+  background: var(--texto);
+  color: var(--fundo);
+}
+
+.painel {
+  margin-top: var(--esp-6);
+  border-radius: var(--raio-m);
+}
+/* Fim dos estilos das AbasSegmentadas. */

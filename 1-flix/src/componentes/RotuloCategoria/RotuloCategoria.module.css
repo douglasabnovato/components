@@ -1,0 +1,18 @@
+/* Estilos do RotuloCategoria. */
+.rotulo {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--esp-3);
+  border-radius: var(--raio-pilula);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.grande {
+  padding: var(--esp-1) var(--esp-4);
+  font-size: 0.875rem;
+}
+/* Fim dos estilos do RotuloCategoria. */

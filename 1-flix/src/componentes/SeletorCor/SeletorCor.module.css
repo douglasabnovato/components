@@ -1,0 +1,41 @@
+/* Estilos do SeletorCor. */
+.seletor {
+  display: grid;
+  gap: var(--esp-1);
+}
+
+.rotulo {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.linha {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.cor {
+  width: 3rem;
+  height: 2.75rem;
+  padding: 2px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-p);
+  background: var(--fundo);
+  cursor: pointer;
+}
+
+.previa {
+  padding: var(--esp-1) var(--esp-4);
+  border-radius: var(--raio-pilula);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.info {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+/* Fim dos estilos do SeletorCor. */

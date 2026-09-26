@@ -1,0 +1,181 @@
+/* Estilos do Topo: fundo em grade, texto e mosaico flutuante. */
+.topo {
+  position: relative;
+  display: grid;
+  align-items: center;
+  min-height: 100svh;
+  padding: 8rem 0 var(--esp-16);
+  overflow: clip;
+}
+
+.fundo {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(40rem 30rem at 85% 20%, rgb(196 240 66 / 0.14), transparent 70%),
+    radial-gradient(36rem 28rem at 10% 90%, rgb(139 123 255 / 0.18), transparent 70%),
+    linear-gradient(var(--borda) 1px, transparent 1px) 0 0 / 4rem 4rem,
+    linear-gradient(90deg, var(--borda) 1px, transparent 1px) 0 0 / 4rem 4rem;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+  opacity: 0.7;
+}
+
+.conteudo {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: var(--esp-12);
+  width: min(100% - 2rem, var(--largura-max));
+  margin-inline: auto;
+}
+
+.texto {
+  display: grid;
+  gap: var(--esp-6);
+}
+
+.rotulo {
+  font-family: var(--fonte-codigo);
+  font-size: 0.875rem;
+  color: var(--texto-suave);
+}
+
+.titulo {
+  font-size: clamp(2.5rem, 5.4vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+.destaque {
+  font-family: var(--fonte-editorial);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--acento-ativo, var(--acento));
+  transition: color 600ms var(--curva);
+}
+
+.resumo {
+  max-width: 34rem;
+  color: var(--texto-suave);
+  font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+}
+
+.numeros {
+  display: flex;
+  gap: var(--esp-8);
+  margin: var(--esp-4) 0 0;
+}
+
+.numeros div {
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.numeros dt {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.numeros dd {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mosaicoArea {
+  position: relative;
+}
+
+.mosaico {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 7.5rem;
+  gap: var(--esp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bloco {
+  animation: flutuar 7s ease-in-out infinite;
+  animation-delay: var(--atraso);
+}
+
+.bloco:nth-child(1) {
+  grid-column: span 2;
+}
+
+.bloco:nth-child(4) {
+  grid-row: span 2;
+}
+
+.mosaico[data-pausado='true'] .bloco {
+  animation-play-state: paused;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: var(--esp-4);
+  border-radius: var(--raio-m);
+  background:
+    radial-gradient(circle at 100% 0%, rgb(255 255 255 / 0.25), transparent 55%), var(--cor);
+  color: var(--sobre);
+  text-decoration: none;
+  transition: transform var(--duracao) var(--curva);
+}
+
+.link:hover {
+  transform: scale(1.03) rotate(-1deg);
+}
+
+.numero {
+  font-family: var(--fonte-codigo);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.nome {
+  font-family: var(--fonte-titulo);
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.pausa {
+  position: absolute;
+  right: var(--esp-3);
+  bottom: calc(var(--esp-12) * -1);
+}
+
+@keyframes flutuar {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -10px;
+  }
+}
+
+@media (max-width: 60rem) {
+  .conteudo {
+    grid-template-columns: 1fr;
+  }
+
+  .mosaico {
+    grid-auto-rows: 6rem;
+  }
+}
+/* Fim dos estilos do Topo. */
