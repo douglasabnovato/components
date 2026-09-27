@@ -1,0 +1,25 @@
+<Desafio>
+
+Um botão dentro de um componente filho sorteia um número. O resultado precisa aparecer no pai, fora do filho. Props só descem.
+
+**Como um filho avisa o pai sem quebrar o fluxo de dados do React?**
+
+</Desafio>
+
+<Conteudo>
+
+- **Comunicação direta**: o pai passa dados ao filho por props.
+- **Comunicação indireta**: o pai passa uma **função** por props. O filho chama essa função com o valor, e quem guarda o estado é o pai.
+- O nome da prop descreve o evento (`aoSortear`, `aoSalvar`), não a implementação.
+
+</Conteudo>
+
+<Solucao>
+
+1. Guardar `sorteado` no estado do pai.
+2. Passar `setSorteado` para o filho como `aoSortear`.
+3. No filho, chamar `aoSortear(numero)` no clique.
+4. Mostrar o valor no pai.
+5. No teste, fixar o `Math.random` para o resultado ser previsível.
+
+</Solucao>

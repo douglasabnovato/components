@@ -1,0 +1,28 @@
+<Desafio>
+
+O contador ganhou somar, multiplicar, zerar e desfazer. Cada botão tem sua própria lógica com vários `setState`, e o "desfazer" precisa lembrar o valor anterior de todas elas. As regras estão espalhadas pelos cliques.
+
+**Como juntar todas as regras de mudança num lugar só, fácil de testar?**
+
+</Desafio>
+
+<Conteudo>
+
+`useReducer(reducer, inicial)` troca vários setters por **ações**.
+
+- O **reducer** é uma função pura: recebe o estado e uma ação e devolve o próximo estado.
+- Os componentes só **descrevem o que aconteceu** (`{ tipo: 'somar', quanto: 10 }`).
+- É o mesmo modelo do Redux (projeto 05), só que local ao componente.
+- Por ser pura, a regra se testa sem tela.
+
+</Conteudo>
+
+<Solucao>
+
+1. Tipar o estado e as ações como união discriminada.
+2. Escrever o reducer com `switch`, guardando o histórico para desfazer.
+3. Testar o reducer sozinho.
+4. Na tela, usar `useReducer` e só despachar ações nos botões.
+5. Desabilitar "Desfazer" quando o histórico estiver vazio (estado derivado).
+
+</Solucao>

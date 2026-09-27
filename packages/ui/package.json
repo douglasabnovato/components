@@ -11,7 +11,8 @@
     ".": "./src/index.ts",
     "./tokens.css": "./src/tokens.css",
     "./testes/axe": "./src/testes/axe.ts",
-    "./testes/setup": "./src/testes/setup.ts"
+    "./testes/setup": "./src/testes/setup.ts",
+    "./ecossistema": "./src/utilitarios/ecossistema.ts"
   },
   "scripts": {
     "test": "vitest run",

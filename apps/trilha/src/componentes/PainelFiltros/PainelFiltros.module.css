@@ -1,0 +1,71 @@
+/* Estilos do PainelFiltros. */
+.painel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--esp-4);
+  padding: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.busca,
+.modulo {
+  display: grid;
+  gap: var(--esp-1);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.busca {
+  flex: 1 1 16rem;
+}
+
+.modulo {
+  flex: 1 1 14rem;
+  min-width: 0;
+  max-width: 22rem;
+}
+
+.modulo select {
+  width: 100%;
+  text-overflow: ellipsis;
+}
+
+.busca input,
+.modulo select {
+  min-height: 2.75rem;
+  padding: 0 var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie-2);
+  font-weight: 400;
+}
+
+.historicos {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  min-height: 2.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.historicos input {
+  width: 1.125rem;
+  height: 1.125rem;
+  accent-color: var(--acento);
+}
+
+.limpar {
+  min-height: 2.75rem;
+  padding: 0 var(--esp-4);
+  border: 0;
+  background: transparent;
+  color: var(--acento-texto);
+  font-weight: 600;
+  text-decoration: underline;
+  cursor: pointer;
+}
+/* Fim dos estilos do PainelFiltros. */

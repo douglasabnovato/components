@@ -1,0 +1,26 @@
+<Desafio>
+
+Um componente de busca de biblioteca precisa deixar o pai **focar** e **limpar** o campo. Passar `ref` para um componente de função, até o React 18, não funcionava sem `forwardRef`. E entregar o `input` inteiro ao pai deixa ele mexer em tudo.
+
+**Como o pai controla o filho sem ganhar acesso a tudo?**
+
+</Desafio>
+
+<Conteudo>
+
+- No **React 19**, `ref` é uma prop comum em componentes de função: o `forwardRef` não é mais necessário.
+- **`useImperativeHandle(ref, () => ({ ... }))`** define o que o pai enxerga pela ref: aqui, só `focar` e `limpar`.
+- O filho continua dono do seu `input`, com uma ref interna própria.
+- Use com moderação: o normal é controlar pelo estado e props. Ref imperativa é para foco, rolagem e integrações.
+
+</Conteudo>
+
+<Solucao>
+
+1. Tipar o controle público: `{ focar, limpar }`.
+2. Receber `ref` como prop no `CampoBusca`.
+3. Criar a ref interna do `input` e expor as ações com `useImperativeHandle`.
+4. No pai, criar `useRef<ControleBusca>` e chamar as ações nos botões.
+5. Testar foco e limpeza a partir do pai.
+
+</Solucao>

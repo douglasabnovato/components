@@ -27,6 +27,16 @@ export {
   TEXTO_CLARO,
   TEXTO_ESCURO,
 } from './utilitarios/contraste'
+export {
+  ecossistema,
+  enderecoDaApi,
+  enderecoDoHub,
+  enderecoDoProjeto,
+  PORTA_API,
+  projetoDoEcossistema,
+  proxyDaApi,
+  type ProjetoEcossistema,
+} from './utilitarios/ecossistema'
 export { useMovimentoReduzido } from './hooks/useMovimentoReduzido'
 export { useSecaoAtiva } from './hooks/useSecaoAtiva'
 /* Fim do ponto de entrada. */

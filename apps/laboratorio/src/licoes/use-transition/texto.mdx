@@ -1,0 +1,28 @@
+<Desafio>
+
+Um campo filtra uma lista de 5.000 itens. A cada letra, a tela congela um instante: o campo "engasga" porque o React precisa terminar a lista antes de mostrar o que você digitou.
+
+**Como dizer ao React o que é urgente e o que pode esperar?**
+
+</Desafio>
+
+<Conteudo>
+
+O **React 18** trouxe a renderização concorrente.
+
+- **`useTransition`** devolve `[pendente, iniciarTransicao]`. Atualizações dentro de `iniciarTransicao` têm prioridade baixa e podem ser interrompidas por algo mais urgente, como a próxima tecla.
+- O texto do campo continua num estado **urgente**; o filtro aplicado vai na transição.
+- `pendente` permite mostrar "atualizando" sem travar nada.
+- `useDeferredValue` resolve o mesmo problema quando você só tem o valor, não o setter (veja o Cadastro, projeto 02).
+
+</Conteudo>
+
+<Solucao>
+
+1. Separar dois estados: `texto` (campo) e `filtro` (lista).
+2. No `onChange`, atualizar `texto` normalmente e `filtro` dentro de `iniciarTransicao`.
+3. Mostrar "Atualizando…" e reduzir a opacidade da lista enquanto `pendente`.
+4. Desenhar só os primeiros 200 itens visíveis.
+5. Testar que o filtro chega ao resultado certo.
+
+</Solucao>

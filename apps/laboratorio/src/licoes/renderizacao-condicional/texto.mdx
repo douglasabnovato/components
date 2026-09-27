@@ -1,0 +1,28 @@
+<Desafio>
+
+A tela precisa mostrar "é par" ou "é ímpar" conforme um número, e uma saudação só quando alguém entrou. No projeto antigo havia um componente `If` feito à mão, que avaliava o conteúdo mesmo quando a condição era falsa.
+
+**Como mostrar ou esconder partes da tela sem criar um componente só para isso?**
+
+</Desafio>
+
+<Conteudo>
+
+JSX é JavaScript: dá para usar qualquer expressão.
+
+- **Ternário** (`cond ? a : b`): escolhe entre duas saídas.
+- **`&&`**: mostra algo só quando a condição é verdadeira. Cuidado com `0 && ...`: o zero aparece na tela.
+- **Retorno antecipado**: `if (!nome) return ...` deixa o caso principal mais legível.
+- Devolver `null` não desenha nada.
+
+</Conteudo>
+
+<Solucao>
+
+1. Guardar o número e o usuário em estado.
+2. Em `ParOuImpar`, usar um ternário com `numero % 2 === 0`.
+3. Em `UsuarioInfo`, fazer retorno antecipado quando não há nome.
+4. Ligar os botões aos setters.
+5. Testar os dois caminhos de cada condição.
+
+</Solucao>

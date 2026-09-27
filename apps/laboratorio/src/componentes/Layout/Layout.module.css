@@ -1,0 +1,82 @@
+/* Estilos do Layout do Laboratório. */
+.pagina {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--borda);
+  background: color-mix(in srgb, var(--fundo) 88%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+.faixa {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-3) var(--esp-4);
+  width: min(100% - 2rem, var(--largura-max));
+  margin-inline: auto;
+  padding-block: var(--esp-3);
+}
+
+.marca {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--esp-2);
+  font-family: var(--fonte-titulo);
+  font-size: 1.375rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: var(--esp-1);
+}
+
+.link {
+  padding: var(--esp-2) var(--esp-3);
+  border-radius: var(--raio-pilula);
+  color: var(--texto-suave);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--texto);
+}
+
+.link[aria-current='page'] {
+  background: var(--superficie-2);
+  color: var(--texto);
+}
+
+.conteudo {
+  width: min(100% - 2rem, var(--largura-max));
+  margin-inline: auto;
+  padding-block: var(--esp-8) var(--esp-16);
+}
+
+.rodape {
+  display: grid;
+  gap: var(--esp-2);
+  padding: var(--esp-8) max(1rem, calc((100% - var(--largura-max)) / 2));
+  border-top: 1px solid var(--borda);
+  background: var(--superficie);
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.progresso {
+  margin-left: auto;
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+}
+/* Fim dos estilos do Layout. */

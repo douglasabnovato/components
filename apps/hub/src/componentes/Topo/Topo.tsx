@@ -1,6 +1,6 @@
 /*
  * Topo: abertura do hub. Título, dois botões em pílula, números do projeto
- * e um mosaico animado com os 7 filhos, que pode ser pausado (WCAG 2.2.2).
+ * e um mosaico animado com os 8 filhos, que pode ser pausado (WCAG 2.2.2).
  */
 import { BotaoPausa, BotaoPilula, useMovimentoReduzido } from '@components/ui'
 import { motion } from 'motion/react'
@@ -9,7 +9,7 @@ import { doisDigitos, projetos, site } from '../../dados/projetos'
 import styles from './Topo.module.css'
 
 const numeros = [
-  { valor: '7', rotulo: 'projetos' },
+  { valor: String(projetos.length), rotulo: 'projetos' },
   { valor: '1', rotulo: 'instalação' },
   { valor: '0', rotulo: 'código legado' },
 ]
@@ -36,8 +36,8 @@ export function Topo() {
             moderno.
           </h1>
           <p className={styles.resumo}>
-            Um hub para apresentar cada projeto numa seção própria, com demonstração ao vivo, e um
-            caminho de ida e volta para cada um deles.
+            Um hub para apresentar cada projeto numa seção própria, com demonstração ao vivo, e uma
+            trilha de 116 vídeos para estudar o que cada um deles usa.
           </p>
           <div className={styles.acoes}>
             <BotaoPilula href="#filho-1" tamanho="g">
@@ -67,7 +67,7 @@ export function Topo() {
           <ul
             className={styles.mosaico}
             data-pausado={pausado}
-            aria-label="Os sete projetos do hub"
+            aria-label="Os oito projetos do hub"
           >
             {projetos.map((p, indice) => (
               <li

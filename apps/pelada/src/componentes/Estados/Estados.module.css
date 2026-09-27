@@ -1,0 +1,27 @@
+/* Estilos do EstadoVazio. */
+.vazio {
+  display: grid;
+  justify-items: center;
+  gap: var(--esp-4);
+  padding: var(--esp-12) var(--esp-4);
+  border: 1px dashed var(--borda);
+  border-radius: var(--raio-g);
+  text-align: center;
+}
+
+.titulo {
+  font-size: 1.5rem;
+}
+
+.texto {
+  max-width: 34rem;
+  color: var(--texto-suave);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--esp-3);
+}
+/* Fim dos estilos do EstadoVazio. */

@@ -1,0 +1,31 @@
+<Desafio>
+
+Você vai dar manutenção num sistema escrito em 2017. Os componentes são classes, com `this.state`, `setState` e métodos como `componentDidMount`. Nada disso aparece nos tutoriais novos.
+
+**Como ler código de classe traduzindo para o que você já conhece de hooks?**
+
+</Desafio>
+
+<Conteudo>
+
+Lição de contexto histórico: projeto novo não usa classe, mas código legado usa muito.
+
+| Classe                                       | Hooks                        |
+| -------------------------------------------- | ---------------------------- |
+| `this.state` e `this.setState`               | `useState`                   |
+| `componentDidMount` + `componentWillUnmount` | `useEffect` com limpeza      |
+| `componentDidUpdate`                         | `useEffect` com dependências |
+| `render()`                                   | o próprio corpo da função    |
+
+As classes ainda existem para uma coisa: **Error Boundaries**.
+
+</Conteudo>
+
+<Solucao>
+
+1. Escrever o relógio como classe: estado inicial, intervalo no `componentDidMount` e limpeza no `componentWillUnmount`.
+2. Escrever o mesmo relógio com `useState` e `useEffect`.
+3. Colocar os dois lado a lado.
+4. Testar com relógio falso que os dois contam igual.
+
+</Solucao>

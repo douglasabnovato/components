@@ -1,6 +1,7 @@
 /*
- * Configuração única do ESLint para todo o monorepo (flat config).
- * Os filhos ainda não reconstruídos ficam fora da verificação até a vez de cada um.
+ * Configuração única do ESLint para todo o monorepo (flat config). As pastas
+ * antigas (2 a 7) ficam fora: são só referência. As rotas do modo framework do
+ * React Router podem exportar loader, action e meta junto do componente.
  */
 import js from '@eslint/js'
 import globals from 'globals'
@@ -15,6 +16,10 @@ export default tseslint.config(
       '**/node_modules/**',
       '**/dist/**',
       '**/coverage/**',
+      '**/build/**',
+      '**/.react-router/**',
+      '**/test-results/**',
+      '**/playwright-report/**',
       '_referencia/**',
       '2-cadastro/**',
       '3-herois/**',
@@ -42,6 +47,19 @@ export default tseslint.config(
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'jsx-a11y/no-noninteractive-tabindex': ['error', { tags: ['pre'], roles: ['tabpanel'] }],
+    },
+  },
+  {
+    files: ['apps/formularios/app/**/*.tsx'],
+    rules: {
+      'react-refresh/only-export-components': [
+        'warn',
+        {
+          allowConstantExport: true,
+          allowExportNames: ['meta', 'links', 'loader', 'action', 'Layout', 'ErrorBoundary'],
+        },
+      ],
     },
   },
 )

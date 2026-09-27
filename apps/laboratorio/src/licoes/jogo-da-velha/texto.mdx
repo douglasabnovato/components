@@ -1,0 +1,27 @@
+<Desafio>
+
+O jogo da velha do projeto antigo guardava, em estados separados, o tabuleiro, de quem era a vez e se alguém tinha ganhado. Ao "voltar no tempo", essas informações se desencontravam.
+
+**Qual é o menor estado possível para um jogo com histórico?**
+
+</Desafio>
+
+<Conteudo>
+
+Esse é o tutorial clássico da documentação do React (react.dev).
+
+- **Estado mínimo**: a lista de tabuleiros (`historico`) e a jogada atual. Todo o resto é **derivado**.
+- **Imutabilidade**: cada jogada cria um tabuleiro novo (`slice`), o que torna o histórico possível.
+- Voltar no tempo é só mudar a jogada atual; jogar a partir dali descarta o futuro.
+
+</Conteudo>
+
+<Solucao>
+
+1. Escrever as regras puras: `vencedor`, `vezDe` e `empate`.
+2. Guardar só `historico` e `jogada`.
+3. Calcular casas, status, vencedor e empate a cada renderização.
+4. Em `jogar`, copiar o tabuleiro, marcar e cortar o histórico futuro.
+5. Testar as regras e uma partida com volta no tempo.
+
+</Solucao>

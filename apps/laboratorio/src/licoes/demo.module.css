@@ -1,0 +1,136 @@
+/* Estilos comuns às demonstrações das lições. */
+.caixa {
+  display: grid;
+  gap: var(--esp-4);
+  padding: var(--esp-6);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.linha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.botao {
+  min-height: 2.5rem;
+  padding: 0 var(--esp-4);
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botao:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.vazado {
+  border: 1px solid var(--borda);
+  background: transparent;
+  color: var(--texto);
+}
+
+.campo {
+  display: grid;
+  gap: var(--esp-1);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.campo input,
+.campo select {
+  min-height: 2.5rem;
+  padding: 0 var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-p);
+  background: var(--fundo);
+  font-weight: 400;
+}
+
+.numero {
+  font-family: var(--fonte-titulo);
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.suave {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.lista {
+  display: grid;
+  gap: var(--esp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-3);
+  padding: var(--esp-2) var(--esp-3);
+  border-radius: var(--raio-m);
+  background: var(--superficie-2);
+}
+
+.cartao {
+  display: grid;
+  gap: var(--esp-2);
+  padding: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+}
+
+.destaque {
+  border-color: var(--acento);
+}
+
+.erro {
+  color: var(--erro);
+  font-weight: 600;
+}
+
+.sucesso {
+  color: #3ddc97;
+  font-weight: 600;
+}
+
+.tabuleiro {
+  display: grid;
+  grid-template-columns: repeat(3, 3.5rem);
+  gap: var(--esp-1);
+}
+
+.casa {
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-p);
+  background: var(--superficie-2);
+  font-family: var(--fonte-titulo);
+  font-size: 1.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.claro {
+  background: #f6f5f1;
+  color: #15161a;
+}
+
+.escuro {
+  background: #0b0c10;
+  color: #f2f3f5;
+}
+/* Fim dos estilos das demonstrações. */

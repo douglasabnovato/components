@@ -1,0 +1,59 @@
+/* Estilos do FormularioCliente. */
+.form {
+  display: grid;
+  gap: var(--esp-6);
+  max-width: 36rem;
+  padding: var(--esp-8);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.titulo {
+  font-family: var(--fonte-editorial);
+  font-size: 1.75rem;
+  font-weight: 600;
+}
+
+.erro {
+  color: var(--erro);
+  font-weight: 600;
+}
+
+.botoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+}
+
+.salvar,
+.cancelar {
+  min-height: 3rem;
+  padding: 0 var(--esp-6);
+  border-radius: var(--raio-pilula);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.salvar {
+  border: 0;
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.salvar:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.cancelar {
+  border: 1px solid var(--borda);
+  background: transparent;
+}
+
+@media (max-width: 40rem) {
+  .form {
+    padding: var(--esp-6) var(--esp-4);
+  }
+}
+/* Fim dos estilos do FormularioCliente. */

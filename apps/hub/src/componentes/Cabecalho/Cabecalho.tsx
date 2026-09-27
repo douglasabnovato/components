@@ -1,5 +1,5 @@
 /*
- * Cabecalho: configura a NavPilula do hub com o megamenu dos 7 projetos,
+ * Cabecalho: configura a NavPilula do hub com o megamenu dos 8 projetos,
  * os links institucionais, o atalho para o GitHub e o indicador da seção ativa.
  */
 import { BotaoPilula, NavPilula } from '@components/ui'

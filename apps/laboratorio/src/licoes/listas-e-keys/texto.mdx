@@ -1,0 +1,26 @@
+<Desafio>
+
+Numa lista de tarefas, cada item tem um campo de nota. Você escreve "feito" na primeira tarefa, adiciona outra no topo e... a nota aparece na tarefa errada. Nenhum erro no console.
+
+**Por que o React trocou a nota de lugar?**
+
+</Desafio>
+
+<Conteudo>
+
+Ao desenhar uma lista com `map`, o React usa a **key** para saber qual elemento é qual entre uma renderização e outra.
+
+- Key boa é **estável e única**: o id do dado.
+- O **índice** muda quando você insere ou reordena. O React acha que o item 0 continua sendo o item 0 e reaproveita o elemento, com o estado interno dele (o texto digitado).
+- A key não chega ao componente como prop: é só para o React.
+
+</Conteudo>
+
+<Solucao>
+
+1. Dar um `id` a cada tarefa no momento em que ela é criada.
+2. Usar `key={t.id}` no `map`.
+3. Ligar a caixa "Usar o índice como key" para ver o erro acontecendo.
+4. Escrever dois testes: com id a nota fica; com índice ela pula.
+
+</Solucao>

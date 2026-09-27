@@ -1,5 +1,5 @@
 /*
- * App: monta o hub na ordem das seções (topo, 7 projetos, arquitetura e
+ * App: monta o hub na ordem das seções (topo, 8 projetos, arquitetura e
  * créditos), liga o acento global à seção visível e define o comportamento
  * de movimento reduzido para todas as animações do Motion.
  */
@@ -18,6 +18,7 @@ import { SecaoPelada } from './secoes/Pelada/SecaoPelada'
 import { Rodape } from './secoes/Rodape/Rodape'
 import { SecaoServidor } from './secoes/Servidor/SecaoServidor'
 import { SecaoTarefas } from './secoes/Tarefas/SecaoTarefas'
+import { SecaoTrilha } from './secoes/Trilha/SecaoTrilha'
 
 const ids = ['topo', ...projetos.map((p) => p.id), 'arquitetura']
 const acentoPadrao = '#c4f042'
@@ -44,6 +45,7 @@ export function App() {
         <SecaoTarefas />
         <SecaoPelada />
         <SecaoLaboratorio />
+        <SecaoTrilha />
         <SecaoArquitetura />
       </main>
       <Rodape />

@@ -1,6 +1,7 @@
 /*
  * AbasSegmentadas: abas em pílula no padrão ARIA de tabs, com ativação
- * automática e navegação por setas, Home e End.
+ * automática e navegação por setas, Home e End. Funciona sozinha (inicial)
+ * ou controlada pelo pai (ativa + aoMudar), por exemplo pela URL.
  */
 import { useId, useRef, useState, type KeyboardEvent, type ReactNode } from 'react'
 import styles from './AbasSegmentadas.module.css'
@@ -15,14 +16,23 @@ type Props = {
   abas: Aba[]
   rotulo: string
   inicial?: string
+  ativa?: string
   aoMudar?: (id: string) => void
   className?: string
 }
 
 /* Controla a aba ativa e liga cada aba ao seu painel. */
-export function AbasSegmentadas({ abas, rotulo, inicial, aoMudar, className }: Props) {
+export function AbasSegmentadas({
+  abas,
+  rotulo,
+  inicial,
+  ativa: controlada,
+  aoMudar,
+  className,
+}: Props) {
   const base = useId()
-  const [ativa, setAtiva] = useState(inicial ?? abas[0]?.id)
+  const [interna, setAtiva] = useState(inicial ?? abas[0]?.id)
+  const ativa = controlada ?? interna
   const refs = useRef<Array<HTMLButtonElement | null>>([])
 
   /* Ativa uma aba pelo índice e move o foco para ela. */

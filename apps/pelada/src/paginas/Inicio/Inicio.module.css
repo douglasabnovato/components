@@ -1,0 +1,74 @@
+/* Estilos do Início da Pelada. */
+.pagina {
+  display: grid;
+  gap: var(--esp-12);
+}
+
+.topo {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(16rem, 1fr);
+  gap: var(--esp-8);
+  align-items: start;
+}
+
+.rotulo {
+  margin-bottom: var(--esp-3);
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+}
+
+.resumo {
+  max-width: 36rem;
+  margin-top: var(--esp-4);
+  color: var(--texto-suave);
+  font-size: 1.0625rem;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: var(--esp-6);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.grade > li {
+  display: grid;
+}
+
+.detalhe {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.abrir {
+  justify-self: start;
+  margin-top: var(--esp-2);
+  color: var(--acento-texto);
+  font-weight: 700;
+}
+
+.encerrados {
+  display: grid;
+  gap: var(--esp-4);
+  opacity: 0.8;
+}
+
+.encerrados h2 {
+  font-size: 1.25rem;
+}
+
+@media (max-width: 52rem) {
+  .topo {
+    grid-template-columns: 1fr;
+  }
+}
+/* Fim dos estilos do Início. */

@@ -1,0 +1,70 @@
+/* Estilos da LinhaAprendizado. */
+.linha {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: start;
+  gap: var(--esp-3) var(--esp-4);
+  padding: var(--esp-3) var(--esp-4);
+  border-radius: var(--raio-m);
+  transition: background var(--duracao) var(--curva);
+}
+
+.linha:hover {
+  background: var(--superficie-2);
+}
+
+.caixa {
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-top: 0.2rem;
+  accent-color: var(--acento);
+  cursor: pointer;
+}
+
+.numero {
+  margin-top: 0.15rem;
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.875rem;
+}
+
+.textos {
+  display: grid;
+  gap: var(--esp-1);
+  min-width: 0;
+}
+
+.titulo {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.titulo:hover {
+  color: var(--acento-texto);
+  text-decoration: underline;
+}
+
+.linha[data-assistido='true'] .titulo {
+  color: var(--texto-suave);
+  text-decoration: line-through;
+  text-decoration-color: var(--acento);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-1) var(--esp-3);
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+
+.etiqueta {
+  padding: 0 var(--esp-2);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+}
+
+.historico {
+  border-style: dashed;
+}
+/* Fim dos estilos da LinhaAprendizado. */

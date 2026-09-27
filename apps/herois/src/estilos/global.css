@@ -1,0 +1,42 @@
+/*
+ * Estilos do Portal de Heróis: Tailwind CSS v4 sem o preflight (a base vem
+ * dos tokens do ecossistema) e um @theme que expõe os tokens como utilitários
+ * (bg-superficie, text-suave, rounded-g, font-titulo...).
+ */
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css';
+
+@theme inline {
+  --color-fundo: var(--fundo);
+  --color-superficie: var(--superficie);
+  --color-superficie-2: var(--superficie-2);
+  --color-borda: var(--borda);
+  --color-texto: var(--texto);
+  --color-suave: var(--texto-suave);
+  --color-acento: var(--acento);
+  --color-sobre-acento: var(--sobre-acento);
+  --color-foco: var(--foco);
+  --font-titulo: var(--fonte-titulo);
+  --font-texto: var(--fonte-texto);
+  --font-codigo: var(--fonte-codigo);
+  --radius-p: var(--raio-p);
+  --radius-m: var(--raio-m);
+  --radius-g: var(--raio-g);
+}
+
+:root {
+  --acento: #ffb020;
+  --sobre-acento: #0b0c10;
+  --acento-texto: #ffb020;
+  --largura-max: 76rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+/* Fim dos estilos do Portal de Heróis. */

@@ -1,0 +1,22 @@
+/*
+ * Tema da Pelada sobre os tokens compartilhados: acento violeta do projeto
+ * (preenchimento com texto escuro e versão clara para texto em fundo escuro).
+ */
+:root {
+  --acento: #8b7bff;
+  --sobre-acento: #0b0c10;
+  --acento-texto: #a99dff;
+  --sucesso: #3ddc97;
+  --alerta: #ffd166;
+  --largura-max: 68rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+/* Fim do tema da Pelada. */

@@ -1,0 +1,26 @@
+<Desafio>
+
+A tela calcula os números primos até 10.000 e tem um botão de trocar o tema. Cada troca de tema refaz o cálculo inteiro, e a lista de botões renderiza de novo sem nada ter mudado nela.
+
+**Como evitar trabalho repetido sem espalhar otimização por todo lado?**
+
+</Desafio>
+
+<Conteudo>
+
+- **`useMemo(fn, deps)`** guarda o resultado de um cálculo e só refaz quando as dependências mudam.
+- **`memo(Componente)`** pula a renderização quando as props são as mesmas (comparação rasa).
+- **`useCallback(fn, deps)`** mantém a mesma função entre renderizações. Sem ele, a função nova quebraria o `memo` da lista.
+- Meça antes de otimizar: a maior parte dos componentes não precisa disso. O React Compiler já faz parte desse trabalho sozinho.
+
+</Conteudo>
+
+<Solucao>
+
+1. Tirar o cálculo para uma função pura (`primosAte`) com contador de execuções.
+2. Envolver a chamada em `useMemo` com `[limite]`.
+3. Envolver a lista em `memo` e a função de escolha em `useCallback`.
+4. Mostrar os contadores na tela para ver o efeito.
+5. Testar: trocar o tema não soma cálculo; mudar o limite soma um.
+
+</Solucao>
