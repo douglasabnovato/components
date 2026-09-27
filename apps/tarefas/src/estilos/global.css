@@ -1,0 +1,21 @@
+/*
+ * Tema das Tarefas: tema claro dos tokens (data-tema no html) e acento
+ * petróleo com texto branco por cima.
+ */
+:root {
+  --acento: #0e7490;
+  --sobre-acento: #ffffff;
+  --acento-texto: #0e7490;
+  --sucesso: #15803d;
+  --largura-max: 52rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--acento);
+  color: #ffffff;
+}
+/* Fim do tema das Tarefas. */

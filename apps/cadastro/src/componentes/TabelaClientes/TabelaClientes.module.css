@@ -1,0 +1,160 @@
+/* Estilos da TabelaClientes. */
+.moldura {
+  overflow-x: auto;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabela th,
+.tabela td {
+  padding: var(--esp-4) var(--esp-6);
+  border-bottom: 1px solid var(--borda);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tabela tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.tabela thead th {
+  color: var(--texto-suave);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.tabela tbody tr:hover {
+  background: var(--superficie-2);
+}
+
+.cliente {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+  font-weight: 400;
+}
+
+.avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--acento) 18%, var(--superficie-2));
+  color: var(--acento-texto);
+  font-family: var(--fonte-titulo);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.textos {
+  display: grid;
+  min-width: 0;
+}
+
+.nome {
+  font-weight: 600;
+}
+
+.email {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+  overflow-wrap: anywhere;
+}
+
+.numero {
+  width: 6rem;
+  font-variant-numeric: tabular-nums;
+  text-align: right !important;
+}
+
+.acoesCabecalho {
+  width: 12rem;
+  text-align: right !important;
+}
+
+.acoes {
+  text-align: right !important;
+  white-space: nowrap;
+}
+
+.botao {
+  min-height: 2.25rem;
+  margin-left: var(--esp-2);
+  padding: 0 var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao:hover {
+  border-color: var(--acento);
+  color: var(--acento-texto);
+}
+
+.perigo:hover {
+  border-color: var(--erro);
+  color: var(--erro);
+}
+
+.barra,
+.barraCurta {
+  display: block;
+  height: 1rem;
+  border-radius: var(--raio-p);
+  background: linear-gradient(
+    90deg,
+    var(--superficie-2) 25%,
+    var(--borda) 50%,
+    var(--superficie-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: brilho 1.4s linear infinite;
+}
+
+.barra {
+  width: 60%;
+}
+
+.barraCurta {
+  width: 2rem;
+  margin-left: auto;
+}
+
+@keyframes brilho {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (max-width: 40rem) {
+  .tabela th,
+  .tabela td {
+    padding: var(--esp-3);
+  }
+
+  .acoesCabecalho {
+    width: auto;
+  }
+
+  .acoes {
+    white-space: normal;
+  }
+
+  .botao {
+    margin: var(--esp-1) 0 0 var(--esp-1);
+  }
+}
+/* Fim dos estilos da TabelaClientes. */

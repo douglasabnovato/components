@@ -1,0 +1,166 @@
+/* Estilos da página da lição. */
+.pagina {
+  display: grid;
+  gap: var(--esp-8);
+}
+
+.migalhas {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.migalhas a:hover {
+  color: var(--acento-texto);
+}
+
+.cabecalho {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--esp-6);
+}
+
+.simbolo {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: var(--raio-m);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-family: var(--fonte-codigo);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.titulo {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.resumo {
+  margin-top: var(--esp-2);
+  color: var(--texto-suave);
+}
+
+.solucao {
+  display: grid;
+  gap: var(--esp-8);
+}
+
+.lado {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: var(--esp-6);
+  align-items: start;
+}
+
+.demo {
+  display: grid;
+  gap: var(--esp-3);
+}
+
+.legenda {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+}
+
+.codigos {
+  display: grid;
+  gap: var(--esp-4);
+  min-width: 0;
+}
+
+.assista {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.videos {
+  display: grid;
+  gap: var(--esp-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.videos a {
+  display: flex;
+  gap: var(--esp-4);
+  padding: var(--esp-3) var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  text-decoration: none;
+}
+
+.videos a:hover {
+  border-color: var(--acento);
+}
+
+.numeroVideo {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+}
+
+.duracao {
+  color: var(--texto-suave);
+}
+
+.vizinhas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-4);
+  padding-top: var(--esp-6);
+  border-top: 1px solid var(--borda);
+}
+
+.vizinhas a {
+  display: grid;
+  gap: var(--esp-1);
+  padding: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vizinhas a:hover {
+  border-color: var(--acento);
+}
+
+.vizinhas span {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.proxima {
+  grid-column: 2;
+  text-align: right;
+}
+
+@media (max-width: 60rem) {
+  .lado {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 40rem) {
+  .cabecalho {
+    grid-template-columns: auto 1fr;
+  }
+
+  .cabecalho > :last-child {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+
+  .vizinhas {
+    grid-template-columns: 1fr;
+  }
+
+  .proxima {
+    grid-column: auto;
+  }
+}
+/* Fim dos estilos da página da lição. */

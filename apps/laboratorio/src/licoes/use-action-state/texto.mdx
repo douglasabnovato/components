@@ -1,0 +1,28 @@
+<Desafio>
+
+Um formulário de inscrição precisa de: estado de "enviando", mensagem de erro, mensagem de sucesso e a lista de inscritos. O jeito antigo usava três `useState`, um `try/catch` e um `useEffect` para limpar o campo.
+
+**Como deixar o React cuidar do ciclo do envio?**
+
+</Desafio>
+
+<Conteudo>
+
+No **React 19**, formulários aceitam uma função em `action`.
+
+- **`useActionState(acao, inicial)`** devolve `[estado, acaoLigada]`. A ação recebe o estado anterior e o `FormData` e devolve o próximo estado, podendo ser assíncrona.
+- **`useFormStatus()`**, dentro do formulário, diz se ele está `pending`: o botão desabilita sozinho.
+- O campo é limpo automaticamente depois de a ação terminar.
+- É a mesma ideia das actions do React Router no projeto 04 e das Server Actions do Next.
+
+</Conteudo>
+
+<Solucao>
+
+1. Escrever `inscrever(anterior, dados)` como função assíncrona e pura, testável sem tela.
+2. Ligar ao formulário com `useActionState` e `<form action={acao}>`.
+3. Criar `BotaoEnviar` com `useFormStatus` para o estado pendente.
+4. Mostrar a mensagem e o total de inscritos a partir do estado.
+5. Testar a ação sozinha e o fluxo pela tela.
+
+</Solucao>

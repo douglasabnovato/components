@@ -125,6 +125,23 @@ describe('BotaoPilula', () => {
   })
 })
 
+describe('BotaoPilula comoFilho', () => {
+  it('empresta o visual ao elemento filho sem criar outro elemento', () => {
+    render(
+      <BotaoPilula comoFilho icone="→">
+        <a href="/trilha/" className="extra">
+          Continuar
+        </a>
+      </BotaoPilula>,
+    )
+    const link = screen.getByRole('link', { name: 'Continuar' })
+    expect(link).toHaveAttribute('href', '/trilha/')
+    expect(link.className).toContain('extra')
+    expect(link.className).toContain('pilula')
+    expect(screen.queryByRole('button')).not.toBeInTheDocument()
+  })
+})
+
 describe('BotaoPausa', () => {
   it('troca o rótulo acessível conforme o estado', () => {
     const { rerender } = render(<BotaoPausa pausado={false} aoAlternar={() => {}} />)

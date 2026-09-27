@@ -1,36 +1,38 @@
 /*
  * Seção 02 · Cadastro. Referência: faixa preta, título serifado centralizado,
  * seletor em pílula que troca a vista (Tabela ⇄ Formulário) e cards com a
- * ilustração saindo da borda. A demo usa um repositório em memória real.
+ * ilustração saindo da borda. A demo usa o repositório em memória do próprio
+ * projeto 02 e a mesma validação da API (contratos Zod).
  */
 import { BarraWidget, Campo, CardCategoria, SeletorPilula } from '@components/ui'
 import { useId, useState } from 'react'
 import { projeto } from '../../dados/projetos'
 import { CabecalhoSecao, RodapeSecao, Secao } from '../../componentes/Secao/Secao'
 import {
+  clientesIniciais,
   criarRepositorioMemoria,
-  validarCliente,
+  ErroRepositorio,
+  errosPorCampo,
+  esquemaDadosCliente,
   type Cliente,
-  type ErrosCliente,
-} from './clientes'
+} from '@components/cadastro/dados'
 import styles from './SecaoCadastro.module.css'
 
 type Vista = 'tabela' | 'formulario'
 
-const iniciais: Cliente[] = [
-  { id: '1', nome: 'Ana Ribeiro', idade: 34 },
-  { id: '2', nome: 'Bruno Costa', idade: 27 },
-  { id: '3', nome: 'Carla Souza', idade: 45 },
-]
+type ErrosCliente = Partial<Record<'nome' | 'email' | 'idade', string>>
+
+const iniciais = clientesIniciais().slice(0, 3)
 
 /* Controla a vista, o formulário e as operações no repositório. */
 export function SecaoCadastro() {
   const p = projeto(2)
   const [repositorio] = useState(() => criarRepositorioMemoria(iniciais))
-  const [clientes, setClientes] = useState(() => repositorio.listar())
+  const [clientes, setClientes] = useState<Cliente[]>(iniciais)
   const [vista, setVista] = useState<Vista>('tabela')
   const [editando, setEditando] = useState<string | undefined>()
   const [nome, setNome] = useState('')
+  const [email, setEmail] = useState('')
   const [idade, setIdade] = useState('')
   const [erros, setErros] = useState<ErrosCliente>({})
   const [aviso, setAviso] = useState('')
@@ -40,26 +42,37 @@ export function SecaoCadastro() {
   function abrirFormulario(cliente?: Cliente) {
     setEditando(cliente?.id)
     setNome(cliente?.nome ?? '')
+    setEmail(cliente?.email ?? '')
     setIdade(cliente ? String(cliente.idade) : '')
     setErros({})
     setVista('formulario')
   }
 
-  /* Valida, salva no repositório e volta para a tabela. */
-  function salvar() {
-    const encontrados = validarCliente(nome, idade)
-    setErros(encontrados)
-    if (Object.keys(encontrados).length > 0) return
-    const salvo = repositorio.salvar({ id: editando, nome: nome.trim(), idade: Number(idade) })
-    setClientes(repositorio.listar())
-    setAviso(`${salvo.nome} ${editando ? 'atualizado' : 'cadastrado'}.`)
-    setVista('tabela')
+  /* Valida pelo contrato, salva no repositório e volta para a tabela. */
+  async function salvar() {
+    const dados = { nome, email, idade: idade.trim() === '' ? Number.NaN : Number(idade) }
+    const validacao = esquemaDadosCliente.safeParse(dados)
+    if (!validacao.success) {
+      setErros(errosPorCampo(validacao.error.issues))
+      return
+    }
+    try {
+      const salvo = editando
+        ? await repositorio.atualizar(editando, validacao.data)
+        : await repositorio.criar(validacao.data)
+      setErros({})
+      setClientes(await repositorio.listar())
+      setAviso(`${salvo.nome} ${editando ? 'atualizado' : 'cadastrado'}.`)
+      setVista('tabela')
+    } catch (erro) {
+      if (erro instanceof ErroRepositorio) setErros(erro.campos)
+    }
   }
 
   /* Remove o cliente e atualiza a lista. */
-  function excluir(cliente: Cliente) {
-    repositorio.excluir(cliente.id)
-    setClientes(repositorio.listar())
+  async function excluir(cliente: Cliente) {
+    await repositorio.excluir(cliente.id)
+    setClientes(await repositorio.listar())
     setAviso(`${cliente.nome} excluído.`)
   }
 
@@ -91,6 +104,7 @@ export function SecaoCadastro() {
               <thead>
                 <tr>
                   <th scope="col">Nome</th>
+                  <th scope="col">E-mail</th>
                   <th scope="col">Idade</th>
                   <th scope="col">
                     <span className="visualmente-oculto">Ações</span>
@@ -100,7 +114,7 @@ export function SecaoCadastro() {
               <tbody>
                 {clientes.length === 0 ? (
                   <tr>
-                    <td colSpan={3} className={styles.vazio}>
+                    <td colSpan={4} className={styles.vazio}>
                       Nenhum cliente. Use o formulário para cadastrar.
                     </td>
                   </tr>
@@ -108,12 +122,13 @@ export function SecaoCadastro() {
                   clientes.map((c) => (
                     <tr key={c.id}>
                       <td>{c.nome}</td>
+                      <td>{c.email}</td>
                       <td>{c.idade}</td>
                       <td className={styles.acoes}>
                         <button type="button" onClick={() => abrirFormulario(c)}>
                           Editar <span className="visualmente-oculto">{c.nome}</span>
                         </button>
-                        <button type="button" onClick={() => excluir(c)}>
+                        <button type="button" onClick={() => void excluir(c)}>
                           Excluir <span className="visualmente-oculto">{c.nome}</span>
                         </button>
                       </td>
@@ -126,7 +141,7 @@ export function SecaoCadastro() {
             <BarraWidget
               rotulo={editando ? 'Editar cliente' : 'Novo cliente'}
               acao={editando ? 'Salvar alterações' : 'Cadastrar'}
-              aoEnviar={salvar}
+              aoEnviar={() => void salvar()}
               className={styles.formulario}
             >
               <Campo rotulo="Nome" htmlFor="cadastro-nome" erro={erros.nome}>
@@ -136,6 +151,17 @@ export function SecaoCadastro() {
                   onChange={(e) => setNome(e.target.value)}
                   aria-invalid={Boolean(erros.nome)}
                   aria-describedby={erros.nome ? 'cadastro-nome-erro' : undefined}
+                  autoComplete="off"
+                />
+              </Campo>
+              <Campo rotulo="E-mail" htmlFor="cadastro-email" erro={erros.email}>
+                <input
+                  id="cadastro-email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  aria-invalid={Boolean(erros.email)}
+                  aria-describedby={erros.email ? 'cadastro-email-erro' : undefined}
                   autoComplete="off"
                 />
               </Campo>

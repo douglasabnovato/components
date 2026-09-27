@@ -1,0 +1,42 @@
+<Desafio>
+
+O contador soma na variável a cada clique, o `console.log` mostra o valor subindo, mas o número na tela nunca muda:
+
+```tsx
+let contagem = 0
+return (
+  <button
+    onClick={() => {
+      contagem += 1
+      console.log(contagem)
+    }}
+  >
+    {contagem}
+  </button>
+)
+```
+
+**Por que a tela não acompanha a variável?**
+
+</Desafio>
+
+<Conteudo>
+
+Cada renderização executa a função do componente de novo. Uma variável comum nasce zerada em toda execução e o React nem sabe que ela mudou.
+
+- `useState` guarda o valor **entre** renderizações e devolve `[valor, setter]`.
+- Chamar o setter **agenda** uma nova renderização com o valor novo.
+- Quando o valor novo depende do anterior, use a forma de função: `setContagem((c) => c + passo)`.
+- O ESLint deste monorepo (regras do React) recusa o código do desafio: alterar uma variável local depois da renderização é erro.
+
+</Conteudo>
+
+<Solucao>
+
+1. Trocar a variável por `useState(0)`.
+2. Criar um segundo estado para o passo, ligado a um campo controlado.
+3. Somar e subtrair com a forma de função do setter.
+4. Rodar o lint: o código do desafio é recusado; a solução passa.
+5. Testar que a tela acompanha o estado a cada clique.
+
+</Solucao>

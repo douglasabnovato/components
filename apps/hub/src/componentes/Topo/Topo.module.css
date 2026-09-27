@@ -118,6 +118,10 @@
   grid-row: span 2;
 }
 
+.bloco:nth-child(8) {
+  grid-column: 1 / -1;
+}
+
 .mosaico[data-pausado='true'] .bloco {
   animation-play-state: paused;
 }

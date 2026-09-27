@@ -1,0 +1,27 @@
+<Desafio>
+
+Um botão precisa colocar o cursor num campo. E você quer saber quantas vezes o componente renderizou, mas contar com `useState` cria um ciclo: contar provoca renderização, que provoca contagem.
+
+**Como guardar algo entre renderizações sem disparar uma nova?**
+
+</Desafio>
+
+<Conteudo>
+
+`useRef` devolve um objeto `{ current }` que dura a vida toda do componente.
+
+- Mudar `current` **não** renderiza de novo.
+- Passada em `ref={...}`, a ref recebe o elemento do DOM: dá para chamar `focus()`, medir, rolar.
+- Use ref para o que a tela não precisa mostrar na hora; para o que ela mostra, use estado.
+
+</Conteudo>
+
+<Solucao>
+
+1. Criar `campo = useRef<HTMLInputElement>(null)` e ligar em `ref={campo}`.
+2. No botão, chamar `campo.current?.focus()`.
+3. Criar `renderizacoes = useRef(0)` e somar num efeito sem dependências.
+4. Mostrar a contagem só quando pedirem (copiando para um estado).
+5. Testar o foco e a contagem.
+
+</Solucao>

@@ -1,0 +1,150 @@
+/* Estilos da página do jogo. */
+.pagina {
+  display: grid;
+  gap: var(--esp-8);
+}
+
+.cabecalho {
+  display: grid;
+  gap: var(--esp-3);
+}
+
+.rotulo {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2) var(--esp-8);
+  margin: 0;
+}
+
+.meta dt {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+
+.meta dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.situacao {
+  justify-self: start;
+  padding: var(--esp-1) var(--esp-3);
+  border-radius: var(--raio-pilula);
+  background: color-mix(in srgb, var(--sucesso) 18%, transparent);
+  color: var(--sucesso);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.situacao[data-situacao='lotado'] {
+  background: color-mix(in srgb, var(--alerta) 18%, transparent);
+  color: var(--alerta);
+}
+
+.situacao[data-situacao='encerrado'] {
+  background: var(--superficie-2);
+  color: var(--texto-suave);
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+}
+
+.confirmar,
+.sorteio {
+  display: grid;
+  gap: var(--esp-4);
+  padding: var(--esp-6);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.subtitulo {
+  font-size: 1.25rem;
+}
+
+.campos {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--esp-4);
+}
+
+.enviar {
+  align-self: end;
+  min-height: 2.75rem;
+  padding: 0 var(--esp-6);
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.listas {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--esp-8);
+}
+
+.cabecalhoSorteio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+}
+
+.explicacao {
+  color: var(--texto-suave);
+  font-size: 0.9375rem;
+}
+
+.erro {
+  color: var(--erro);
+  font-weight: 600;
+}
+
+.texto summary {
+  color: var(--acento-texto);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.texto pre {
+  margin-top: var(--esp-3);
+  padding: var(--esp-4);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+  font-family: var(--fonte-codigo);
+  font-size: 0.875rem;
+  white-space: pre-wrap;
+}
+
+@media (max-width: 48rem) {
+  .campos,
+  .listas {
+    grid-template-columns: 1fr;
+  }
+
+  .enviar {
+    justify-self: start;
+  }
+}
+/* Fim dos estilos da página do jogo. */

@@ -1,0 +1,20 @@
+/*
+ * Tema do Laboratório: acento lima sobre fundo escuro, com blocos de código
+ * em fonte monoespaçada.
+ */
+:root {
+  --acento: #c4f042;
+  --sobre-acento: #0b0c10;
+  --acento-texto: #c4f042;
+  --largura-max: 74rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+/* Fim do tema do Laboratório. */

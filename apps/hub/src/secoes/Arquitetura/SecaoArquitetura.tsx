@@ -17,13 +17,19 @@ const pilares = [
   {
     titulo: 'Componentes compartilhados',
     texto:
-      'packages/ui reúne tokens, navegação, carrossel, abas, cards e o botão de voltar ao hub.',
+      'packages/ui reúne tokens, navegação, carrossel, abas, cards, o mapa de endereços e o botão de voltar ao hub.',
     codigo: '@components/ui',
   },
   {
     titulo: 'Uma API para quem precisa',
-    texto: 'Vídeos, clientes e tarefas vêm de um único serviço com validação e banco SQL.',
+    texto:
+      'Clientes (02) e tarefas (05) vêm de um único serviço Hono, com Drizzle e Postgres em WebAssembly (PGlite).',
     codigo: 'apps/api',
+  },
+  {
+    titulo: 'Contratos compartilhados',
+    texto: 'Os mesmos esquemas Zod validam o formulário no navegador e a requisição no servidor.',
+    codigo: '@components/contratos',
   },
 ]
 

@@ -1,0 +1,46 @@
+/* Estilos do texto das lições (MDX). */
+.texto {
+  display: grid;
+  gap: var(--esp-4);
+  max-width: 46rem;
+  font-size: 1.0625rem;
+}
+
+.texto ul,
+.texto ol {
+  display: grid;
+  gap: var(--esp-2);
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.texto ol li::marker {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-weight: 700;
+}
+
+.texto strong {
+  color: var(--acento-texto);
+}
+
+.texto code {
+  padding: 0.1em 0.35em;
+  border-radius: 0.3em;
+  background: var(--superficie-2);
+  font-family: var(--fonte-codigo);
+  font-size: 0.9em;
+}
+
+.texto table {
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.texto th,
+.texto td {
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--borda);
+  text-align: left;
+}
+/* Fim dos estilos do texto. */

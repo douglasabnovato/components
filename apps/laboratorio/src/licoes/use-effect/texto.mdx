@@ -1,0 +1,27 @@
+<Desafio>
+
+O cronômetro acelera cada vez que você pausa e retoma: um segundo passa a contar dois, depois três.
+
+**De onde vêm os intervalos extras?**
+
+</Desafio>
+
+<Conteudo>
+
+`useEffect` sincroniza o componente com algo de fora do React: intervalos, eventos, conexões, APIs.
+
+- O efeito roda depois da renderização, sempre que uma dependência muda.
+- Todo efeito que **cria** algo precisa devolver a **limpeza**. O React chama a limpeza antes de rodar o efeito de novo e quando o componente sai da tela.
+- Sem limpeza, cada retomada cria um intervalo novo e os antigos continuam vivos.
+
+</Conteudo>
+
+<Solucao>
+
+1. Guardar `segundos` e `rodando` em estado.
+2. No efeito, sair cedo se não estiver rodando.
+3. Criar o intervalo e devolver `() => clearInterval(id)`.
+4. Declarar `[rodando]` como dependência.
+5. Testar com relógio falso: 3 s, pausa, retoma, 2 s → 5 s, não mais.
+
+</Solucao>

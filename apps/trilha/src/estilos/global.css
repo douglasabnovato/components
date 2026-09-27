@@ -1,0 +1,21 @@
+/*
+ * Tema da Trilha sobre os tokens compartilhados: acento laranja de "caminho"
+ * (preenchimento com texto escuro e a mesma cor para texto em fundo escuro).
+ */
+:root {
+  --acento: #ff8a3d;
+  --sobre-acento: #0b0c10;
+  --acento-texto: #ff8a3d;
+  --sucesso: #3ddc97;
+  --largura-max: 72rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+/* Fim do tema da Trilha. */
