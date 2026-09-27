@@ -1,0 +1,44 @@
+/* Estilos da BarraProgresso. */
+.barra {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-3);
+}
+
+.barra progress {
+  flex: 1;
+  height: 0.625rem;
+  appearance: none;
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: var(--superficie-2);
+  overflow: hidden;
+}
+
+.barra progress::-webkit-progress-bar {
+  background: var(--superficie-2);
+}
+
+.barra progress::-webkit-progress-value {
+  background: var(--acento);
+  border-radius: var(--raio-pilula);
+  transition: width var(--duracao) var(--curva);
+}
+
+.barra progress::-moz-progress-bar {
+  background: var(--acento);
+  border-radius: var(--raio-pilula);
+}
+
+.percentual {
+  min-width: 3ch;
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  text-align: right;
+}
+
+.compacta progress {
+  height: 0.375rem;
+}
+/* Fim dos estilos da BarraProgresso. */

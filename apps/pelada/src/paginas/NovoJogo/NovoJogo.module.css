@@ -1,0 +1,66 @@
+/* Estilos do Novo jogo. */
+.pagina {
+  display: grid;
+  gap: var(--esp-8);
+  max-width: 40rem;
+}
+
+.rotulo {
+  margin-bottom: var(--esp-2);
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  font-size: clamp(2rem, 5vw, 3rem);
+}
+
+.form {
+  display: grid;
+  gap: var(--esp-6);
+  padding: var(--esp-8);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.contadores {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-8);
+}
+
+.erro {
+  margin-top: var(--esp-2);
+  color: var(--erro);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.dica {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.enviar {
+  justify-self: start;
+  min-height: 3rem;
+  padding: 0 var(--esp-8);
+  border: 0;
+  border-radius: var(--raio-pilula);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 40rem) {
+  .form {
+    padding: var(--esp-6) var(--esp-4);
+  }
+}
+/* Fim dos estilos do Novo jogo. */

@@ -1,14 +1,44 @@
 /*
  * Seção 07 · Laboratório. Referência: índice de lições em formato de
  * megamenu (ícone, título, descrição), abas segmentadas Desafio / Conteúdo /
- * Solução e bloco dividido entre código e demonstração ao vivo.
+ * Solução e bloco dividido entre código e demonstração ao vivo. As lições
+ * (texto MDX, demo e código) vêm do próprio projeto 07.
  */
 import { AbasSegmentadas } from '@components/ui'
 import { useState } from 'react'
 import { projeto } from '../../dados/projetos'
 import { CabecalhoSecao, RodapeSecao, Secao } from '../../componentes/Secao/Secao'
-import { licoes } from './licoes'
+import {
+  AbaContexto,
+  Conteudo,
+  Desafio,
+  licoes as todas,
+  Solucao,
+  type Aba,
+  type Licao,
+} from '@components/laboratorio/dados'
 import styles from './SecaoLaboratorio.module.css'
+
+const EM_DESTAQUE = [
+  'use-state',
+  'use-effect',
+  'use-context',
+  'use-reducer',
+  'use-memo',
+  'jogo-da-velha',
+]
+const licoes = EM_DESTAQUE.map((id) => todas.find((l) => l.id === id)!)
+const componentesMdx = { Desafio, Conteudo, Solucao }
+
+/* Texto MDX da lição mostrando só a seção da aba. */
+function Texto({ licao, aba }: { licao: Licao; aba: Aba }) {
+  const { Texto: Mdx } = licao
+  return (
+    <AbaContexto.Provider value={aba}>
+      <Mdx components={componentesMdx} />
+    </AbaContexto.Provider>
+  )
+}
 
 /* Controla a lição escolhida no índice e mostra suas três etapas. */
 export function SecaoLaboratorio() {
@@ -25,24 +55,19 @@ export function SecaoLaboratorio() {
         <nav aria-label="Lições do laboratório">
           <ul className={styles.indice}>
             {licoes.map((licao) => {
-              const disponivel = Boolean(licao.Demo)
               return (
                 <li key={licao.id}>
                   <button
                     type="button"
                     className={styles.licao}
                     aria-current={licao.id === ativa?.id ? 'true' : undefined}
-                    disabled={!disponivel}
                     onClick={() => setAtivaId(licao.id)}
                   >
                     <span className={styles.simbolo} aria-hidden="true">
                       {licao.simbolo}
                     </span>
                     <span className={styles.textos}>
-                      <span className={styles.tituloLicao}>
-                        {licao.titulo}
-                        {!disponivel ? <span className={styles.breve}>Em breve</span> : null}
-                      </span>
+                      <span className={styles.tituloLicao}>{licao.titulo}</span>
                       <span className={styles.resumoLicao}>{licao.resumo}</span>
                     </span>
                   </button>
@@ -62,12 +87,12 @@ export function SecaoLaboratorio() {
                 {
                   id: 'desafio',
                   rotulo: '1 · Desafio',
-                  conteudo: <p className={styles.texto}>{ativa.desafio}</p>,
+                  conteudo: <Texto licao={ativa} aba="desafio" />,
                 },
                 {
                   id: 'conteudo',
                   rotulo: '2 · Conteúdo',
-                  conteudo: <p className={styles.texto}>{ativa.conteudo}</p>,
+                  conteudo: <Texto licao={ativa} aba="conteudo" />,
                 },
                 {
                   id: 'solucao',

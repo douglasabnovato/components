@@ -1,0 +1,43 @@
+/* Estilos do bloco de código. */
+.bloco {
+  display: grid;
+  min-width: 0;
+  margin: 0;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: #07080b;
+  overflow: hidden;
+}
+
+.topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  padding: var(--esp-2) var(--esp-4);
+  border-bottom: 1px solid var(--borda);
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+}
+
+.copiar {
+  padding: var(--esp-1) var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.pre {
+  max-height: 32rem;
+  margin: 0;
+  padding: var(--esp-4);
+  overflow: auto;
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+/* Fim dos estilos do bloco de código. */

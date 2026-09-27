@@ -5,7 +5,7 @@
  */
 import { BotaoPilula } from '@components/ui'
 import type { CSSProperties, ReactNode } from 'react'
-import { doisDigitos, type Projeto } from '../../dados/projetos'
+import { doisDigitos, projetos, type Projeto } from '../../dados/projetos'
 import { Revelar } from '../Revelar'
 import styles from './Secao.module.css'
 
@@ -114,8 +114,8 @@ type ChamadaProps = {
 export function ChamadaProjeto({ projeto, variante = 'preenchido', icone, apoio }: ChamadaProps) {
   const publicado = projeto.status === 'publicado'
   const meta = publicado
-    ? (apoio ?? `Projeto ${doisDigitos(projeto.numero)} de 07`)
-    : `Em construção · fase ${projeto.fase} de 7 na ordem de construção`
+    ? (apoio ?? `Projeto ${doisDigitos(projeto.numero)} de ${doisDigitos(projetos.length)}`)
+    : `Em construção · fase ${projeto.fase} de ${projetos.length} na ordem de construção`
   return (
     <div className={styles.chamada}>
       {publicado ? (

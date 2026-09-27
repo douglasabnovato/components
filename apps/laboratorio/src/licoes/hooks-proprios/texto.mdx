@@ -1,0 +1,28 @@
+<Desafio>
+
+Dois componentes têm a mesma lógica de contador (somar, subtrair, limites), copiada e colada. Um bug corrigido em um continua no outro. E alguém tentou colocar um `useState` dentro de um `if`, e o estado começou a trocar de lugar.
+
+**Como reaproveitar lógica com estado, respeitando as regras dos hooks?**
+
+</Desafio>
+
+<Conteudo>
+
+Um **hook próprio** é uma função que começa com `use` e chama outros hooks.
+
+- Ele reaproveita a **lógica**, não o estado: cada componente que o usa tem o seu.
+- **Regra 1**: hooks só no topo do componente ou de outro hook. Nunca em `if`, loop ou depois de um `return`. O React identifica cada hook pela ordem de chamada.
+- **Regra 2**: hooks só em componentes ou em outros hooks, nunca em funções comuns.
+- Hooks próprios se testam sozinhos com `renderHook`.
+
+</Conteudo>
+
+<Solucao>
+
+1. Extrair `useContador(inicial, { min, max })` com `useState` e ações.
+2. Estabilizar as ações com `useCallback`.
+3. Criar `useAlternar` para o caso ligado/desligado.
+4. Usar os hooks em dois componentes e confirmar que o estado é separado.
+5. Testar o hook com `renderHook` e a tela com cliques.
+
+</Solucao>

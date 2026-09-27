@@ -1,0 +1,103 @@
+/* Estilos da página de clientes. */
+.pagina {
+  display: grid;
+  gap: var(--esp-8);
+}
+
+.topo {
+  display: grid;
+  justify-items: center;
+  gap: var(--esp-4);
+  padding: var(--esp-12) var(--esp-4);
+  border-radius: var(--raio-g);
+  background: #000000;
+  text-align: center;
+}
+
+.rotulo {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  max-width: 44rem;
+  font-family: var(--fonte-editorial);
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.resumo {
+  max-width: 38rem;
+  color: var(--texto-suave);
+  font-size: 1.0625rem;
+}
+
+.controles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--esp-6);
+}
+
+.grupo {
+  display: grid;
+  justify-items: center;
+  gap: var(--esp-2);
+}
+
+.legenda {
+  color: var(--texto-suave);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.painel {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.painel > form {
+  justify-self: center;
+  width: 100%;
+}
+
+.filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--esp-4);
+}
+
+.campo {
+  display: grid;
+  flex: 1 1 12rem;
+  gap: var(--esp-1);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.campo input,
+.campo select {
+  min-height: 2.75rem;
+  padding: 0 var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie);
+  font-weight: 400;
+}
+
+.novo {
+  margin-left: auto;
+}
+
+.contagem {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+/* Fim dos estilos da página de clientes. */

@@ -1,0 +1,27 @@
+<Desafio>
+
+Uma página tem dez caixas iguais: borda, título em negrito e um conteúdo diferente em cada uma. Hoje o HTML de cada caixa está copiado dez vezes. Quando o designer pede para trocar a borda, você edita dez lugares. E numa lista de familiares, o sobrenome está digitado em cada linha.
+
+**Como escrever a caixa uma vez só e deixar o sobrenome num lugar só?**
+
+</Desafio>
+
+<Conteudo>
+
+**Componente** é uma função que devolve JSX. **Props** são os argumentos dessa função: o pai decide os valores, o filho só lê.
+
+- `children` é uma prop especial: tudo o que vai entre a abertura e o fechamento da tag.
+- Props descem, nunca sobem. O filho não altera o que recebeu.
+- Um componente pode repassar props para outros: é assim que o sobrenome chega a cada membro.
+
+</Conteudo>
+
+<Solucao>
+
+1. Criar `Cartao` com as props `titulo`, `destaque` e `children`.
+2. Criar `Membro`, que recebe `nome` e `sobrenome` e monta a linha.
+3. Criar `Familia`, que recebe o `sobrenome` uma vez e o repassa para cada `Membro`.
+4. Usar o mesmo `Cartao` duas vezes com conteúdos diferentes.
+5. Testar que cada membro recebeu o sobrenome e que o cartão aceita qualquer conteúdo.
+
+</Solucao>

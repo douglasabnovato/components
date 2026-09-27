@@ -1,0 +1,26 @@
+<Desafio>
+
+No projeto original, a rota que usava contexto quebrava: o componente lia o tema, mas ninguém o fornecia, e o erro aparecia como `undefined` bem longe da causa. Antes disso, o tema era passado de prop em prop por componentes que nem o usavam.
+
+**Como compartilhar um valor com a árvore inteira, e errar de forma clara quando ele falta?**
+
+</Desafio>
+
+<Conteudo>
+
+- `createContext` cria o canal; o `Provider` coloca um valor nele; `useContext` lê o valor do Provider mais próximo acima.
+- Os componentes do meio não precisam repassar nada (sem "prop drilling").
+- Um **hook próprio** (`useTema`) esconde o `useContext` e lança um erro claro sem Provider.
+- Memorize o valor do Provider (`useMemo`) para não renderizar todos os consumidores sem necessidade.
+
+</Conteudo>
+
+<Solucao>
+
+1. Criar `TemaContexto` com valor inicial `null`.
+2. Escrever `useTema`, que lança erro se o valor for `null`.
+3. No topo, guardar o tema em estado e fornecer `{ tema, alternar }` memorizado.
+4. Ler o tema três níveis abaixo, sem props intermediárias.
+5. Testar a troca de tema e a mensagem de erro sem Provider.
+
+</Solucao>

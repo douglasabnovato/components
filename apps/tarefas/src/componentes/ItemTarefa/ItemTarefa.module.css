@@ -1,0 +1,99 @@
+/* Estilos do ItemTarefa. */
+.item {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: var(--esp-4);
+  padding: var(--esp-4) var(--esp-6);
+  border-bottom: 1px solid var(--borda);
+}
+
+.item:last-child {
+  border-bottom: 0;
+}
+
+.caixa {
+  width: 1.375rem;
+  height: 1.375rem;
+  margin-top: 0.15rem;
+  accent-color: var(--acento);
+  cursor: pointer;
+}
+
+.textos {
+  display: grid;
+  gap: var(--esp-1);
+  min-width: 0;
+}
+
+.descricao {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  cursor: pointer;
+}
+
+.descricao mark {
+  border-radius: 0.2em;
+  background: #fde68a;
+  color: #15161a;
+}
+
+.item[data-concluida='true'] .descricao {
+  color: var(--texto-suave);
+  text-decoration: line-through;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+
+.selo {
+  padding: 0 var(--esp-2);
+  border-radius: var(--raio-pilula);
+  background: color-mix(in srgb, var(--sucesso) 14%, transparent);
+  color: var(--sucesso);
+  font-weight: 600;
+}
+
+.excluir {
+  min-height: 2.25rem;
+  padding: 0 var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.excluir:hover {
+  border-color: var(--erro);
+  color: var(--erro);
+}
+
+.excluir[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.excluir[aria-disabled='true']:hover {
+  border-color: var(--borda);
+  color: inherit;
+}
+
+@media (max-width: 36rem) {
+  .item {
+    grid-template-columns: auto 1fr;
+    padding: var(--esp-4);
+  }
+
+  .excluir {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+/* Fim dos estilos do ItemTarefa. */

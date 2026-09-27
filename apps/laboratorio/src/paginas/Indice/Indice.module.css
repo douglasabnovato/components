@@ -1,0 +1,122 @@
+/* Estilos do índice das lições. */
+.pagina {
+  display: grid;
+  gap: var(--esp-12);
+}
+
+.topo {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.rotulo {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  max-width: 48rem;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+}
+
+.resumo {
+  max-width: 42rem;
+  color: var(--texto-suave);
+  font-size: 1.0625rem;
+}
+
+.modulo {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.cabecalhoModulo h2 {
+  font-size: 1.5rem;
+}
+
+.meta {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: var(--esp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cartao {
+  display: flex;
+  gap: var(--esp-4);
+  height: 100%;
+  padding: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+  text-decoration: none;
+  transition: border-color var(--duracao) var(--curva);
+}
+
+.cartao:hover {
+  border-color: var(--acento);
+}
+
+.cartao[data-feita='true'] {
+  border-color: color-mix(in srgb, var(--acento) 45%, var(--borda));
+}
+
+.simbolo {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--raio-p);
+  background: var(--acento);
+  color: var(--sobre-acento);
+  font-family: var(--fonte-codigo);
+  font-weight: 700;
+}
+
+.textos {
+  display: grid;
+  gap: var(--esp-1);
+}
+
+.nome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--esp-2);
+  font-weight: 700;
+}
+
+.descricao {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.selo,
+.seloHistorico {
+  padding: 0 var(--esp-2);
+  border-radius: var(--raio-pilula);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.selo {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.seloHistorico {
+  border: 1px dashed var(--borda);
+  color: var(--texto-suave);
+}
+/* Fim dos estilos do índice. */

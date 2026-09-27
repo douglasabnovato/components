@@ -1,8 +1,17 @@
 # Dependências e saídas de build
 node_modules/
 dist/
+build/
 coverage/
 *.tsbuildinfo
+
+# Gerados por ferramentas
+.react-router/
+test-results/
+playwright-report/
+
+# Banco local da API (PGlite)
+.dados/
 
 # Ambiente (nunca versionar)
 .env

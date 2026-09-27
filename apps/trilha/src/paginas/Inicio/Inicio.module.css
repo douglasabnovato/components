@@ -1,0 +1,135 @@
+/* Estilos do Início da Trilha. */
+.topo {
+  display: grid;
+  gap: var(--esp-6);
+  margin-bottom: var(--esp-12);
+  padding: var(--esp-8);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      color-mix(in srgb, var(--acento) 22%, transparent),
+      transparent 55%
+    ),
+    var(--superficie);
+}
+
+.rotulo {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.titulo {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+}
+
+.resumo {
+  max-width: 44rem;
+  color: var(--texto-suave);
+  font-size: 1.0625rem;
+}
+
+.numeros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--esp-4);
+  margin: 0;
+}
+
+.numeros div {
+  padding: var(--esp-4);
+  border-radius: var(--raio-m);
+  background: var(--superficie-2);
+}
+
+.numeros dt {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+
+.numeros dd {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.numeros dd span {
+  color: var(--texto-suave);
+  font-size: 1rem;
+}
+
+.numeros dd .tempo {
+  color: var(--texto);
+  font-size: inherit;
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+}
+
+.concluida {
+  color: var(--sucesso);
+  font-weight: 700;
+}
+
+.contagem {
+  margin: var(--esp-6) 0 var(--esp-4);
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.modulos {
+  display: grid;
+  gap: var(--esp-8);
+}
+
+.modulo {
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+  overflow: hidden;
+}
+
+.cabecalhoModulo {
+  display: grid;
+  gap: var(--esp-2);
+  padding: var(--esp-6);
+  border-bottom: 1px solid var(--borda);
+}
+
+.numeroModulo {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+}
+
+.tituloModulo {
+  font-size: 1.5rem;
+}
+
+.metaModulo {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.lista {
+  display: grid;
+  gap: var(--esp-1);
+  margin: 0;
+  padding: var(--esp-3);
+  list-style: none;
+}
+
+@media (max-width: 40rem) {
+  .topo {
+    padding: var(--esp-6) var(--esp-4);
+  }
+}
+/* Fim dos estilos do Início. */

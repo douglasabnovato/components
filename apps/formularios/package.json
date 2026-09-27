@@ -1,0 +1,44 @@
+{
+  "name": "@components/formularios",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Filho 4 · Formulários no Servidor: React Router em modo framework com SSR, loaders, actions e aprimoramento progressivo.",
+  "type": "module",
+  "scripts": {
+    "dev": "react-router dev",
+    "build": "react-router build",
+    "start": "react-router-serve ./build/server/index.js",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "typecheck": "react-router typegen && tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@components/ui": "workspace:*",
+    "@fontsource-variable/fraunces": "catalog:",
+    "@fontsource-variable/inter": "catalog:",
+    "@fontsource-variable/space-grotesk": "catalog:",
+    "@react-router/node": "catalog:",
+    "@react-router/serve": "catalog:",
+    "isbot": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-router": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@components/config": "workspace:*",
+    "@playwright/test": "catalog:",
+    "@react-router/dev": "catalog:",
+    "@testing-library/jest-dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/user-event": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "axe-core": "catalog:",
+    "jsdom": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  }
+}

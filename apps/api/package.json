@@ -1,0 +1,33 @@
+{
+  "name": "@components/api",
+  "private": true,
+  "version": "1.0.0",
+  "description": "API compartilhada do hub: clientes (filho 2) e tarefas (filho 5), com Hono, Zod, Drizzle e PGlite (Postgres em WebAssembly).",
+  "type": "module",
+  "exports": {
+    ".": "./src/app.ts",
+    "./banco": "./src/banco/conexao.ts"
+  },
+  "scripts": {
+    "dev": "tsx watch src/servidor.ts",
+    "start": "tsx src/servidor.ts",
+    "banco:limpar": "tsx src/banco/limpar.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@components/contratos": "workspace:*",
+    "@electric-sql/pglite": "catalog:",
+    "@hono/node-server": "catalog:",
+    "drizzle-orm": "catalog:",
+    "hono": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@components/config": "workspace:*",
+    "@types/node": "catalog:",
+    "tsx": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

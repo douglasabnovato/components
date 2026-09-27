@@ -1,0 +1,25 @@
+<Desafio>
+
+Dois campos: Celsius e Fahrenheit. Digitar em um deve atualizar o outro. Se cada campo tiver o próprio estado, eles se desencontram, e o aviso "a água ferve" não sabe qual ler.
+
+**Onde deve morar o estado que dois componentes precisam compartilhar?**
+
+</Desafio>
+
+<Conteudo>
+
+- **Campo controlado**: o `value` vem do estado e o `onChange` o atualiza. O React é a fonte da verdade.
+- **Elevar o estado**: quando dois componentes precisam do mesmo dado, ele sobe para o ancestral comum, que passa valor e função para baixo.
+- Guarde o **mínimo**: o texto digitado e a escala. O outro campo é **calculado** a cada renderização (estado derivado).
+
+</Conteudo>
+
+<Solucao>
+
+1. Escrever `converter`, uma função pura testável sozinha.
+2. No pai, guardar `texto` e `escala`.
+3. Calcular os dois valores exibidos a partir desse estado.
+4. Fazer os campos serem controlados pelo pai.
+5. Testar a conversão e a sincronização pela tela.
+
+</Solucao>

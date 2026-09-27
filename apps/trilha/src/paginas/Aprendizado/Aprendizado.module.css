@@ -1,0 +1,212 @@
+/* Estilos da página do aprendizado. */
+.pagina {
+  display: grid;
+  gap: var(--esp-8);
+}
+
+.trilha ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  margin: 0;
+  padding: 0;
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+  list-style: none;
+}
+
+.trilha li + li::before {
+  content: '/';
+  margin-right: var(--esp-2);
+  color: var(--borda);
+}
+
+.trilha a {
+  text-decoration: none;
+}
+
+.trilha a:hover {
+  color: var(--acento-texto);
+  text-decoration: underline;
+}
+
+.cabecalho {
+  display: grid;
+  gap: var(--esp-3);
+}
+
+.rotulo {
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+}
+
+.titulo {
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2) var(--esp-4);
+  color: var(--texto-suave);
+}
+
+.etiqueta {
+  padding: 0 var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  font-size: 0.875rem;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+  gap: var(--esp-8);
+  align-items: start;
+}
+
+.video {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.descricao {
+  font-size: 1.0625rem;
+}
+
+.aviso {
+  padding: var(--esp-3) var(--esp-4);
+  border-left: 3px dashed var(--acento);
+  background: var(--superficie);
+  color: var(--texto-suave);
+  font-size: 0.9375rem;
+}
+
+.lateral {
+  display: grid;
+  gap: var(--esp-4);
+  padding: var(--esp-6);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-g);
+  background: var(--superficie);
+}
+
+.externo {
+  color: var(--acento-texto);
+  font-weight: 600;
+}
+
+.notas {
+  display: grid;
+  gap: var(--esp-2);
+  font-weight: 600;
+}
+
+.notas textarea {
+  width: 100%;
+  padding: var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie-2);
+  font-weight: 400;
+  resize: vertical;
+}
+
+.dica {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.bloco {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.bloco h2 {
+  font-size: 1.25rem;
+}
+
+.tecnologias,
+.projetos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tecnologias li {
+  display: flex;
+  align-items: center;
+  gap: var(--esp-2);
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+}
+
+.tecnologias a {
+  font-weight: 600;
+}
+
+.projetos a {
+  display: inline-block;
+  padding: var(--esp-2) var(--esp-4);
+  border-radius: var(--raio-pilula);
+  background: var(--superficie-2);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.projetos a:hover {
+  background: var(--acento);
+  color: var(--sobre-acento);
+}
+
+.vizinhos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--esp-4);
+  padding-top: var(--esp-6);
+  border-top: 1px solid var(--borda);
+}
+
+.vizinhos a {
+  display: grid;
+  gap: var(--esp-1);
+  padding: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.vizinhos a:hover {
+  border-color: var(--acento);
+}
+
+.vizinhos span {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.proximo {
+  grid-column: 2;
+  text-align: right;
+}
+
+@media (max-width: 52rem) {
+  .grade,
+  .vizinhos {
+    grid-template-columns: 1fr;
+  }
+
+  .proximo {
+    grid-column: auto;
+  }
+}
+/* Fim dos estilos da página do aprendizado. */

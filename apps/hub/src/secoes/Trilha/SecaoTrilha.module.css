@@ -1,0 +1,97 @@
+/* Estilos da seção Trilha React. */
+.numeros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--esp-4);
+  margin: var(--esp-8) 0;
+}
+
+.numeros div {
+  padding: var(--esp-4) var(--esp-6);
+  border-left: 3px solid var(--acento);
+}
+
+.numeros dt {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.numeros dd {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+.mapa {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--esp-3);
+  margin: 0 0 var(--esp-12);
+  padding: 0;
+  list-style: none;
+}
+
+.modulo {
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+  transition: border-color var(--duracao) var(--curva);
+}
+
+.modulo[data-aberto='true'] {
+  grid-column: 1 / -1;
+  border-color: var(--acento);
+}
+
+.botao {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--esp-1) var(--esp-3);
+  width: 100%;
+  padding: var(--esp-4);
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.numero {
+  grid-row: span 2;
+  color: var(--acento-texto);
+  font-family: var(--fonte-codigo);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.titulo {
+  font-weight: 700;
+}
+
+.meta {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+
+.lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr));
+  gap: var(--esp-2) var(--esp-6);
+  margin: 0;
+  padding: 0 var(--esp-6) var(--esp-6);
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.lista[hidden] {
+  display: none;
+}
+
+.lista a {
+  color: var(--texto);
+}
+
+.lista a:hover {
+  color: var(--acento-texto);
+}
+/* Fim dos estilos da seção Trilha React. */

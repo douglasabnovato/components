@@ -1,8 +1,9 @@
 /*
  * Seção 03 · Portal de Heróis. Referência: ilustração em tela cheia com
- * título sobreposto e chamada com ícone e linha de apoio. Heróis e artes
- * são originais do projeto (sem personagens ou marcas de terceiros).
+ * título sobreposto e chamada com ícone e linha de apoio. As fichas mostram
+ * um herói de cada equipe, vindos do próprio projeto 03 (dados originais).
  */
+import { equipes, herois as heroisReais, universos } from '@components/herois/dados'
 import { projeto } from '../../dados/projetos'
 import {
   CabecalhoSecao,
@@ -14,11 +15,11 @@ import { Revelar } from '../../componentes/Revelar'
 import { CenaHerois } from './CenaHerois'
 import styles from './SecaoHerois.module.css'
 
-const herois = [
-  { nome: 'Aurora', poder: 'Transforma luz em escudo', universo: 'Alvorada', cor: '#FFB020' },
-  { nome: 'Vértice', poder: 'Dobra o espaço em ângulos', universo: 'Geometria', cor: '#FF5C7A' },
-  { nome: 'Maré', poder: 'Controla correntes e marés', universo: 'Oceânica', cor: '#3DDC97' },
-]
+const herois = equipes.map((e) => {
+  const h = heroisReais.find((heroi) => heroi.equipe === e.slug)!
+  const universo = universos.find((u) => u.slug === e.universo)!
+  return { nome: h.nome, poder: h.resumo, universo: universo.nome, cor: h.cor, equipe: e.nome }
+})
 
 /* Monta a cena ilustrada, o texto sobreposto e as fichas dos heróis. */
 export function SecaoHerois() {
@@ -51,7 +52,9 @@ export function SecaoHerois() {
                 <h3 className={styles.nomeHeroi}>{h.nome}</h3>
                 <p className={styles.poder}>{h.poder}</p>
               </div>
-              <span className={styles.universo}>Universo {h.universo}</span>
+              <span className={styles.universo}>
+                {h.equipe} · {h.universo}
+              </span>
             </Revelar>
           ))}
         </ul>

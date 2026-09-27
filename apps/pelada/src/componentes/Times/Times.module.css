@@ -1,0 +1,59 @@
+/* Estilos dos Times. */
+.times {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--esp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.time {
+  padding: var(--esp-4);
+  border: 1px solid var(--borda);
+  border-top: 4px solid var(--acento);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+}
+
+.time:nth-child(2n) {
+  border-top-color: var(--sucesso);
+}
+
+.nome {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--esp-2);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+}
+
+.forca {
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.jogadores {
+  display: grid;
+  gap: var(--esp-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nivel {
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+
+.reservas {
+  color: var(--texto-suave);
+}
+/* Fim dos estilos dos Times. */

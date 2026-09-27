@@ -1,0 +1,22 @@
+{
+  "name": "@components/contratos",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Esquemas Zod compartilhados entre a API e os filhos: a mesma regra de validação no front e no back.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@components/config": "workspace:*",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

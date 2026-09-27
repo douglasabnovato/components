@@ -1,0 +1,5 @@
+# Gerados pelo React Router e pelo Playwright
+.react-router/
+build/
+test-results/
+playwright-report/

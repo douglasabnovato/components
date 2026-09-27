@@ -1,0 +1,69 @@
+/* Estilos da ListaJogadores. */
+.bloco {
+  display: grid;
+  align-content: start;
+  gap: var(--esp-3);
+}
+
+.titulo {
+  font-size: 1.25rem;
+}
+
+.contagem {
+  color: var(--texto-suave);
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.vazio {
+  color: var(--texto-suave);
+}
+
+.lista {
+  display: grid;
+  gap: var(--esp-2);
+  margin: 0;
+  padding-left: 2rem;
+}
+
+.item {
+  padding: var(--esp-2) var(--esp-3);
+  border-radius: var(--raio-m);
+  background: var(--superficie);
+}
+
+.item::marker {
+  color: var(--texto-suave);
+  font-family: var(--fonte-codigo);
+  font-size: 0.875rem;
+}
+
+.item > * {
+  vertical-align: middle;
+}
+
+.nome {
+  font-weight: 600;
+}
+
+.nivel {
+  margin-left: var(--esp-3);
+  color: var(--texto-suave);
+  font-size: 0.8125rem;
+}
+
+.retirar {
+  float: right;
+  padding: 0 var(--esp-3);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio-pilula);
+  background: transparent;
+  font-size: 0.8125rem;
+  cursor: pointer;
+}
+
+.retirar:hover {
+  border-color: var(--erro);
+  color: var(--erro);
+}
+/* Fim dos estilos da ListaJogadores. */
