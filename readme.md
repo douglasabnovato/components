@@ -1,4 +1,4 @@
-# components
+# Components
 
 Monorepo React com um hub (projeto 0) e **8 projetos filhos**: sete ideias antigas reconstruídas do zero com React moderno e uma trilha de estudo com 116 vídeos. Cada filho aparece numa seção do hub com uma demonstração ao vivo feita com os dados e as regras reais dele, e tem um botão para voltar ao hub.
 
