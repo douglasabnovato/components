@@ -19,7 +19,7 @@ Monorepo React com um hub (projeto 0) e **8 projetos filhos**: sete ideias antig
 
 ## Rodar
 
-Requisitos: Node 22.12 ou mais novo e pnpm 10.
+Requisitos: Node 24.15 ou mais novo na linha 24 (ou 22.22.2 na linha 22) e pnpm 10.28. A versão usada no projeto está em `.node-version`. Documentação técnica em [docs/](docs/README.md).
 
 ```bash
 pnpm install
