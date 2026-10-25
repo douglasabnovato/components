@@ -1,0 +1,28 @@
+{
+  "name": "@components/servidor",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Servidor de produção: API em /api e SSR dos Formulários em /formularios/ num único processo Node. No modo ensaio, entrega também o site montado em publicar/.",
+  "type": "module",
+  "scripts": {
+    "start": "tsx src/servidor.ts",
+    "ensaio": "tsx src/servidor.ts --ensaio",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@components/api": "workspace:*",
+    "@hono/node-server": "catalog:",
+    "hono": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-router": "catalog:",
+    "tsx": "catalog:"
+  },
+  "devDependencies": {
+    "@components/config": "workspace:*",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

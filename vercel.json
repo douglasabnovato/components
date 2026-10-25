@@ -1,0 +1,24 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm build && node scripts/montar-publicacao.mjs",
+  "outputDirectory": "publicar",
+  "rewrites": [
+    {
+      "source": "/api/:caminho*",
+      "destination": "https://components-servidor.onrender.com/api/:caminho*"
+    },
+    {
+      "source": "/formularios/:caminho*",
+      "destination": "https://components-servidor.onrender.com/formularios/:caminho*"
+    },
+    { "source": "/flix/:caminho*", "destination": "/flix/index.html" },
+    { "source": "/cadastro/:caminho*", "destination": "/cadastro/index.html" },
+    { "source": "/herois/:caminho*", "destination": "/herois/index.html" },
+    { "source": "/tarefas/:caminho*", "destination": "/tarefas/index.html" },
+    { "source": "/pelada/:caminho*", "destination": "/pelada/index.html" },
+    { "source": "/laboratorio/:caminho*", "destination": "/laboratorio/index.html" },
+    { "source": "/trilha/:caminho*", "destination": "/trilha/index.html" }
+  ]
+}
