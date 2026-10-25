@@ -34,7 +34,8 @@ flowchart TB
 | Expor o SSR do Formulários em `/formularios/` | Usa o build do React Router (`build/server`) e entrega `build/client` como arquivos estáticos |
 | Ler a porta do provedor | `PORT`, com `PORTA` e 3333 como alternativas |
 | Saúde | `GET /api/saude` |
-| **Ensaio de produção local** | Com a variável `SERVIR_ESTATICOS=1`, também entrega a pasta `publicar/` (hub e filhos), reproduzindo no computador o site publicado num único endereço |
+| **Ensaio de produção local** | Com `pnpm ensaio:producao` (opção `--ensaio`, ou a variável `SERVIR_ESTATICOS=1`), também entrega a pasta `publicar/` (hub e filhos), reproduzindo no computador o site publicado num único endereço |
+| Estrutura | `src/app.ts` compõe as partes e é testado com Vitest; `src/servidor.ts` abre o banco, carrega o build e escuta na porta |
 
 Princípio: **reaproveitar, não reescrever**. O servidor só compõe peças que já existem e já são testadas.
 

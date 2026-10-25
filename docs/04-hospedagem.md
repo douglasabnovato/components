@@ -29,17 +29,19 @@ Reproduz no computador o site exatamente como ficará publicado, num único ende
 
 ```bash
 pnpm build
-node scripts/montar-publicacao.mjs
+node scripts/montar-publicacao.mjs   # ou: pnpm montar:publicacao
 pnpm ensaio:producao
 ```
 
-Abra o endereço indicado no terminal e teste todos os cliques. Se tudo funcionar aqui, o deploy tende a funcionar de primeira.
+Abra o endereço indicado no terminal (padrão `http://localhost:3333/`) e teste todos os cliques. Se tudo funcionar aqui, o deploy tende a funcionar de primeira. O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta com `PORT`.
+
+O ensaio aplica as mesmas regras do `vercel.json`: rota interna de um filho (ex.: `/trilha/aprendizado/1`) carrega o `index.html` da pasta, e caminho desconhecido na raiz responde 404.
 
 ## Passo a passo
 
 ### 1. Render (parte dinâmica)
 
-1. Criar um **Web Service** ligado ao repositório `douglasabnovato/components`.
+1. Criar um **Web Service** ligado ao repositório `douglasabnovato/components`, com o nome `components-servidor` (é o endereço que o `vercel.json` já usa; se o nome for outro, atualizar as duas regras de `/api` e `/formularios` no `vercel.json`).
 2. Configurar:
 
 | Campo | Valor |
@@ -54,7 +56,7 @@ Abra o endereço indicado no terminal e teste todos os cliques. Se tudo funciona
 
 ### 2. Vercel (parte estática)
 
-1. Colocar o endereço do Render no `vercel.json`.
+1. Conferir o endereço do Render no `vercel.json` (`https://components-servidor.onrender.com`).
 2. Criar o projeto na Vercel ligado ao repositório.
 3. A Vercel lê o `vercel.json`, que segue este modelo:
 
@@ -76,7 +78,7 @@ Abra o endereço indicado no terminal e teste todos os cliques. Se tudo funciona
 }
 ```
 
-As regras por pasta só valem quando o arquivo pedido não existe: arquivos JS e CSS continuam sendo entregues normalmente. Confirmar a sintaxe `:caminho*` no primeiro deploy.
+As regras por pasta só valem quando o arquivo pedido não existe: arquivos JS e CSS continuam sendo entregues normalmente. Confirmar a sintaxe `:caminho*` no primeiro deploy. O `vercel.json` real também define `"framework": null` (sem detecção automática de framework) e `installCommand` com `--frozen-lockfile`. Se a Vercel usar uma versão do pnpm diferente da do `packageManager`, definir a variável `ENABLE_EXPERIMENTAL_COREPACK=1` no projeto.
 
 ### 3. Validação
 
@@ -102,4 +104,4 @@ As regras por pasta só valem quando o arquivo pedido não existe: arquivos JS e
 | `PORT` | Render | Definida pelo próprio Render |
 | `ORIGENS` | Render | Domínio da Vercel |
 | `PASTA_DADOS` | Render | Opcional; padrão `apps/api/.dados` |
-| `SERVIR_ESTATICOS` | Só no ensaio local | `1` para o servidor entregar também a pasta `publicar/` |
+| `SERVIR_ESTATICOS` | Só no ensaio local | `1` para o servidor entregar também a pasta `publicar/` (o `pnpm ensaio:producao` já faz isso com a opção `--ensaio`) |

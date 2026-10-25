@@ -32,7 +32,14 @@ Provar automaticamente que **todo elemento clicável funciona** e impedir regres
 
 ### T-01 · Navegação do ecossistema
 
-Pacote `testes-e2e` (Playwright), usando o `ecossistema.ts` como gabarito. Sobe a API, o hub e os 8 filhos automaticamente.
+Pacote `packages/testes-e2e` (Playwright), usando o `ecossistema.ts` como gabarito. Sobe a API, o hub e os 8 filhos automaticamente, nas portas de desenvolvimento (reaproveita os que já estiverem rodando, por exemplo com `pnpm dev:tudo`).
+
+```bash
+pnpm --filter @components/testes-e2e exec playwright install chromium   # só na primeira vez
+pnpm test:navegacao
+```
+
+Todo teste do pacote falha se a página registrar erro de console ou exceção (`suporte/teste.ts`); ruídos inofensivos só entram na lista de ignorados com o motivo.
 
 | Caso | Pronto quando |
 | --- | --- |
@@ -65,7 +72,13 @@ Seções renderizadas, demos funcionando com dados reais, cabeçalho destacando 
 
 ### T-05 · Fumaça em produção
 
-Rodar T-01 contra a URL publicada (ou contra o ensaio de produção local), depois de cada deploy.
+Rodar T-01 contra a URL publicada (ou contra o ensaio de produção local), depois de cada deploy. Com `URL_BASE`, o Playwright não sobe servidores e testa o endereço informado:
+
+```bash
+# PowerShell
+$env:URL_BASE="http://localhost:3333/"; pnpm test:navegacao   # ensaio local
+$env:URL_BASE="https://<projeto>.vercel.app/"; pnpm test:navegacao   # publicado
+```
 
 ## Integração contínua
 
@@ -79,7 +92,7 @@ Workflow no GitHub Actions, em todo push e pull request:
 | Navegação | `pnpm test:navegacao` |
 | Ponta a ponta do 04 | `pnpm test:e2e` |
 
-A versão do Node vem do arquivo `.node-version`.
+Arquivo: `.github/workflows/ci.yml`. A versão do Node vem do arquivo `.node-version` e a do pnpm, do campo `packageManager`. Em caso de falha, os relatórios do Playwright ficam como artefato da execução por 7 dias.
 
 ## Definição de pronto (testes)
 

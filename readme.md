@@ -43,15 +43,26 @@ Ou um de cada vez:
 
 Cadastro (origem API) e Tarefas precisam da API ligada. Os filhos chamam `/api` no próprio endereço e o Vite encaminha para a porta 3333.
 
-   ## Verificar
+## Verificar
 
 ```bash
-   pnpm verificar       # lint, typecheck, testes e build de tudo
-   pnpm test:e2e        # Playwright do projeto 04, com e sem JavaScript
+pnpm verificar       # lint, typecheck, testes e build de tudo
+pnpm test:navegacao  # Playwright: hub ↔ 8 filhos (sobe tudo sozinho)
+pnpm test:e2e        # Playwright do projeto 04, com e sem JavaScript
 ```
 
-   Na primeira vez, instale o navegador do Playwright:
-   `pnpm --filter @components/formularios exec playwright install chromium`
+Na primeira vez, instale o navegador do Playwright:
+`pnpm --filter @components/testes-e2e exec playwright install chromium`
+
+## Ensaio de produção
+
+Reproduz o site publicado num único endereço (http://localhost:3333):
+
+```bash
+pnpm build
+pnpm montar:publicacao
+pnpm ensaio:producao
+```
 
 ## Estrutura
 
