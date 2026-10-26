@@ -19,7 +19,7 @@ Monorepo React com um hub (projeto 0) e **8 projetos filhos**: sete ideias antig
 
 ## Rodar
 
-Requisitos: Node 22.12 ou mais novo e pnpm 10.
+Requisitos: Node 24.15 ou mais novo na linha 24 (ou 22.22.2 na linha 22) e pnpm 10.28. A versão usada no projeto está em `.node-version`. Documentação técnica em [docs/](docs/README.md).
 
 ```bash
 pnpm install
@@ -43,15 +43,26 @@ Ou um de cada vez:
 
 Cadastro (origem API) e Tarefas precisam da API ligada. Os filhos chamam `/api` no próprio endereço e o Vite encaminha para a porta 3333.
 
-   ## Verificar
+## Verificar
 
 ```bash
-   pnpm verificar       # lint, typecheck, testes e build de tudo
-   pnpm test:e2e        # Playwright do projeto 04, com e sem JavaScript
+pnpm verificar       # lint, typecheck, testes e build de tudo
+pnpm test:navegacao  # Playwright: hub ↔ 8 filhos (sobe tudo sozinho)
+pnpm test:e2e        # Playwright do projeto 04, com e sem JavaScript
 ```
 
-   Na primeira vez, instale o navegador do Playwright:
-   `pnpm --filter @components/formularios exec playwright install chromium`
+Na primeira vez, instale o navegador do Playwright:
+`pnpm --filter @components/testes-e2e exec playwright install chromium`
+
+## Ensaio de produção
+
+Reproduz o site publicado num único endereço (http://localhost:3333):
+
+```bash
+pnpm build
+pnpm montar:publicacao
+pnpm ensaio:producao
+```
 
 ## Estrutura
 
@@ -66,12 +77,17 @@ components/
 │   ├── pelada/        06 · hooks puros, vagas, espera e sorteio
 │   ├── laboratorio/   07 · 17 lições em MDX com demo, código e teste
 │   ├── trilha/        08 · 116 aprendizados e o mapa da stack
-│   └── api/           Hono + Drizzle + PGlite (Postgres em WebAssembly)
+│   ├── api/           Hono + Drizzle + PGlite (Postgres em WebAssembly)
+│   └── servidor/      produção: API em /api e SSR do 04 num único processo
 ├── 1-flix/            01 · catálogo de vídeos (TanStack Query)
 ├── packages/
 │   ├── ui/            tokens, componentes, hooks e mapa de endereços
 │   ├── contratos/     esquemas Zod compartilhados entre front e API
-│   └── config/        tsconfig base 
+│   ├── config/        tsconfig base
+│   └── testes-e2e/    Playwright do ecossistema (navegação hub ↔ filhos)
+├── scripts/           montagem da pasta publicar/ (site estático)
+├── docs/              planos de arquitetura, testes, hospedagem e backlog
+└── vercel.json        publicação na Vercel, com /api e /formularios no Render
 ```
 
 Cada projeto tem o próprio README, com telas, regras de negócio numeradas, estrutura e stack.
@@ -81,7 +97,7 @@ Cada projeto tem o próprio README, com telas, regras de negócio numeradas, est
 - Uma instalação só (pnpm workspaces) e um catálogo de versões para todos.
 - TypeScript estrito, CSS Modules (Tailwind só no 03) e os tokens de `@components/ui`.
 - Regras de negócio em funções puras, validadas com Zod e testadas sem tela.
-- Testes com Vitest, Testing Library e axe em todos os projetos; Playwright no 04.
+- Testes com Vitest, Testing Library e axe em todos os projetos; Playwright no 04 e na navegação do ecossistema.
 - Estado derivado sempre que possível; filtros e abas na URL quando fazem sentido.
 - Endereços entre projetos vêm de um mapa único (`@components/ui/ecossistema`).
 - Comentário só no início e no fim de cada arquivo e no início de cada função.

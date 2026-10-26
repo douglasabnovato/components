@@ -1,0 +1,7 @@
+{
+  "extends": "@components/config/tsconfig.react.json",
+  "compilerOptions": {
+    "types": ["node", "vite/client"]
+  },
+  "include": ["testes", "suporte", "playwright.config.ts"]
+}

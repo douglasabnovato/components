@@ -1,0 +1,19 @@
+{
+  "name": "@components/testes-e2e",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Testes de ponta a ponta do ecossistema com Playwright: navegação hub ↔ filhos (T-01) e, depois, clicáveis e fumaça em produção.",
+  "type": "module",
+  "scripts": {
+    "test:navegacao": "playwright test testes/navegacao",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@components/config": "workspace:*",
+    "@components/ui": "workspace:*",
+    "@playwright/test": "catalog:",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:"
+  }
+}

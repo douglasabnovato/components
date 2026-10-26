@@ -1,0 +1,61 @@
+# CI do components: verificação completa (lint, tipos, testes e build), teste de
+# navegação do ecossistema (T-01) e ponta a ponta do Formulários, em todo push
+# e pull request. A versão do Node vem do .node-version e a do pnpm, do
+# campo packageManager do package.json.
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verificar:
+    name: Verificação e navegação
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v5
+
+      - name: Instalar o pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Instalar o Node
+        uses: actions/setup-node@v5
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Verificação (lint, tipos, testes e build)
+        run: pnpm verificar
+
+      - name: Instalar o Chromium do Playwright
+        run: pnpm --filter @components/testes-e2e exec playwright install --with-deps chromium
+
+      - name: Navegação do ecossistema (T-01)
+        run: pnpm test:navegacao
+
+      - name: Ponta a ponta do Formulários
+        run: pnpm test:e2e
+
+      - name: Guardar relatórios do Playwright
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: relatorios-playwright
+          path: |
+            packages/testes-e2e/playwright-report/
+            packages/testes-e2e/test-results/
+            apps/formularios/playwright-report/
+            apps/formularios/test-results/
+          retention-days: 7
