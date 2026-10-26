@@ -13,6 +13,8 @@ pnpm dev:api
 
 A API sobe em http://localhost:3333. O banco fica na pasta `apps/api/.dados` (ignorada pelo Git) e é criado com dados de exemplo na primeira vez. Para começar do zero: `pnpm --filter @components/api banco:limpar`.
 
+Em produção, a API roda dentro do [servidor de produção](../servidor/README.md), sob o prefixo `/api`.
+
 Os filhos chamam sempre `/api/...` no próprio endereço. Em desenvolvimento, o Vite de cada filho encaminha `/api` para a porta 3333 (`proxyDaApi` do `@components/ui`), então o navegador não precisa de CORS.
 
 ## Rotas
@@ -46,10 +48,10 @@ src/
 ├── banco/    esquema (Drizzle), migração e exemplos, conexão, limpar
 ├── rotas/    clientes, tarefas e respostas padronizadas
 ├── app.ts    aplicação Hono (recebe o banco pronto)
-├── servidor.ts  sobe o servidor Node na porta 3333
+├── servidor.ts  sobe o servidor Node (porta PORT, PORTA ou 3333)
 └── testes/   testes com banco em memória
 ```
 
 ## Stack
 
-Node 22, TypeScript, Hono, Zod, Drizzle ORM, PGlite, tsx e Vitest.
+Node 24, TypeScript, Hono, Zod, Drizzle ORM, PGlite, tsx e Vitest.

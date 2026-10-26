@@ -1,107 +1,181 @@
 # 04 · Hospedagem
 
-## Decisão
+Guia de operação da publicação: onde cada parte roda, como foi configurada e como validar, atualizar e diagnosticar. A decisão e as alternativas estão na [ADR 0003](adr/0003-hospedagem-vercel-render.md).
 
-**Vercel** para o hub e os filhos estáticos, **Render** para a API e o SSR do Formulários, sob um único domínio. Detalhes e alternativas em [ADR 0003](adr/0003-hospedagem-vercel-render.md).
+## Visão geral
 
-## Por que essa combinação
+| Parte | Provedor | Endereço | Situação |
+| --- | --- | --- | --- |
+| Hub e 7 filhos estáticos | Vercel (Hobby) | https://components-dusky-nine.vercel.app | ✅ No ar |
+| API e Formulários (`apps/servidor`) | Render (Free) | https://components-servidor.onrender.com | ⏳ A criar (A-09) |
+
+O visitante usa só o domínio da Vercel. Os caminhos `/api` e `/formularios` são repassados ao Render pelo `vercel.json`, sem o visitante perceber.
 
 | Critério | Vercel + Render |
 | --- | --- |
-| Hub e 6 filhos estáticos | Sempre rápidos, sem espera |
+| Hub e 7 filhos estáticos | Sempre rápidos, sem espera |
 | Custo | Planos gratuitos |
-| Limitação | O Render gratuito dorme após 15 minutos sem acesso e leva cerca de 1 minuto para acordar; afeta só Cadastro (modo API), Tarefas e Formulários na primeira visita |
-| Dados | Disco temporário no Render gratuito: a API recria os dados de exemplo a cada reinício |
+| Limitação | O Render gratuito dorme após 15 minutos sem acesso e leva até cerca de 1 minuto para acordar; afeta só Cadastro (modo API), Tarefas e Formulários na primeira visita |
+| Dados | Disco temporário no Render gratuito: a API volta aos dados de exemplo a cada reinício, deploy ou hibernação |
 
 ## Pré-requisitos no código
 
-| # | Item | Ajuste |
-| --- | --- | --- |
-| 1 | `.node-version` e `engines` corretos | A-01 |
-| 2 | API lendo `PORT` | A-05 |
-| 3 | Servidor de produção `apps/servidor` | A-06 |
-| 4 | Script `scripts/montar-publicacao.mjs` | A-07 |
-| 5 | `vercel.json` | A-08 |
+| # | Item | Ajuste | Situação |
+| --- | --- | --- | --- |
+| 1 | `.node-version` e `engines` corretos | A-01 | ✅ |
+| 2 | API lendo `PORT` | A-05 | ✅ |
+| 3 | Servidor de produção `apps/servidor` | A-06 | ✅ |
+| 4 | Script `scripts/montar-publicacao.mjs` | A-07 | ✅ |
+| 5 | `vercel.json` | A-08 | ✅ Escrito; validação completa depende do Render |
 
 ## Antes de publicar: ensaio de produção local
 
-Reproduz no computador o site exatamente como ficará publicado, num único endereço:
+Reproduz no computador o site exatamente como fica publicado, num único endereço:
 
 ```bash
 pnpm build
-node scripts/montar-publicacao.mjs   # ou: pnpm montar:publicacao
+pnpm montar:publicacao
 pnpm ensaio:producao
 ```
 
-Abra o endereço indicado no terminal (padrão `http://localhost:3333/`) e teste todos os cliques. Se tudo funcionar aqui, o deploy tende a funcionar de primeira. O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta com `PORT`.
+Abra `http://localhost:3333/` e teste os cliques, ou rode o T-01 contra o ensaio:
 
-O ensaio aplica as mesmas regras do `vercel.json`: rota interna de um filho (ex.: `/trilha/aprendizado/1`) carrega o `index.html` da pasta, e caminho desconhecido na raiz responde 404.
+```powershell
+$env:URL_BASE="http://localhost:3333/"; pnpm test:navegacao
+Remove-Item Env:URL_BASE
+```
 
-## Passo a passo
+O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta com `PORT`. Ele aplica as mesmas regras do `vercel.json`: rota interna de um filho (ex.: `/trilha/aprendizado/1`) carrega o `index.html` da pasta, e caminho desconhecido na raiz responde 404.
 
-### 1. Render (parte dinâmica)
+## Render (parte dinâmica)
 
-1. Criar um **Web Service** ligado ao repositório `douglasabnovato/components`, com o nome `components-servidor` (é o endereço que o `vercel.json` já usa; se o nome for outro, atualizar as duas regras de `/api` e `/formularios` no `vercel.json`).
-2. Configurar:
+### Criação do serviço
+
+1. Em https://dashboard.render.com, entrar com a conta do GitHub.
+2. **+ New → Web Service** e escolher o repositório `douglasabnovato/components`.
+3. Preencher:
 
 | Campo | Valor |
 | --- | --- |
-| Branch | A branch publicada (`main` após o merge) |
-| Build | `corepack enable && pnpm install --frozen-lockfile && pnpm --filter @components/formularios build` |
-| Start | `pnpm --filter @components/servidor start` |
-| Variável `NODE_VERSION` | A mesma do `.node-version` |
-| Variável `ORIGENS` | Endereço da Vercel |
+| Name | `components-servidor` (é o endereço que o `vercel.json` usa; se for outro, atualizar as regras de `/api` e `/formularios`) |
+| Language | Node |
+| Branch | `main` |
+| Region | Uma região dos Estados Unidos (Ohio ou Virginia) |
+| Root Directory | vazio (raiz do repositório) |
+| Build Command | `corepack enable && pnpm install --frozen-lockfile && pnpm --filter @components/formularios build` |
+| Start Command | `corepack enable && pnpm --filter @components/servidor start` |
+| Instance Type | Free |
 
-3. Testar `https://<servico>.onrender.com/api/saude` → `{"ok":true}`.
+4. Em **Environment Variables**:
 
-### 2. Vercel (parte estática)
+| Variável | Valor |
+| --- | --- |
+| `NODE_VERSION` | `24.22.1` (a mesma do `.node-version`) |
+| `ORIGENS` | `https://components-dusky-nine.vercel.app` |
 
-1. Conferir o endereço do Render no `vercel.json` (`https://components-servidor.onrender.com`).
-2. Criar o projeto na Vercel ligado ao repositório.
-3. A Vercel lê o `vercel.json`, que segue este modelo:
+5. Em **Advanced → Health Check Path**: `/api/saude`.
+6. **Deploy Web Service**. O deploy termina quando o log mostra `Servidor do components em http://localhost:10000 · produção (API e Formulários)`. A porta é a que o Render informa em `PORT`.
 
-```json
-{
-  "buildCommand": "pnpm build && node scripts/montar-publicacao.mjs",
-  "outputDirectory": "publicar",
-  "rewrites": [
-    { "source": "/api/:caminho*", "destination": "https://<servico>.onrender.com/api/:caminho*" },
-    { "source": "/formularios/:caminho*", "destination": "https://<servico>.onrender.com/formularios/:caminho*" },
-    { "source": "/flix/:caminho*", "destination": "/flix/index.html" },
-    { "source": "/cadastro/:caminho*", "destination": "/cadastro/index.html" },
-    { "source": "/herois/:caminho*", "destination": "/herois/index.html" },
-    { "source": "/tarefas/:caminho*", "destination": "/tarefas/index.html" },
-    { "source": "/pelada/:caminho*", "destination": "/pelada/index.html" },
-    { "source": "/laboratorio/:caminho*", "destination": "/laboratorio/index.html" },
-    { "source": "/trilha/:caminho*", "destination": "/trilha/index.html" }
-  ]
-}
+### O que o build faz
+
+| Etapa | Comando | Por quê |
+| --- | --- | --- |
+| Ativar o pnpm | `corepack enable` | Usa a versão do campo `packageManager` (10.28.0) |
+| Instalar | `pnpm install --frozen-lockfile` | Falha se o `pnpm-lock.yaml` estiver desatualizado, em vez de instalar versões diferentes |
+| Compilar o Formulários | `pnpm --filter @components/formularios build` | Gera `build/server` e `build/client`, que o servidor carrega. A API e o servidor rodam direto do TypeScript, com `tsx` |
+
+## Vercel (parte estática)
+
+### Criação do projeto
+
+1. Em https://vercel.com, **Add New… → Project** e importar `douglasabnovato/components`.
+2. Preencher:
+
+| Campo | Valor |
+| --- | --- |
+| Vercel Team | `douglasabnovato's projects` (Hobby) |
+| Project Name | `components` |
+| Root Directory | `./` |
+| Application Preset | **Other** |
+| Build, Output e Install | Sem alteração: o `vercel.json` define os três |
+| Environment Variables | Nenhuma |
+
+3. **Deploy**. O domínio gerado foi `components-dusky-nine.vercel.app`, porque `components.vercel.app` já pertence a outra conta.
+
+> **Atenção ao importar.** A Vercel detecta várias aplicações no repositório e sugere o preset **Services**, com um `vercel.json` próprio e um texto para assistentes de código. Não usar: o preset precisa ser **Other**, para o nosso `vercel.json` controlar o build. Depois do deploy, a tela oferece "Deploy another project from this repository" com 13 pastas; também não usar, porque cada pasta viraria um site com domínio próprio (ver [ADR 0003](adr/0003-hospedagem-vercel-render.md)).
+
+### `vercel.json`
+
+| Chave | Valor | Função |
+| --- | --- | --- |
+| `framework` | `null` | Desliga a detecção automática de framework |
+| `installCommand` | `pnpm install --frozen-lockfile` | Instalação reprodutível |
+| `buildCommand` | `pnpm build && node scripts/montar-publicacao.mjs` | Compila tudo e monta `publicar/` |
+| `outputDirectory` | `publicar` | Pasta publicada |
+| `rewrites` `/api/:caminho*` e `/formularios/:caminho*` | `https://components-servidor.onrender.com/...` | Repasse ao Render |
+| `rewrites` `/<filho>/:caminho*` | `/<filho>/index.html` | Rotas internas carregam o app do filho |
+
+As regras por pasta só valem quando o arquivo pedido não existe: arquivos JS e CSS continuam sendo entregues normalmente. O repasse ao Render é resolvido a cada requisição, então criar ou recriar o serviço no Render não exige novo deploy na Vercel.
+
+## Validação
+
+| # | Verificação | Esperado | Situação |
+| --- | --- | --- | --- |
+| 1 | Abrir o hub | Carrega na hora | ✅ |
+| 2 | Abrir `https://components-servidor.onrender.com/api/saude` | `{"ok":true}` | ⏳ A-09 |
+| 3 | Abrir `/api/saude` pelo domínio da Vercel | `{"ok":true}` | ⏳ A-09 |
+| 4 | Clicar nos 8 projetos e voltar | Todos funcionam | ⏳ Formulários depende do A-09 |
+| 5 | Abrir uma rota interna direto (`/trilha/aprendizado/1`) | Carrega o app | ⏳ A-08 |
+| 6 | Criar cliente (modo API) e concluir tarefa | Funcionam | ⏳ A-09 |
+| 7 | Enviar formulário com JavaScript desligado | Funciona | ⏳ A-09 |
+| 8 | Rodar o T-05 | 11 de 11 | ⏳ A-11 |
+
+Para o item 8, acordar o Render antes (abrir a URL do item 2) e rodar:
+
+```powershell
+$env:URL_BASE="https://components-dusky-nine.vercel.app/"; pnpm test:navegacao
+Remove-Item Env:URL_BASE
 ```
 
-As regras por pasta só valem quando o arquivo pedido não existe: arquivos JS e CSS continuam sendo entregues normalmente. Confirmar a sintaxe `:caminho*` no primeiro deploy. O `vercel.json` real também define `"framework": null` (sem detecção automática de framework) e `installCommand` com `--frozen-lockfile`. Se a Vercel usar uma versão do pnpm diferente da do `packageManager`, definir a variável `ENABLE_EXPERIMENTAL_COREPACK=1` no projeto.
+## Publicar uma nova versão
 
-### 3. Validação
+Os dois provedores publicam automaticamente a cada push na `main`:
 
-| # | Verificação | Esperado |
+1. Trabalho em `feature/*`, pull request para `developer-mvp`, CI verde.
+2. Pull request de `developer-mvp` para `main`, CI verde, merge.
+3. Vercel e Render fazem o deploy sozinhos. Cada branch enviada ao GitHub também ganha uma prévia na Vercel.
+4. Rodar o T-05 contra o domínio publicado.
+
+Para voltar a uma versão anterior: na Vercel, **Deployments → (versão anterior) → Promote to Production**; no Render, **Events → (deploy anterior) → Rollback**.
+
+## Problemas comuns
+
+| Sintoma | Causa provável | Ação |
 | --- | --- | --- |
-| 1 | Abrir o hub | Carrega na hora |
-| 2 | Clicar nos 8 projetos e voltar | Todos funcionam |
-| 3 | Abrir uma rota interna direto (ex.: `/trilha/aprendizado/1`) | Carrega o app |
-| 4 | Criar cliente (modo API) e concluir tarefa | Funcionam |
-| 5 | Enviar formulário com JavaScript desligado | Funciona |
-| 6 | Rodar T-05 (fumaça em produção) | Verde |
+| Render: `pnpm: command not found` | Corepack não ativado | Conferir `corepack enable &&` no início do Build e do Start Command |
+| Render: erro de versão do Node ou `Unsupported engine` | `NODE_VERSION` ausente ou diferente | Definir `24.22.1` e fazer **Manual Deploy** |
+| Render ou Vercel: `ERR_PNPM_OUTDATED_LOCKFILE` | `pnpm-lock.yaml` desatualizado | Rodar `pnpm install` local, fazer commit do lockfile e push |
+| Vercel usa outra versão do pnpm | Vercel ignorou o `packageManager` | Variável `ENABLE_EXPERIMENTAL_COREPACK=1` no projeto e novo deploy |
+| `/api/...` ou `/formularios/` com erro pela Vercel | Render fora do ar, dormindo ou com outro nome | Abrir a URL do Render direto; conferir o nome no `vercel.json` |
+| Formulários responde 503 | Build do Formulários não foi gerado | Conferir o Build Command do Render |
+| Primeira resposta da API leva cerca de 1 minuto | Render acordando | Esperado no plano gratuito |
+| Clientes e tarefas criados somem | Disco temporário do Render | Esperado no plano gratuito (A-37) |
 
-### 4. Opcional
-
-- Domínio próprio na Vercel (ex.: `components.douglasabnovato.dev`).
-- Se a espera do Render incomodar: plano pago do Render ou outra hospedagem sem hibernação.
+Ao atualizar o Node para a linha 25 ou superior, o Corepack deixa de vir junto com o Node: será preciso instalá-lo no build (`npm install -g corepack`).
 
 ## Variáveis de ambiente
 
 | Variável | Onde | Valor |
 | --- | --- | --- |
-| `NODE_VERSION` | Render | Versão do `.node-version` |
-| `PORT` | Render | Definida pelo próprio Render |
-| `ORIGENS` | Render | Domínio da Vercel |
+| `NODE_VERSION` | Render | `24.22.1`, a versão do `.node-version` |
+| `PORT` | Render | Definida pelo próprio Render (10000) |
+| `ORIGENS` | Render | `https://components-dusky-nine.vercel.app` |
 | `PASTA_DADOS` | Render | Opcional; padrão `apps/api/.dados` |
-| `SERVIR_ESTATICOS` | Só no ensaio local | `1` para o servidor entregar também a pasta `publicar/` (o `pnpm ensaio:producao` já faz isso com a opção `--ensaio`) |
+| `SERVIR_ESTATICOS` | Só no ensaio local | `1` para o servidor entregar também `publicar/` (o `pnpm ensaio:producao` já faz isso com `--ensaio`) |
+| `URL_BASE` | Testes | Endereço testado pelo T-01; sem ela, o Playwright sobe o ambiente de desenvolvimento |
+| `ENABLE_EXPERIMENTAL_COREPACK` | Vercel | Só se a Vercel não respeitar o `packageManager` |
+
+## Opcional
+
+- Domínio próprio ou mais legível na Vercel (A-36); ao trocar, atualizar `ORIGENS` no Render e esta documentação.
+- Se a espera do Render incomodar: plano pago do Render ou outra hospedagem sem hibernação.
