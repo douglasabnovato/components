@@ -60,10 +60,10 @@ O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta 
 | Name | `components-servidor` (é o endereço que o `vercel.json` usa; se for outro, atualizar as regras de `/api` e `/formularios`) |
 | Language | Node |
 | Branch | `main` |
-| Region | Uma região dos Estados Unidos (Ohio ou Virginia) |
+| Region | Oregon (US West), a mesma dos outros serviços da conta |
 | Root Directory | vazio (raiz do repositório) |
-| Build Command | `corepack enable && pnpm install --frozen-lockfile && pnpm --filter @components/formularios build` |
-| Start Command | `corepack enable && pnpm --filter @components/servidor start` |
+| Build Command | `corepack pnpm install --frozen-lockfile && corepack pnpm --filter @components/formularios build` |
+| Start Command | `corepack pnpm --filter @components/servidor start` |
 | Instance Type | Free |
 
 4. Em **Environment Variables**:
@@ -72,6 +72,7 @@ O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta 
 | --- | --- |
 | `NODE_VERSION` | `24.22.1` (a mesma do `.node-version`) |
 | `ORIGENS` | `https://components-dusky-nine.vercel.app` |
+| `COREPACK_ENABLE_DOWNLOAD_PROMPT` | `0` |
 
 5. Em **Advanced → Health Check Path**: `/api/saude`.
 6. **Deploy Web Service**. O deploy termina quando o log mostra `Servidor do components em http://localhost:10000 · produção (API e Formulários)`. A porta é a que o Render informa em `PORT`.
@@ -80,7 +81,7 @@ O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta 
 
 | Etapa | Comando | Por quê |
 | --- | --- | --- |
-| Ativar o pnpm | `corepack enable` | Usa a versão do campo `packageManager` (10.28.0) |
+| Usar o pnpm do projeto | `corepack pnpm ...` | Roda a versão do campo `packageManager` (10.28.0). O Render já traz um pnpm próprio em `/usr/bin`, numa área somente leitura; por isso `corepack enable` falha ali (`EROFS: read-only file system`) e o Corepack é chamado diretamente |
 | Instalar | `pnpm install --frozen-lockfile` | Falha se o `pnpm-lock.yaml` estiver desatualizado, em vez de instalar versões diferentes |
 | Compilar o Formulários | `pnpm --filter @components/formularios build` | Gera `build/server` e `build/client`, que o servidor carrega. A API e o servidor rodam direto do TypeScript, com `tsx` |
 
@@ -152,7 +153,8 @@ Para voltar a uma versão anterior: na Vercel, **Deployments → (versão anteri
 
 | Sintoma | Causa provável | Ação |
 | --- | --- | --- |
-| Render: `pnpm: command not found` | Corepack não ativado | Conferir `corepack enable &&` no início do Build e do Start Command |
+| Render: `EROFS: read-only file system, unlink '/usr/bin/pnpm'` | `corepack enable` tentando substituir o pnpm do Render | Usar `corepack pnpm ...` nos comandos, sem `corepack enable` |
+| Render: `pnpm: command not found` ou versão errada do pnpm | Comando sem o Corepack | Conferir `corepack pnpm` no Build e no Start Command |
 | Render: erro de versão do Node ou `Unsupported engine` | `NODE_VERSION` ausente ou diferente | Definir `24.22.1` e fazer **Manual Deploy** |
 | Render ou Vercel: `ERR_PNPM_OUTDATED_LOCKFILE` | `pnpm-lock.yaml` desatualizado | Rodar `pnpm install` local, fazer commit do lockfile e push |
 | Vercel usa outra versão do pnpm | Vercel ignorou o `packageManager` | Variável `ENABLE_EXPERIMENTAL_COREPACK=1` no projeto e novo deploy |
@@ -161,7 +163,7 @@ Para voltar a uma versão anterior: na Vercel, **Deployments → (versão anteri
 | Primeira resposta da API leva cerca de 1 minuto | Render acordando | Esperado no plano gratuito |
 | Clientes e tarefas criados somem | Disco temporário do Render | Esperado no plano gratuito (A-37) |
 
-Ao atualizar o Node para a linha 25 ou superior, o Corepack deixa de vir junto com o Node: será preciso instalá-lo no build (`npm install -g corepack`).
+Ao atualizar o Node para a linha 25 ou superior, o Corepack deixa de vir junto com o Node: será preciso trocar a estratégia no build (por exemplo, `npx corepack pnpm ...`).
 
 ## Variáveis de ambiente
 
@@ -170,6 +172,7 @@ Ao atualizar o Node para a linha 25 ou superior, o Corepack deixa de vir junto c
 | `NODE_VERSION` | Render | `24.22.1`, a versão do `.node-version` |
 | `PORT` | Render | Definida pelo próprio Render (10000) |
 | `ORIGENS` | Render | `https://components-dusky-nine.vercel.app` |
+| `COREPACK_ENABLE_DOWNLOAD_PROMPT` | Render | `0`, para o Corepack baixar o pnpm sem pedir confirmação |
 | `PASTA_DADOS` | Render | Opcional; padrão `apps/api/.dados` |
 | `SERVIR_ESTATICOS` | Só no ensaio local | `1` para o servidor entregar também `publicar/` (o `pnpm ensaio:producao` já faz isso com `--ensaio`) |
 | `URL_BASE` | Testes | Endereço testado pelo T-01; sem ela, o Playwright sobe o ambiente de desenvolvimento |
