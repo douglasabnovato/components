@@ -5,8 +5,8 @@
   "description": "Servidor de produção: API em /api e SSR dos Formulários em /formularios/ num único processo Node. No modo ensaio, entrega também o site montado em publicar/.",
   "type": "module",
   "scripts": {
-    "start": "tsx src/servidor.ts",
-    "ensaio": "tsx src/servidor.ts --ensaio",
+    "start": "node --import tsx src/servidor.ts",
+    "ensaio": "node --import tsx src/servidor.ts --ensaio",
     "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },

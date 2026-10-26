@@ -13,6 +13,7 @@
     "dev": "tsx watch src/servidor.ts",
     "start": "tsx src/servidor.ts",
     "banco:limpar": "tsx src/banco/limpar.ts",
+    "banco:preparar": "tsx src/banco/preparar.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
