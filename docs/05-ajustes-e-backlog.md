@@ -18,16 +18,16 @@ Registro dos ajustes identificados. Cada item pode virar uma issue no GitHub, co
 | --- | --- | --- | --- | --- |
 | A-01 | Corrigir `engines`, criar `.node-version`, atualizar README | P0 | Os três indicam o mesmo Node mínimo (24.15.0) | Feito |
 | A-02 | Atualizar `vite` e `jsdom` no catálogo | P0 | `pnpm audit` sem vulnerabilidades altas; `pnpm verificar` verde | Feito |
-| A-03 | Teste de navegação do ecossistema (T-01) | P0 | 8 de 8 filhos abrem pelo hub e voltam, sem erros | Em andamento |
+| A-03 | Teste de navegação do ecossistema (T-01) | P0 | 8 de 8 filhos abrem pelo hub e voltam, sem erros | Feito |
 | A-04 | CI no GitHub Actions | P0 | Verificação e navegação rodam em todo PR | Em andamento |
 
 ## Fase 2 · Publicação
 
 | ID | Ajuste | Prioridade | Pronto quando | Status |
 | --- | --- | --- | --- | --- |
-| A-05 | API ler `PORT` | P0 | Sobe na porta definida pelo provedor | Em andamento |
-| A-06 | Criar `apps/servidor` (com ensaio de produção local) | P0 | API em `/api` e SSR em `/formularios/` num único processo | Em andamento |
-| A-07 | Script `montar-publicacao.mjs` | P0 | Pasta `publicar/` com hub na raiz e filhos nas pastas | Em andamento |
+| A-05 | API ler `PORT` | P0 | Sobe na porta definida pelo provedor | Feito |
+| A-06 | Criar `apps/servidor` (com ensaio de produção local) | P0 | API em `/api` e SSR em `/formularios/` num único processo | Feito |
+| A-07 | Script `montar-publicacao.mjs` | P0 | Pasta `publicar/` com hub na raiz e filhos nas pastas | Feito |
 | A-08 | `vercel.json` | P0 | Rotas internas e encaminhamentos funcionando | Em andamento |
 | A-09 | Deploy no Render | P0 | `/api/saude` responde | A fazer |
 | A-10 | Deploy na Vercel | P0 | Hub publicado | A fazer |
@@ -47,6 +47,7 @@ Registro dos ajustes identificados. Cada item pode virar uma issue no GitHub, co
 | A-19 | Remover ignorados órfãos no ESLint e Prettier | P2 | Sem pastas inexistentes nas configurações | A fazer |
 | A-20 | Carregamento sob demanda no hub | P2 | JavaScript inicial bem abaixo de 685 kB | A fazer |
 | A-21 | Fontes só com alfabeto latino | P2 | Build sem cirílico, grego e vietnamita | A fazer |
+| A-25 | Migrar para o ESLint 10 | P2 | `pnpm install` sem aviso de ESLint descontinuado; `pnpm lint` verde | A fazer |
 
 ## Fase 4 · Documentação e processo
 
@@ -60,6 +61,8 @@ Registro dos ajustes identificados. Cada item pode virar uma issue no GitHub, co
 
 | Data | Ajuste |
 | --- | --- |
+| 26/10/2026 | A-05 a A-07 verificados no ensaio de produção: `pnpm ensaio:producao` e T-01 com `URL_BASE` em 11 de 11 (26 s). A-08 fica em andamento até o deploy na Vercel (A-10) |
+| 26/10/2026 | A-03 verificado: `pnpm test:navegacao` com 11 de 11 testes passando em desenvolvimento (1,9 min) |
 | 24/10/2026 | A-05 a A-08 escritos: API lê `PORT`, `apps/servidor` (com `pnpm ensaio:producao`), `scripts/montar-publicacao.mjs` e `vercel.json`; aguardando verificação |
 | 24/10/2026 | A-03 e A-04 escritos: pacote `packages/testes-e2e` (T-01) e `.github/workflows/ci.yml`; aguardando verificação |
 | 24/10/2026 | A-01 e A-02 verificados (`pnpm install`, `pnpm verificar`, `pnpm audit --audit-level high`) |

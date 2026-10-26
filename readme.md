@@ -77,12 +77,17 @@ components/
 │   ├── pelada/        06 · hooks puros, vagas, espera e sorteio
 │   ├── laboratorio/   07 · 17 lições em MDX com demo, código e teste
 │   ├── trilha/        08 · 116 aprendizados e o mapa da stack
-│   └── api/           Hono + Drizzle + PGlite (Postgres em WebAssembly)
+│   ├── api/           Hono + Drizzle + PGlite (Postgres em WebAssembly)
+│   └── servidor/      produção: API em /api e SSR do 04 num único processo
 ├── 1-flix/            01 · catálogo de vídeos (TanStack Query)
 ├── packages/
 │   ├── ui/            tokens, componentes, hooks e mapa de endereços
 │   ├── contratos/     esquemas Zod compartilhados entre front e API
-│   └── config/        tsconfig base 
+│   ├── config/        tsconfig base
+│   └── testes-e2e/    Playwright do ecossistema (navegação hub ↔ filhos)
+├── scripts/           montagem da pasta publicar/ (site estático)
+├── docs/              planos de arquitetura, testes, hospedagem e backlog
+└── vercel.json        publicação na Vercel, com /api e /formularios no Render
 ```
 
 Cada projeto tem o próprio README, com telas, regras de negócio numeradas, estrutura e stack.
@@ -92,7 +97,7 @@ Cada projeto tem o próprio README, com telas, regras de negócio numeradas, est
 - Uma instalação só (pnpm workspaces) e um catálogo de versões para todos.
 - TypeScript estrito, CSS Modules (Tailwind só no 03) e os tokens de `@components/ui`.
 - Regras de negócio em funções puras, validadas com Zod e testadas sem tela.
-- Testes com Vitest, Testing Library e axe em todos os projetos; Playwright no 04.
+- Testes com Vitest, Testing Library e axe em todos os projetos; Playwright no 04 e na navegação do ecossistema.
 - Estado derivado sempre que possível; filtros e abas na URL quando fazem sentido.
 - Endereços entre projetos vêm de um mapa único (`@components/ui/ecossistema`).
 - Comentário só no início e no fim de cada arquivo e no início de cada função.
