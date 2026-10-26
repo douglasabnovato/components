@@ -17,6 +17,7 @@ export default tseslint.config(
       '**/dist/**',
       '**/coverage/**',
       '**/build/**',
+      'publicar/**',
       '**/.react-router/**',
       '**/test-results/**',
       '**/playwright-report/**',
