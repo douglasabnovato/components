@@ -2,10 +2,10 @@
  * Conexão com o banco: PGlite (Postgres em WebAssembly, sem instalar nada)
  * embrulhado pelo Drizzle. Sem pasta, o banco vive só na memória (testes),
  * e reiniciarBanco devolve esse banco ao estado inicial sem abrir outro.
- * Com memoriaReduzida, o Postgres usa áreas de trabalho pequenas, para caber
- * em instâncias de 512 MB (servidor de produção).
+ * Com memoriaReduzida, o Postgres passa a usar áreas de memória pequenas, para
+ * caber em instâncias de 512 MB (servidor de produção).
  */
-import { PGlite, type PGliteOptions } from '@electric-sql/pglite'
+import { PGlite } from '@electric-sql/pglite'
 import { drizzle } from 'drizzle-orm/pglite'
 import * as esquema from './esquema'
 import { migrar } from './migracao'
@@ -18,34 +18,32 @@ export type OpcoesBanco = {
   memoriaReduzida?: boolean
 }
 
-/* Memória inicial do WebAssembly no modo econômico (o padrão do PGlite é 128 MB). */
-const MEMORIA_INICIAL_ECONOMICA = 64 * 1024 * 1024
+/*
+ * Áreas de memória do Postgres no modo econômico, suficientes para os dados de
+ * exemplo. O PGlite ignora parâmetros -c na partida, então elas são gravadas
+ * com ALTER SYSTEM (postgresql.auto.conf) e valem a partir da próxima abertura
+ * do mesmo banco: o build prepara e fecha o banco, e o servidor já abre com elas.
+ * A memória inicial do WebAssembly (128 MB) é fixa no pglite.wasm.
+ */
+const PARAMETROS_ECONOMICOS: Record<string, string> = {
+  shared_buffers: '16MB',
+  work_mem: '2MB',
+  maintenance_work_mem: '8MB',
+  temp_buffers: '2MB',
+}
 
-/* Áreas de memória do Postgres no modo econômico, suficientes para os dados de exemplo. */
-const PARAMETROS_ECONOMICOS = [
-  '-c',
-  'shared_buffers=16MB',
-  '-c',
-  'work_mem=2MB',
-  '-c',
-  'maintenance_work_mem=8MB',
-  '-c',
-  'temp_buffers=2MB',
-]
-
-/* Opções do PGlite conforme o modo de memória. */
-function opcoesDoPglite(memoriaReduzida: boolean): PGliteOptions {
-  if (!memoriaReduzida) return {}
-  return {
-    initialMemory: MEMORIA_INICIAL_ECONOMICA,
-    startParams: [...PGlite.defaultStartParams, ...PARAMETROS_ECONOMICOS],
+/* Grava os parâmetros econômicos no banco, para valerem na próxima abertura. */
+async function gravarParametrosEconomicos(cliente: PGlite) {
+  for (const [nome, valor] of Object.entries(PARAMETROS_ECONOMICOS)) {
+    await cliente.exec(`ALTER SYSTEM SET ${nome} = '${valor}'`)
   }
 }
 
 /* Abre o banco, aplica a migração e devolve o Drizzle e o cliente bruto. */
 export async function abrirBanco(opcoes: OpcoesBanco = {}) {
-  const cliente = new PGlite(opcoes.pasta, opcoesDoPglite(opcoes.memoriaReduzida ?? false))
+  const cliente = new PGlite(opcoes.pasta)
   await migrar(cliente, opcoes.comExemplos ?? true)
+  if (opcoes.memoriaReduzida) await gravarParametrosEconomicos(cliente)
   const banco = drizzle({ client: cliente, schema: esquema })
   return { banco, cliente }
 }

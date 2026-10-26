@@ -34,8 +34,12 @@ O servidor sobe em `http://localhost:3333`, ou na porta definida em `PORT`.
 
 | Modo | Comando | Uso |
 | --- | --- | --- |
-| Produção | `pnpm start` (`tsx src/servidor.ts`) | Render |
-| Ensaio | `pnpm ensaio:producao` (`tsx src/servidor.ts --ensaio`) | Validar localmente antes de publicar; o T-01 pode rodar contra ele com `URL_BASE=http://localhost:3333/` |
+| Produção | `pnpm start` (`node --import tsx src/servidor.ts`) | Render, com o Start Command `cd apps/servidor && node --max-old-space-size=200 --import tsx src/servidor.ts` |
+| Ensaio | `pnpm ensaio:producao` (`node --import tsx src/servidor.ts --ensaio`) | Validar localmente antes de publicar; o T-01 pode rodar contra ele com `URL_BASE=http://localhost:3333/` |
+
+## Memória
+
+O servidor roda num único processo Node (`node --import tsx`, sem processos intermediários) e abre o banco no modo econômico (`memoriaReduzida`), para caber nos 512 MB do Render gratuito. No log, as linhas `[memória]` mostram o uso em cada etapa da subida, e a mensagem do banco indica se ele veio pronto do build (`banco:preparar`). Detalhes em [04 · Hospedagem](../../docs/04-hospedagem.md#memória-limite-de-512-mb).
 
 ## Variáveis de ambiente
 

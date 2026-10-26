@@ -11,7 +11,7 @@ pnpm install
 pnpm dev:api
 ```
 
-A API sobe em http://localhost:3333. O banco fica na pasta `apps/api/.dados` (ignorada pelo Git) e é criado com dados de exemplo na primeira vez. Para começar do zero: `pnpm --filter @components/api banco:limpar`.
+A API sobe em http://localhost:3333. O banco fica na pasta `apps/api/.dados` (ignorada pelo Git) e é criado com dados de exemplo na primeira vez. Para começar do zero: `pnpm --filter @components/api banco:limpar`. Para criar o banco já com os exemplos, sem subir a API (usado no build do Render): `pnpm --filter @components/api banco:preparar`.
 
 Em produção, a API roda dentro do [servidor de produção](../servidor/README.md), sob o prefixo `/api`.
 

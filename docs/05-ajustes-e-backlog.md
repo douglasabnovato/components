@@ -33,6 +33,7 @@ Registro dos ajustes identificados. Cada item pode virar uma issue no GitHub, co
 | A-09 | Deploy no Render | P0 | `/api/saude` responde pelo Render e pela Vercel | A fazer |
 | A-10 | Deploy na Vercel | P0 | Hub publicado | Feito |
 | A-11 | Fumaça em produção (T-05) | P0 | T-01 verde contra a URL publicada | A fazer |
+| A-38 | Servidor dentro de 512 MB no Render | P0 | Banco preparado no build, Postgres em modo econômico, processo único e log de memória; serviço Live sem `Out of memory` | Em andamento |
 
 ## Fase 3 · Clicáveis e qualidade
 
@@ -81,6 +82,8 @@ Itens detalhados em [06 · Próximos passos](06-proximos-passos.md).
 
 | Data | Ajuste |
 | --- | --- |
+| 26/10/2026 | A-38: primeiro deploy no Render estourou 512 MB na subida (PGlite com `initdb` a cada início). Banco preparado no build (`banco:preparar`), Postgres em modo econômico (`memoriaReduzida`), servidor em processo único e log de memória por etapa. A primeira versão usava `initialMemory` de 64 MB, abaixo do piso de 128 MB do `pglite.wasm` (`LinkError`); opção removida. O teste novo mostrou que o PGlite ignora `-c shared_buffers` na partida (continuava 128MB); os parâmetros passam a ser gravados com `ALTER SYSTEM` no preparo. Medição local: 229 MB no processo antes de abrir o banco |
+| 26/10/2026 | Render: `corepack enable` falha (pnpm do Render em `/usr/bin`, somente leitura); o build passa a chamar `corepack pnpm` |
 | 26/10/2026 | Documentação atualizada (D-02): estado atual, arquitetura vigente, guia de operação da hospedagem, próximos passos (06), ADR 0003 aceita, ADR 0004 e READMEs de `servidor`, `testes-e2e` e `ui`. Removidos da raiz os arquivos de diagnóstico da Fase 0 |
 | 26/10/2026 | A-10 feito: projeto `components` na Vercel (preset Other), publicado em https://components-dusky-nine.vercel.app. Parte dinâmica aguarda o A-09 |
 | 26/10/2026 | PR #9 (`feature/spa-models` → `developer-mvp`) e PR #10 (`developer-mvp` → `main`) mesclados: 35 arquivos na `main` |

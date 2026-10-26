@@ -29,6 +29,7 @@ Itens que fecham a definição de MVP estável.
 | ID | Item | Motivação | Pronto quando |
 | --- | --- | --- | --- |
 | A-09 | Serviço `components-servidor` no Render | API e Formulários não respondem no site publicado | `/api/saude` responde pelo Render e pela Vercel |
+| A-38 | Servidor dentro de 512 MB | O primeiro deploy estourou a memória do plano gratuito na subida | Serviço Live, sem `Out of memory`, com a memória de cada etapa no log |
 | A-08 | Validar o `vercel.json` em produção | Rotas internas e encaminhamentos só se comprovam publicados | `/trilha/aprendizado/1`, `/api/saude` e `/formularios/` funcionam pelo domínio da Vercel |
 | A-11 | Fumaça em produção (T-05) | Provar que o site publicado se comporta como o ensaio | T-01 com `URL_BASE` do site publicado em 11 de 11 |
 | A-04 | Confirmar o CI na `main` | O CI só cumpre o papel se estiver verde na branch publicada | Execução verde do merge na `main` |
@@ -107,7 +108,7 @@ Itens que melhoram desempenho, segurança e operação. Nenhum bloqueia o MVP.
 
 ## Sequência recomendada
 
-1. **A-09 → A-08 → A-11:** sobe o Render, valida as regras da Vercel e roda a fumaça. Fecha a publicação.
+1. **A-38 → A-09 → A-08 → A-11:** cabe na memória, sobe o Render, valida as regras da Vercel e roda a fumaça. Fecha a publicação.
 2. **A-04 → A-27:** confirma o CI e torna-o obrigatório. A partir daqui, nada entra na `main` sem verificação.
 3. **A-26:** correção pequena e visível para todo visitante.
 4. **A-12 → A-13:** mede e corrige os clicáveis. Fecha o critério central do MVP.

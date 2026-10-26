@@ -62,8 +62,8 @@ O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta 
 | Branch | `main` |
 | Region | Oregon (US West), a mesma dos outros serviços da conta |
 | Root Directory | vazio (raiz do repositório) |
-| Build Command | `corepack pnpm install --frozen-lockfile && corepack pnpm --filter @components/formularios build` |
-| Start Command | `corepack pnpm --filter @components/servidor start` |
+| Build Command | `corepack pnpm install --frozen-lockfile && corepack pnpm --filter @components/formularios build && corepack pnpm --filter @components/api banco:preparar` |
+| Start Command | `cd apps/servidor && node --max-old-space-size=200 --import tsx src/servidor.ts` |
 | Instance Type | Free |
 
 4. Em **Environment Variables**:
@@ -84,6 +84,21 @@ O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta 
 | Usar o pnpm do projeto | `corepack pnpm ...` | Roda a versão do campo `packageManager` (10.28.0). O Render já traz um pnpm próprio em `/usr/bin`, numa área somente leitura; por isso `corepack enable` falha ali (`EROFS: read-only file system`) e o Corepack é chamado diretamente |
 | Instalar | `pnpm install --frozen-lockfile` | Falha se o `pnpm-lock.yaml` estiver desatualizado, em vez de instalar versões diferentes |
 | Compilar o Formulários | `pnpm --filter @components/formularios build` | Gera `build/server` e `build/client`, que o servidor carrega. A API e o servidor rodam direto do TypeScript, com `tsx` |
+| Preparar o banco | `pnpm --filter @components/api banco:preparar` | Cria o banco com os dados de exemplo em `apps/api/.dados`. O Render guarda essa pasta com o resultado do build, e o servidor sobe sem rodar o `initdb` |
+
+O Start Command não usa o Corepack nem o pnpm: chama o Node direto, num único processo (ver Memória). Salvar Build ou Start Command no painel do Render já dispara um novo deploy.
+
+### Memória (limite de 512 MB)
+
+O plano gratuito encerra o serviço acima de 512 MB (`Out of memory (used over 512Mi)`). Boa parte da memória é do banco: o PGlite é um Postgres em WebAssembly dentro do processo, com um piso fixo de 128 MB declarado no próprio `pglite.wasm`. Essa memória fica fora do limite do JavaScript, então `--max-old-space-size` não a controla. Três medidas mantêm o servidor dentro do limite:
+
+| Medida | Onde | Efeito |
+| --- | --- | --- |
+| Banco criado no build | `banco:preparar` no Build Command | Evita o `initdb` na subida, o maior pico |
+| Modo econômico do Postgres | `abrirBanco({ memoriaReduzida: true })` no preparo e no servidor | `shared_buffers` de 16 MB e áreas de trabalho pequenas, gravados com `ALTER SYSTEM` no preparo e em vigor quando o servidor abre o banco. O PGlite ignora parâmetros `-c` na partida |
+| Um único processo Node | Start Command com `node --import tsx` | Sem Corepack, pnpm e processo pai do tsx ocupando memória |
+
+O log do servidor mostra a memória em cada etapa (`[memória] início`, `banco aberto`, `Formulários carregado`, `porta aberta`), se o banco veio pronto do build e o `shared_buffers` em vigor (deve ser 16MB). A aba **Metrics** do Render mostra o uso ao longo do tempo. Se ainda faltar memória, a próxima medida é compilar o servidor para JavaScript no build, eliminando o tsx e o esbuild da execução.
 
 ## Vercel (parte estática)
 
@@ -154,7 +169,10 @@ Para voltar a uma versão anterior: na Vercel, **Deployments → (versão anteri
 | Sintoma | Causa provável | Ação |
 | --- | --- | --- |
 | Render: `EROFS: read-only file system, unlink '/usr/bin/pnpm'` | `corepack enable` tentando substituir o pnpm do Render | Usar `corepack pnpm ...` nos comandos, sem `corepack enable` |
-| Render: `pnpm: command not found` ou versão errada do pnpm | Comando sem o Corepack | Conferir `corepack pnpm` no Build e no Start Command |
+| Render: `pnpm: command not found` ou versão errada do pnpm | Comando sem o Corepack | Conferir `corepack pnpm` no Build Command |
+| Render: `Out of memory (used over 512Mi)` | Pico de memória na subida | Conferir o `banco:preparar` no Build Command e o Start Command de processo único; ver a seção Memória e o log `[memória]` |
+| Render ou local: `LinkError ... memory import has ... pages which is smaller than the declared initial` | Memória inicial do PGlite abaixo do piso de 128 MB do `pglite.wasm` | Não usar a opção `initialMemory` abaixo de 128 MB |
+| Log mostra `Banco ausente: criando agora.` ou `shared_buffers de 128MB` | Banco não foi preparado no build | Conferir o fim do Build Command |
 | Render: erro de versão do Node ou `Unsupported engine` | `NODE_VERSION` ausente ou diferente | Definir `24.22.1` e fazer **Manual Deploy** |
 | Render ou Vercel: `ERR_PNPM_OUTDATED_LOCKFILE` | `pnpm-lock.yaml` desatualizado | Rodar `pnpm install` local, fazer commit do lockfile e push |
 | Vercel usa outra versão do pnpm | Vercel ignorou o `packageManager` | Variável `ENABLE_EXPERIMENTAL_COREPACK=1` no projeto e novo deploy |
