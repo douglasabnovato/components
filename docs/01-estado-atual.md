@@ -19,14 +19,14 @@ Monorepo pnpm com um **hub** (projeto 0) que apresenta **8 projetos filhos** com
 | 6 | Lista da Pelada | `apps/pelada` | Vagas, lista de espera, sorteio equilibrado | Hooks puros, reducer | 3 | Não |
 | 7 | Laboratório | `apps/laboratorio` | 17 lições em MDX com demo, código e teste | MDX | 18 | Não |
 | 8 | Trilha React | `apps/trilha` | 116 aprendizados em 12 módulos | Estado na URL, `useSyncExternalStore` | 3 | Não |
-| — | API | `apps/api` | Clientes e tarefas | Hono, Drizzle, PGlite | 1 | — |
+| — | API | `apps/api` | Clientes e tarefas | Hono, Drizzle, PGlite | 2 | — |
 | — | Servidor | `apps/servidor` | Produção: API em `/api` e SSR em `/formularios/`; ensaio local do site completo | Hono, React Router | 1 | — |
 | — | UI | `packages/ui` | Componentes, hooks, tokens e mapa do ecossistema | React | 3 | — |
 | — | Contratos | `packages/contratos` | Esquemas Zod compartilhados entre front e API | Zod | 1 | — |
 | — | Config | `packages/config` | TypeScript base | — | 0 | — |
 | — | Testes de ponta a ponta | `packages/testes-e2e` | Navegação do ecossistema (T-01) | Playwright | 1 | — |
 
-**Totais:** 16 pacotes no workspace (contando a raiz) e 45 arquivos de teste.
+**Totais:** 16 pacotes no workspace (contando a raiz) e 46 arquivos de teste (o 46º, `apps/api/src/testes/conexao.test.ts`, entrou com o A-38).
 
 ## Arquitetura
 
@@ -79,10 +79,10 @@ Em desenvolvimento, um link só funciona se o projeto de destino estiver rodando
 | Parte | Onde | Situação |
 | --- | --- | --- |
 | Hub e 7 filhos estáticos | Vercel · https://components-dusky-nine.vercel.app | ✅ No ar |
-| API (`/api`) | Render · `components-servidor` | ⏳ Serviço a criar (A-09) |
-| Formulários (`/formularios/`) | Render · `components-servidor` | ⏳ Serviço a criar (A-09) |
+| API (`/api`) | Render · `components-servidor` | ⏳ Serviço criado; não sobe por falta de memória (A-38, depois A-09) |
+| Formulários (`/formularios/`) | Render · `components-servidor` | ⏳ Serviço criado; não sobe por falta de memória (A-38, depois A-09) |
 
-Até o A-09, a Tarefas e o Cadastro no modo API abrem, mas não carregam dados, e o Formulários não abre pelo domínio publicado.
+Até o A-38 e o A-09, a Tarefas e o Cadastro no modo API abrem, mas não carregam dados, e o Formulários não abre pelo domínio publicado.
 
 ## Ambiente de desenvolvimento
 
@@ -97,7 +97,7 @@ Até o A-09, a Tarefas e o Cadastro no modo API abrem, mas não carregam dados, 
 
 | Risco | Impacto | Tratamento |
 | --- | --- | --- |
-| Parte dinâmica fora do ar | API e Formulários com erro no site publicado | A-09 |
+| Parte dinâmica fora do ar | API e Formulários com erro no site publicado | A-38, A-09 |
 | `main` sem proteção | Regressões podem entrar com o CI vermelho | A-27 |
 | Clicáveis dos filhos não testados | Botões quebrados só aparecem manualmente | A-12, A-13 |
 | Render gratuito hiberna | Primeira visita à API e ao Formulários leva cerca de 1 minuto | Aceito no MVP ([ADR 0003](adr/0003-hospedagem-vercel-render.md)) |

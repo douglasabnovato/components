@@ -7,7 +7,7 @@ Guia de operação da publicação: onde cada parte roda, como foi configurada e
 | Parte | Provedor | Endereço | Situação |
 | --- | --- | --- | --- |
 | Hub e 7 filhos estáticos | Vercel (Hobby) | https://components-dusky-nine.vercel.app | ✅ No ar |
-| API e Formulários (`apps/servidor`) | Render (Free) | https://components-servidor.onrender.com | ⏳ A criar (A-09) |
+| API e Formulários (`apps/servidor`) | Render (Free) | https://components-servidor.onrender.com | ⏳ Serviço criado; não sobe por falta de memória (A-38) |
 
 O visitante usa só o domínio da Vercel. Os caminhos `/api` e `/formularios` são repassados ao Render pelo `vercel.json`, sem o visitante perceber.
 

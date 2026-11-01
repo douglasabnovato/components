@@ -11,6 +11,7 @@ Documentação técnica do monorepo **components**: estado atual, arquitetura, t
 | [05 · Ajustes e backlog](05-ajustes-e-backlog.md) | Ajustes identificados, prioridade, status e histórico |
 | [06 · Próximos passos](06-proximos-passos.md) | O que falta para o MVP estável e a evolução depois dele, sob a ótica de engenharia |
 | [ADRs](adr/) | Decisões de arquitetura registradas (0001 a 0004) |
+| [Revisão independente](claudeia/01-relatorio.md) | Avaliação externa de 27/10/2026, plano, registro e roteiros de teste (`docs/claudeia/`) |
 
 Documentação por pacote:
 
