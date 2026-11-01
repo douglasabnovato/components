@@ -27,7 +27,8 @@ Provar automaticamente que **todo elemento clicável funciona** e impedir regres
 | Pelada, Trilha, UI | 3 cada | Adequado |
 | Cadastro, Heróis, Tarefas | 2 cada | Ampliar fluxos principais |
 | **Hub** | **1** | **Insuficiente para o centro da navegação** |
-| API, Contratos, Servidor | 1 cada | Adequado ao tamanho |
+| API | 2 | Adequado ao tamanho |
+| Contratos, Servidor | 1 cada | Adequado ao tamanho |
 | Testes de ponta a ponta | 1 (T-01, 11 casos) | Cobre a navegação entre projetos |
 
 ## Novos testes

@@ -78,10 +78,27 @@ Itens detalhados em [06 · Próximos passos](06-proximos-passos.md).
 | A-36 | Domínio mais legível na Vercel | P2 | Domínio escolhido, refletido no `ORIGENS` e na documentação | A fazer |
 | A-37 | Banco persistente (condicional) | P2 | Só se a persistência virar requisito; decisão em ADR | A fazer |
 
+## Fase 6 · Revisão independente (27/10/2026)
+
+Itens propostos na [revisão independente](claudeia/01-relatorio.md); detalhes e critérios em [claudeia/02](claudeia/02-plano-e-arquitetura.md).
+
+| ID | Ajuste | Prioridade | Pronto quando | Status |
+| --- | --- | --- | --- | --- |
+| A-39 | Teste de memória da subida do servidor no CI | P1 | CI sobe `apps/servidor` com banco preparado e falha se o RSS em `porta aberta` passar de um limite (ex.: 400 MB) | A fazer |
+| A-40 | Plano B do A-38 registrado em ADR | P1 | ADR 0005 com as alternativas (servidor compilado, Postgres gerenciado, outro provedor) e o gatilho de troca | A fazer |
+| A-41 | Confirmar o tempo-limite do repasse da Vercel com o Render dormindo | P1 | Medido: primeira chamada a `/api/saude` e `/formularios/` pela Vercel com o Render dormindo; resultado registrado no 04 | A fazer |
+| A-42 | Aviso de "servidor acordando" nas telas que usam o Render | P2 | Tarefas, Cadastro (modo API) e acesso ao Formulários informam a espera em vez de erro seco; decisão de produto | A fazer |
+| A-43 | `pnpm format:check` no `verificar` ou no CI | P2 | CI falha com arquivo fora do Prettier | A fazer |
+| A-44 | ESLint também em `*.js` e `*.mjs` | P2 | `scripts/montar-publicacao.mjs` e `eslint.config.js` cobertos pelo lint | A fazer |
+| A-45 | Metadados de compartilhamento do hub | P2 | `index.html` do hub com Open Graph, Twitter card e `canonical`; decisão de produto (texto e imagem) | A fazer |
+| A-46 | Limite de corpo e de taxa na API pública | P2 | `POST`/`PUT`/`DELETE` com limite de tamanho e de requisições por IP, sem afetar o uso normal das demos | A fazer |
+| A-47 | Dados de visitantes visíveis a outros visitantes no site publicado | P1 | Decisão de produto registrada: Formulários (`/formularios/mensagens`) e Cadastro mantêm a demonstração, mas avisam para não usar dados reais ou isolam o que cada visitante vê (por exemplo, por sessão) | A fazer |
+
 ## Histórico
 
 | Data | Ajuste |
 | --- | --- |
+| 27/10/2026 | Revisão independente (`docs/claudeia/`): itens A-39 a A-47 propostos; contagem de testes (46) e situação do Render (serviço criado, A-38) corrigidas em 01, 03 e 04; indentação do `apps/hub/vite.config.ts` corrigida. Nenhum status existente alterado |
 | 26/10/2026 | A-38: primeiro deploy no Render estourou 512 MB na subida (PGlite com `initdb` a cada início). Banco preparado no build (`banco:preparar`), Postgres em modo econômico (`memoriaReduzida`), servidor em processo único e log de memória por etapa. A primeira versão usava `initialMemory` de 64 MB, abaixo do piso de 128 MB do `pglite.wasm` (`LinkError`); opção removida. O teste novo mostrou que o PGlite ignora `-c shared_buffers` na partida (continuava 128MB); os parâmetros passam a ser gravados com `ALTER SYSTEM` no preparo. Medição local: 229 MB no processo antes de abrir o banco |
 | 26/10/2026 | Render: `corepack enable` falha (pnpm do Render em `/usr/bin`, somente leitura); o build passa a chamar `corepack pnpm` |
 | 26/10/2026 | Documentação atualizada (D-02): estado atual, arquitetura vigente, guia de operação da hospedagem, próximos passos (06), ADR 0003 aceita, ADR 0004 e READMEs de `servidor`, `testes-e2e` e `ui`. Removidos da raiz os arquivos de diagnóstico da Fase 0 |
