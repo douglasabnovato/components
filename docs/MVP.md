@@ -4,14 +4,14 @@
 
 | # | Critério | Como verificar | Situação |
 |---|---|---|---|
-| 1 | Problema e público claros | Dá para explicar em uma frase | Parcial |
-| 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Não atende |
+| 1 | Problema e público claros | Dá para explicar em uma frase | Atende: um hub para avaliar 7 aplicações React de um monorepo |
+| 2 | Hipótese a validar | Existe uma aposta escrita, com meta | Atende: proposta abaixo |
 | 3 | Fluxo principal completo | Uma pessoa conclui sem ajuda | Parcial |
-| 4 | Escopo enxuto | O que não entra está registrado | Parcial |
+| 4 | Escopo enxuto | O que não entra está registrado | Atende: lista abaixo |
 | 5 | Medição de uso | A métrica principal é coletada | Não atende |
 | 6 | Falhas tratadas | Erro, vazio e carregamento têm resposta clara | Parcial |
-| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende: 3,4 s em 01/11/2026 |
-| 8 | Acessibilidade básica | Lighthouse e teclado | Parcial: Lighthouse 94; teclado sem falha na página inicial |
+| 7 | Desempenho aceitável | LCP de até 2,5 s no celular | Não atende: 3,32 s em 02/11/2026; o limite é o JavaScript da primeira carga |
+| 8 | Acessibilidade básica | Lighthouse e teclado | Parcial: Lighthouse 97; Tab sem falha na página inicial; aplicativos internos não percorridos |
 | 9 | Segurança e conformidade | Riscos decididos; termos cumpridos | Parcial |
 | 10 | Entrega confiável | Publicação só depois de CI verde | Parcial |
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende |
@@ -32,3 +32,13 @@ Lighthouse 12.8.2 local, móvel, na página inicial do site publicado. O resulta
 **Falhas de acessibilidade:** contraste em textos dos cartões de vídeo e tamanho dos pontos do carrossel.
 
 **Teclado:** 40 tabulações em 412 px, nas quais todo elemento teve nome e foco visível. Testei só a sequência de foco da página inicial, sem percorrer os aplicativos internos nem usar leitor de tela.
+
+## Revisão de 02/11/2026
+
+**Hipótese (proposta, sem validação):** Se o hub mostrar 7 aplicações React funcionando em um só lugar, quem avalia abre ao menos 2 delas na mesma visita.
+
+**Fora do MVP (proposta):** Novas aplicações, conta única entre as aplicações e publicação do pacote de interface.
+
+**Medição:** Lighthouse 12.8.2 local, móvel, 3 execuções no site publicado. LCP 3,34 / 3,11 / 3,32 s (mediana 3,32 s), acessibilidade 97. O alerta de contraste que resta aponta cor de tema durante a animação: na página parada, a seção tem fundo claro e o texto escuro, mas não revisei cada elemento. O resultado varia entre execuções, e não houve teste em celular real.
+
+**Critério 5:** segue sem atender, porque nada coleta uso; depende de uma conta de medição do responsável.
