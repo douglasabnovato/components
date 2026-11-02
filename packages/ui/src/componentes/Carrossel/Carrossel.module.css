@@ -52,20 +52,38 @@
   gap: var(--esp-2);
 }
 
+/* A área de toque tem 24 px; o ponto visível é desenhado dentro dela */
 .ponto {
-  width: 0.75rem;
-  height: 0.75rem;
+  position: relative;
+  min-width: 1.5rem;
+  height: 1.5rem;
   padding: 0;
   border: 0;
+  background: transparent;
+  cursor: pointer;
+  transition: min-width var(--duracao) var(--curva);
+}
+
+.ponto::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
   border-radius: var(--raio-pilula);
   background: var(--borda);
-  cursor: pointer;
+  transform: translate(-50%, -50%);
   transition:
     width var(--duracao) var(--curva),
     background-color var(--duracao) var(--curva);
 }
 
 .ponto[aria-current='true'] {
+  min-width: 2.5rem;
+}
+
+.ponto[aria-current='true']::before {
   width: 2.25rem;
   background: var(--texto);
 }
