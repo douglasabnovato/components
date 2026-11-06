@@ -26,6 +26,8 @@ export type Projeto = {
   fase: number
   status: Status
   href: string
+  /** Pasta do projeto no GitHub, para quem quer ler o código. */
+  codigo: string
 }
 
 export const site = {
@@ -33,6 +35,11 @@ export const site = {
   autor: 'Douglas Novato',
   github: 'https://github.com/douglasabnovato/components',
   perfil: 'https://github.com/douglasabnovato',
+}
+
+/* Endereço da pasta na main do GitHub. */
+function codigoDaPasta(pasta: string) {
+  return `${site.github}/tree/main/${pasta}`
 }
 
 export const projetos: Projeto[] = [
@@ -61,6 +68,7 @@ export const projetos: Projeto[] = [
     fase: 1,
     status: 'publicado',
     href: enderecoDoProjeto(1),
+    codigo: codigoDaPasta('1-flix'),
   },
   {
     numero: 2,
@@ -87,6 +95,7 @@ export const projetos: Projeto[] = [
     fase: 4,
     status: 'publicado',
     href: enderecoDoProjeto(2),
+    codigo: codigoDaPasta('apps/cadastro'),
   },
   {
     numero: 3,
@@ -113,6 +122,7 @@ export const projetos: Projeto[] = [
     fase: 6,
     status: 'publicado',
     href: enderecoDoProjeto(3),
+    codigo: codigoDaPasta('apps/herois'),
   },
   {
     numero: 4,
@@ -139,6 +149,7 @@ export const projetos: Projeto[] = [
     fase: 7,
     status: 'publicado',
     href: enderecoDoProjeto(4),
+    codigo: codigoDaPasta('apps/formularios'),
   },
   {
     numero: 5,
@@ -165,6 +176,7 @@ export const projetos: Projeto[] = [
     fase: 5,
     status: 'publicado',
     href: enderecoDoProjeto(5),
+    codigo: codigoDaPasta('apps/tarefas'),
   },
   {
     numero: 6,
@@ -191,6 +203,7 @@ export const projetos: Projeto[] = [
     fase: 3,
     status: 'publicado',
     href: enderecoDoProjeto(6),
+    codigo: codigoDaPasta('apps/pelada'),
   },
   {
     numero: 7,
@@ -217,6 +230,7 @@ export const projetos: Projeto[] = [
     fase: 8,
     status: 'publicado',
     href: enderecoDoProjeto(7),
+    codigo: codigoDaPasta('apps/laboratorio'),
   },
   {
     numero: 8,
@@ -243,6 +257,7 @@ export const projetos: Projeto[] = [
     fase: 2,
     status: 'publicado',
     href: enderecoDoProjeto(8),
+    codigo: codigoDaPasta('apps/trilha'),
   },
 ]
 
