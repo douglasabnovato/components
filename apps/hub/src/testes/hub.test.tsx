@@ -42,6 +42,17 @@ describe('Página do hub', () => {
     expect(within(nav).getAllByRole('link', { name: /No ar/ }).length).toBeGreaterThanOrEqual(8)
   })
 
+  it('liga cada seção à pasta do código no GitHub', () => {
+    render(<App />)
+    for (const p of projetos) {
+      const secao = screen.getByRole('region', { name: p.titulo })
+      const link = within(secao).getByRole('link', { name: `Ver o código de ${p.nome}` })
+      expect(link).toHaveAttribute('href', p.codigo)
+      expect(p.codigo).toMatch(/^https:\/\/github\.com\/douglasabnovato\/components\/tree\/main\//)
+    }
+    expect(new Set(projetos.map((p) => p.codigo)).size).toBe(8)
+  })
+
   it('não tem violações do axe', async () => {
     const { container } = render(<App />)
     expect(await violacoesAxe(container)).toEqual([])

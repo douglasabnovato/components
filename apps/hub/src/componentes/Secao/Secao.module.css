@@ -138,6 +138,18 @@
   font-size: 0.875rem;
 }
 
+.codigo {
+  color: inherit;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.codigo:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
 @media (max-width: 52rem) {
   .rodape {
     grid-template-columns: 1fr;

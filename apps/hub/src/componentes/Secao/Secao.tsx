@@ -110,7 +110,7 @@ type ChamadaProps = {
   apoio?: string
 }
 
-/* Botão para abrir o filho; enquanto não publicado, informa a fase. */
+/* Botão para abrir o filho, a fase e o link para a pasta do código. */
 export function ChamadaProjeto({ projeto, variante = 'preenchido', icone, apoio }: ChamadaProps) {
   const publicado = projeto.status === 'publicado'
   const meta = publicado
@@ -137,6 +137,9 @@ export function ChamadaProjeto({ projeto, variante = 'preenchido', icone, apoio 
       <p id={`${projeto.id}-meta`} className={styles.meta}>
         {meta}
       </p>
+      <a href={projeto.codigo} className={styles.codigo}>
+        Ver o código de {projeto.nome}
+      </a>
     </div>
   )
 }
