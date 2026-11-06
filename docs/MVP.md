@@ -58,6 +58,8 @@ Lighthouse 12.8.2 local, móvel, na página inicial do site publicado. O resulta
 | 10 | Parcial | `main` sem proteção (decisão 3 do processo) | #26 |
 | 12 | Atende | README e este arquivo dizem o que está no ar e o que não está, com issue | — |
 
+**Medição depois do merge (06/11/2026):** Lighthouse 12.8.2 local, móvel, no site publicado. LCP 3,41 / 3,35 / 3,94 s (mediana 3,41 s), acessibilidade 97 nas 3 execuções. Uma rodada anterior no mesmo dia deu 4,00 e 3,51 s, e a terceira falhou. A máquina rodava outros processos ao mesmo tempo, então o número pode estar inflado; o critério 7 segue "Não atende" (#23).
+
 **Novo neste ciclo:** cada seção do hub tem o link "Ver o código de …" para a pasta do projeto no GitHub, com teste em `apps/hub/src/testes/hub.test.tsx`.
 
 **Para "Finalizado":** atender 3, 6, 7, 8 e 9 pelo código e pelo servidor (#23, #24, #25, #28). Os critérios 5 e 10 dependem do responsável (#27, #26).
