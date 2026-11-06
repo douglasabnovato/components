@@ -42,3 +42,22 @@ Lighthouse 12.8.2 local, móvel, na página inicial do site publicado. O resulta
 **Medição:** Lighthouse 12.8.2 local, móvel, 3 execuções no site publicado. LCP 3,34 / 3,11 / 3,32 s (mediana 3,32 s), acessibilidade 97. O alerta de contraste que resta aponta cor de tema durante a animação: na página parada, a seção tem fundo claro e o texto escuro, mas não revisei cada elemento. O resultado varia entre execuções, e não houve teste em celular real.
 
 **Critério 5:** segue sem atender, porque nada coleta uso; depende de uma conta de medição do responsável.
+
+## Revisão de 06/11/2026 (ciclo de 03/11/2026)
+
+**Nível:** Produto (N3), 12 critérios. **Resumo:** 5 de 12 atendidos (1, 2, 4, 11 e 12), 5 parciais (3, 6, 8, 9 e 10) e 2 não atendidos (5 e 7). **Finalizado:** não.
+
+| # | Situação em 06/11/2026 | O que falta | Issue |
+|---|---|---|---|
+| 3 | Parcial | O servidor no Render não respondeu em 60 s; Cadastro com API, Tarefas com API e Formulários não funcionam no site | #28 |
+| 5 | Não atende | Nada coleta uso | #27 |
+| 6 | Parcial | As demos tratam erro e vazio nos testes; sem o servidor, o site publicado não mostra a falha da API de forma testada | #28 |
+| 7 | Não atende | LCP 3,32 s (02/11/2026); um só arquivo de 685 KB na primeira carga | #23 |
+| 8 | Parcial | Contraste dos cartões de vídeo; aplicativos internos não percorridos por teclado | #24, #25 |
+| 9 | Parcial | Sem segredo no código; o servidor publicado não pôde ser conferido | #28 |
+| 10 | Parcial | `main` sem proteção (decisão 3 do processo) | #26 |
+| 12 | Atende | README e este arquivo dizem o que está no ar e o que não está, com issue | — |
+
+**Novo neste ciclo:** cada seção do hub tem o link "Ver o código de …" para a pasta do projeto no GitHub, com teste em `apps/hub/src/testes/hub.test.tsx`.
+
+**Para "Finalizado":** atender 3, 6, 7, 8 e 9 pelo código e pelo servidor (#23, #24, #25, #28). Os critérios 5 e 10 dependem do responsável (#27, #26).
