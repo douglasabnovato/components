@@ -4,20 +4,22 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 
 **Site:** https://components-dusky-nine.vercel.app
 
-## Estado e próximos passos (ciclo de 07/11/2026)
+## Estado e próximos passos (ciclo de 09/11/2026)
 
 **O que foi feito**
-- As seções de projeto do hub carregam sob demanda (`React.lazy`). O JavaScript inicial caiu de 685 KB para 241 KB no build de 09/11/2026 (#23).
-- O título do topo aparece no primeiro quadro: a entrada virou animação CSS sem opacidade 0, e o Motion saiu do pacote inicial.
-- O [`docs/MVP.md`](docs/MVP.md) tem uma tabela só, a atual; as anteriores estão no Histórico.
-- Antes (ciclo de 03/11): link "Ver o código de …" em cada seção, área de toque do carrossel (#19) e medições (#21).
+- Sem o servidor, Cadastro (origem API) e Tarefas desistem em 15 s e mostram "A API não respondeu", com um texto próprio do site publicado. Testes de prazo, de 504 e do texto do site.
+- Contraste dos cartões de vídeo corrigido (#24): Lighthouse de acessibilidade 100 no build local, axe sem violações de contraste no celular e no desktop.
+- Teste de teclado nos 8 aplicativos internos (#25), no `test:navegacao` do CI.
+- LCP medido localmente: mediana de 3,88 s, presa no atraso de renderização do topo (#36).
+- Antes (ciclo de 07/11): seções do hub sob demanda, JavaScript inicial de 685 KB para 241 KB (#23).
 
-**Site:** https://components-dusky-nine.vercel.app respondeu 200 em 09/11/2026. O servidor no Render (`/api` e `/formularios`) não respondeu em 30 s; ver #28.
+**Site:** https://components-dusky-nine.vercel.app respondeu 200 em 09/11/2026, ainda com o build da `main`. O servidor no Render (`/api` e `/formularios`) não respondeu em 40 s; ver #28. As mudanças deste ciclo chegam ao site depois do merge na `main` (PR #35).
 
 **O que queremos fazer**
+- #36 Baixar o atraso de renderização do topo (LCP).
 - #23 Medir o LCP no site depois do merge na `main` (meta de 2,5 s).
-- #24 Corrigir o contraste dos cartões de vídeo.
-- #25 Percorrer os aplicativos internos por teclado.
+- #37 Avisar no hub quando o Formulários estiver fora do ar.
+- #34 Pré-carregar as seções do hub no tempo ocioso.
 - #26 Proteger a `main` com PR e CI obrigatórios (responsável).
 - #27 Ligar a medição de uso (responsável).
 - #28 Decidir o servidor no Render (responsável).

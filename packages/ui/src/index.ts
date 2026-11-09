@@ -27,6 +27,7 @@ export {
   TEXTO_CLARO,
   TEXTO_ESCURO,
 } from './utilitarios/contraste'
+export { explicacaoApiFora, PRAZO_API_MS, statusForaDoAr } from './utilitarios/api'
 export {
   ecossistema,
   enderecoDaApi,

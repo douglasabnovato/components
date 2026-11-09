@@ -4,7 +4,7 @@
  * pelo seletor Memória ⇄ API, sem trocar nenhum componente da tela.
  */
 import { ORDENS_CLIENTE, type Cliente, type OrdemCliente } from '@components/contratos'
-import { BotaoPilula, Dialogo, SeletorPilula, useAvisos } from '@components/ui'
+import { BotaoPilula, Dialogo, explicacaoApiFora, SeletorPilula, useAvisos } from '@components/ui'
 import { useDeferredValue, useId, useState } from 'react'
 import { EstadoVazio } from '../../componentes/Estados/Estados'
 import { FormularioCliente } from '../../componentes/FormularioCliente/FormularioCliente'
@@ -140,8 +140,7 @@ export function Clientes() {
               </>
             }
           >
-            Na raiz do monorepo, rode <code>pnpm dev:api</code> e tente de novo. Enquanto isso, a
-            tela funciona igual com os dados em memória.
+            {explicacaoApiFora()} Enquanto isso, a tela funciona igual com os dados em memória.
           </EstadoVazio>
         ) : (
           <>

@@ -59,6 +59,12 @@ export function Carrossel({
 
   const estilo = (largura ? { '--largura-slide': largura } : {}) as CSSProperties
   const totalPaginas = paginas || itens.length
+  /*
+   * No "espiar", os vizinhos aparecem esmaecidos (opacidade 0,55): o texto
+   * deles não tem contraste e o link dele não deve receber foco. Ficam inertes
+   * e o caminho até eles são as setas e a paginação.
+   */
+  const vizinhosInertes = variante === 'espiar' && (setas || paginacao)
 
   return (
     <section
@@ -78,6 +84,7 @@ export function Carrossel({
               aria-roledescription="slide"
               aria-label={`${indice + 1} de ${itens.length}`}
               data-ativo={indice === atual}
+              inert={vizinhosInertes && indice !== atual}
             >
               {item}
             </div>
