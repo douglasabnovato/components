@@ -30,6 +30,7 @@ Plano por ciclo. O estado dos critérios fica só no [`MVP.md`](MVP.md).
 |---|---|---|---|---|
 | Sprint (antes) | 3,91 · 3,68 · 3,43 | 3,68 s | 2012 · 833 · 1355 | ~2,9 a 3,4 s |
 | Esta rodada (depois) | 1,84 · 1,81 · 1,82 · 1,82 | 1,82 s | 891 · 1313 · 3740* · 701 | ~1,37 s |
+| Build final (após a revisão) | 1,81 · 1,81 · 1,81 | 1,81 s | 463 · 582 · 331 | ~1,36 s |
 
 Execuções descartadas: FCP observado acima de ~2 s ou `NO_FCP` (CPU da máquina em 100% com outros agentes). *TBT de uma execução válida no limite (FCP observado 1,9 s).
 
