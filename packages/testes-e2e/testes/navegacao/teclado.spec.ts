@@ -18,13 +18,25 @@ function enderecoDoFilho(numero: number, caminho = '') {
   return enderecoDoProjeto(numero, caminho, !process.env.URL_BASE)
 }
 
-type Parada = { descricao: string; href: string; nome: string; focoVisivel: boolean }
+type Parada = {
+  descricao: string
+  href: string
+  nome: string
+  focoVisivel: boolean
+  mesmoQueAnterior: boolean
+}
 
 /* Lê o elemento focado: descrição curta, nome acessível aproximado e foco visível. */
 function lerFoco(page: Page) {
   return page.evaluate((): Parada | null => {
     const el = document.activeElement as HTMLElement | null
-    if (!el || el === document.body) return null
+    const memoria = window as unknown as { __ultimoFoco?: Element | null }
+    if (!el || el === document.body) {
+      memoria.__ultimoFoco = null
+      return null
+    }
+    const mesmoQueAnterior = memoria.__ultimoFoco === el
+    memoria.__ultimoFoco = el
     const porId = (ids: string | null) =>
       (ids ?? '')
         .split(/\s+/)
@@ -44,23 +56,33 @@ function lerFoco(page: Page) {
       .map((t) => (t ?? '').replace(/\s+/g, ' ').trim())
       .find(Boolean)
     /* O foco pode aparecer no próprio elemento ou num contêiner próximo
-       (:focus-within, :has(:focus-visible)), como na busca e nos cartões do Flix. */
-    const temIndicador = (alvo: Element) => {
+       (:focus-within, :has(:focus-visible)), como na busca e nos cartões do Flix.
+       Só conta o contorno ou a sombra que aparece com o foco: compara com o
+       elemento sem foco, para não aceitar a sombra fixa de um cartão. */
+    const alvos: Element[] = []
+    for (let alvo: Element | null = el; alvo && alvos.length < 4; alvo = alvo.parentElement)
+      alvos.push(alvo)
+    const indicador = (alvo: Element) => {
       const estilo = getComputedStyle(alvo)
-      const contorno = estilo.outlineStyle !== 'none' && parseFloat(estilo.outlineWidth) > 0
-      return contorno || estilo.boxShadow !== 'none'
+      const contorno =
+        estilo.outlineStyle !== 'none' && parseFloat(estilo.outlineWidth) > 0
+          ? `${estilo.outlineStyle} ${estilo.outlineWidth} ${estilo.outlineColor}`
+          : ''
+      const sombra = estilo.boxShadow !== 'none' ? estilo.boxShadow : ''
+      return `${contorno}|${sombra}`
     }
-    let focoVisivel = false
-    for (let alvo: Element | null = el, n = 0; alvo && n < 4 && !focoVisivel; n++) {
-      focoVisivel = temIndicador(alvo)
-      alvo = alvo.parentElement
-    }
+    const comFoco = alvos.map(indicador)
+    el.blur()
+    const semFoco = alvos.map(indicador)
+    el.focus()
+    const focoVisivel = comFoco.some((v, i) => v !== '|' && v !== semFoco[i])
     const href = el.getAttribute('href') ?? ''
     return {
       descricao: `${el.tagName.toLowerCase()}${href ? `[href=${href}]` : ''}`,
       href,
       nome: nome ?? '',
       focoVisivel,
+      mesmoQueAnterior,
     }
   })
 }
@@ -116,7 +138,11 @@ const filhos: Filho[] = [
     nome: 'Tarefas',
     fluxo: async (page) => {
       const descricao = `Tarefa pelo teclado ${Date.now()}`
-      await tabularAte(page, 'campo da tarefa', (p) => p.descricao === 'input')
+      await tabularAte(
+        page,
+        'campo da tarefa',
+        (p) => p.descricao === 'input' && p.nome.includes('Tarefa ou padrão'),
+      )
       await page.keyboard.type(descricao)
       await page.keyboard.press('Enter')
       await expect(page.getByRole('list', { name: 'Tarefas' })).toContainText(descricao)
@@ -136,14 +162,11 @@ for (const { numero, nome, fluxo } of filhos) {
 
     test('as primeiras paradas de Tab têm nome e foco visível', async ({ page }) => {
       const falhas: string[] = []
-      let anterior = ''
       for (let i = 1; i <= PARADAS; i++) {
         await page.keyboard.press('Tab')
         const parada = await lerFoco(page)
         if (!parada) continue
-        const chave = `${parada.descricao}|${parada.nome}`
-        if (chave === anterior) falhas.push(`parada ${i}: foco preso em ${parada.descricao}`)
-        anterior = chave
+        if (parada.mesmoQueAnterior) falhas.push(`parada ${i}: foco preso em ${parada.descricao}`)
         if (!parada.nome) falhas.push(`parada ${i}: ${parada.descricao} sem nome`)
         if (!parada.focoVisivel)
           falhas.push(`parada ${i}: ${parada.descricao} "${parada.nome}" sem foco visível`)
