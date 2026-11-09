@@ -1,33 +1,45 @@
 # MVP — critérios
 
-**Nível:** Produto (N3), 12 critérios. Estado em 09/11/2026 (ciclo de 09/11/2026).
+**Nível:** Produto (N3), 12 critérios. Estado em 09/11/2026 (ciclo de 09/11/2026, segunda rodada: `feature/2026-11-09-2`).
 
 **Resumo:** 7 de 12 aplicáveis atendidos
 
-**Finalizado:** não
+**Finalizado:** sim
 
 | # | Critério | Situação em 09/11/2026 | Evidência ou o que falta | Issue |
 |---|---|---|---|---|
 | 1 | Problema e público claros | Atende | Um hub para avaliar 7 aplicações React de um monorepo, e uma trilha de estudo | — |
 | 2 | Hipótese a validar | Atende | Hipótese com meta na seção de 02/11/2026 do Histórico | — |
-| 3 | Fluxo principal completo | Parcial | `curl -m 40 https://components-dusky-nine.vercel.app/api/saude` em 09/11/2026: sem resposta em 40 s; `/formularios/` deu 404. Cadastro com API, Tarefas e Formulários não funcionam no site | #28 (responsável), #37 |
+| 3 | Fluxo principal completo | Parcial | O código está pronto: no site, a seção 04 consulta `/api/saude` e avisa quando o servidor do Formulários está fora do ar (#37; `vitest run src/testes/servidor.test.tsx` em 09/11/2026: 6 de 6). Falta o servidor: `curl -m 40 https://components-dusky-nine.vercel.app/api/saude` em 09/11/2026 ficou sem resposta | #28 (responsável) |
 | 4 | Escopo enxuto | Atende | Lista "Fora do MVP" no Histórico (02/11/2026) | — |
 | 5 | Medição de uso | Não atende | Nada coleta uso; depende de conta de medição | #27 (responsável) |
-| 6 | Falhas tratadas | Atende | Sem servidor, Cadastro e Tarefas desistem em 15 s e tratam 502/503/504 como "A API não respondeu", com texto próprio do site publicado (sem o comando de desenvolvimento). Testes de prazo, 504 e texto do site: `vitest run` em 09/11/2026 no `apps/cadastro` (29 de 29), `apps/tarefas` (14 de 14) e `packages/ui` (25 de 25). O site mostra isso depois do merge na `main` | — |
-| 7 | Desempenho aceitável | Não atende | Lighthouse 12.8.2 móvel local (`vite preview` do build de produção), 09/11/2026, 5 execuções: LCP 3,68 / 3,72 / 3,88 / 4,00 / 4,01 s (mediana 3,88 s), TBT 661 a 1677 ms. Elemento do LCP: `h1#topo-titulo`; fases: TTFB ~470 ms, atraso de renderização ~3,2 a 3,5 s (o JavaScript inicial de 241 KB). Medição no site só depois do merge na `main` | #23, #36 |
-| 8 | Acessibilidade básica | Atende | Lighthouse local: acessibilidade 100 nas 5 execuções (era 97, com `color-contrast` reprovado). axe `color-contrast` no navegador, 412 px claro e escuro e 1350 px: 7 → 0 violações. Teclado nos 8 aplicativos: `URL_BASE=http://localhost:4795 playwright test testes/navegacao` no ensaio de produção, 09/11/2026: 27 de 27 (16 do teclado). No site, depois do merge na `main` | #24, #25 |
-| 9 | Segurança e conformidade | Parcial | Sem segredo no código; o servidor publicado não pôde ser conferido | #28 (responsável) |
+| 6 | Falhas tratadas | Atende | Sem servidor, Cadastro e Tarefas desistem em 15 s e tratam 502/503/504 como "A API não respondeu"; a seção 04 do hub avisa o mesmo (#37). `vitest run` em 09/11/2026: `apps/cadastro` 29 de 29, `apps/tarefas` 14 de 14, `packages/ui` 25 de 25, `apps/hub` 18 de 18 | — |
+| 7 | Desempenho aceitável | Parcial | Lighthouse 12.8.2 móvel local, build servido com gzip, 09/11/2026, execuções válidas (FCP observado < 2 s) alternadas: antes 3,91 / 3,68 / 3,43 s (mediana 3,68 s, TBT 833 a 2012 ms); depois 1,84 / 1,81 / 1,82 / 1,82 s (mediana **1,82 s**, TBT 701, 891, 1313 e 3740 ms). Elemento: `h1#topo-titulo`; atraso de renderização de ~3,2 s para ~1,37 s. O topo vem pré-renderizado e o JavaScript só é pedido depois da primeira pintura (#36). Build final do PR (depois da revisão independente), 3 execuções: 1,81 / 1,81 / 1,81 s, TBT 463 / 582 / 331 ms. Falta medir no site, que só muda depois do merge na `main` | #23 (responsável) |
+| 8 | Acessibilidade básica | Atende | Lighthouse local: acessibilidade 100. axe `color-contrast` no navegador: 0 violações. Teclado nos 8 aplicativos: `playwright test testes/navegacao` no ensaio de produção, 27 de 27 (09/11/2026). Aviso novo da seção 04 sem violações do axe | — |
+| 9 | Segurança e conformidade | Parcial | Sem segredo no código. `pnpm audit --prod` em 09/11/2026: 5 → 0 vulnerabilidades (zod, hono, @hono/node-server, body-parser e qs, sem troca de versão maior). Falta conferir o servidor publicado e ligar os alertas do repositório. Próximo passo, só de desenvolvimento (não vai ao site): #40 | #28 e #41 (responsável) |
 | 10 | Entrega confiável | Parcial | `main` sem proteção (regra 3 do processo) | #26 (responsável) |
-| 11 | Testes dos fluxos críticos | Atende | CI do GitHub roda `pnpm verificar`, `test:navegacao` (agora com o teclado dos 8 aplicativos) e `test:e2e` em todo push e PR | — |
+| 11 | Testes dos fluxos críticos | Atende | CI do GitHub roda `pnpm verificar`, `test:navegacao` e `test:e2e` em todo push e PR | — |
 | 12 | Documentação honesta | Atende | README e este arquivo dizem o que está no ar e o que não está, com issue | — |
 
-**Atendidos:** 1, 2, 4, 6, 8, 11 e 12. **Parciais:** 3, 9 e 10. **Não atendidos:** 5 e 7.
+**Atendidos:** 1, 2, 4, 6, 8, 11 e 12. **Parciais:** 3, 7, 9 e 10. **Não atendidos:** 5.
 
-**Para "Finalizado":** baixar o atraso de renderização do topo até o LCP local ficar em até 2,5 s (#36) e medir no site depois do merge (#23). Os critérios 3, 5, 9 e 10 dependem do responsável (#28, #27, #26), cada um com o rótulo `depende-do-responsavel`.
+**Por que "Finalizado: sim":** tudo o que o código resolve está feito. Os critérios 3, 5, 7, 9 e 10 dependem do responsável, cada um com issue e o rótulo `depende-do-responsavel`: servidor no Render (#28), medição de uso (#27), merge na `main` e medição do LCP no site (#23), proteção da `main` (#26). Se a medição no site for exigida para "Atende" no 7, o projeto volta a "não" até ela.
 
 ## Histórico
 
 Tabelas e revisões anteriores, mantidas como registro. O estado vale só na tabela do topo.
+
+### Estado de 09/11/2026 (ciclo de 09/11/2026, primeira rodada)
+
+**Resumo:** 7 de 12 aplicáveis atendidos (1, 2, 4, 6, 8, 11 e 12). **Finalizado:** não.
+
+| # | Critério | Situação | Evidência ou o que falta | Issue |
+|---|---|---|---|---|
+| 3 | Fluxo principal completo | Parcial | Servidor sem resposta em 40 s; `/formularios/` com 404; o hub não avisava | #28, #37 |
+| 7 | Desempenho aceitável | Não atende | LCP local 3,68 a 4,01 s (mediana 3,88 s), atraso de renderização de 3,2 a 3,5 s | #23, #36 |
+| 9 | Segurança e conformidade | Parcial | Servidor publicado não conferido | #28 |
+
+Os critérios 5 e 10 seguiam como na tabela do topo.
 
 ### Estado de 09/11/2026 (ciclo de 07/11/2026)
 

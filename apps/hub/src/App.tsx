@@ -22,8 +22,29 @@ function CarregandoSecoes() {
   return <div aria-busy="true" style={{ minHeight: '100vh' }} />
 }
 
+/* Liga depois da primeira pintura: o requestAnimationFrame roda antes dela e
+   o setTimeout, logo depois. Assim o módulo das seções (e as fontes e demos
+   que ele puxa) só é pedido com o título já na tela (#36). Começar em false
+   também faz o primeiro render bater com o HTML pré-renderizado, que traz
+   só o espaço reservado das seções. */
+function useDepoisDaPrimeiraPintura() {
+  const [pronto, setPronto] = useState(false)
+  useEffect(() => {
+    let espera: ReturnType<typeof setTimeout> | undefined
+    const quadro = requestAnimationFrame(() => {
+      espera = setTimeout(() => setPronto(true), 0)
+    })
+    return () => {
+      cancelAnimationFrame(quadro)
+      clearTimeout(espera)
+    }
+  }, [])
+  return pronto
+}
+
 /* Renderiza a página e atualiza --acento-ativo conforme a rolagem. */
 export function App() {
+  const carregarSecoes = useDepoisDaPrimeiraPintura()
   const [secoesProntas, setSecoesProntas] = useState(false)
   const ativa = useSecaoAtiva(secoesProntas ? todosIds : soTopo)
 
@@ -32,7 +53,8 @@ export function App() {
   const aoMontarSecoes = useCallback(() => {
     setSecoesProntas(true)
     const alvo = window.location.hash.slice(1)
-    if (alvo && window.scrollY === 0) document.getElementById(decodeURIComponent(alvo))?.scrollIntoView()
+    if (alvo && window.scrollY === 0)
+      document.getElementById(decodeURIComponent(alvo))?.scrollIntoView()
   }, [])
 
   useEffect(() => {
@@ -47,7 +69,7 @@ export function App() {
       <main id="conteudo" tabIndex={-1}>
         <Topo />
         <Suspense fallback={<CarregandoSecoes />}>
-          <SecoesProjetos aoMontar={aoMontarSecoes} />
+          {carregarSecoes ? <SecoesProjetos aoMontar={aoMontarSecoes} /> : <CarregandoSecoes />}
         </Suspense>
       </main>
       <Rodape />
