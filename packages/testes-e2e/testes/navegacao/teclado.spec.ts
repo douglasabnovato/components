@@ -157,7 +157,9 @@ for (const { numero, nome, fluxo } of filhos) {
   test.describe(`${String(numero).padStart(2, '0')} · ${nome} pelo teclado`, () => {
     test.beforeEach(async ({ page }) => {
       await page.goto(enderecoDoFilho(numero))
-      await page.waitForLoadState('load')
+      /* Espera a hidratação (o Formulários vem do servidor): sem isso, o Enter
+         num link podia cair entre o HTML e o React e não navegar (instável no CI). */
+      await page.waitForLoadState('networkidle')
     })
 
     test('as primeiras paradas de Tab têm nome e foco visível', async ({ page }) => {
