@@ -2,6 +2,37 @@
 
 Plano por ciclo. O estado dos critérios fica só no [`MVP.md`](MVP.md).
 
+## Ciclo de 09/11/2026
+
+> Executado em 09/11/2026. Branch `feature/2026-11-09`, criada a partir da `developer/sprint-2026-11-12`, com PR para a sprint. A `main` fica com o responsável (PR #35). Nível: Produto (N3). Escopo: só os critérios que o código resolve (6, 7, 8); o servidor no Render (#28) é do responsável.
+
+### Produto
+- **Problema e público:** quem avalia o portfólio abre o site sem o servidor no ar. Hoje Cadastro (origem API) e Tarefas ficam em "Carregando…" sem fim, e o texto de falha manda rodar `pnpm dev:api`, que não serve para quem está no site.
+- **Hipótese e meta:** se a falha aparecer em até 15 s com uma explicação do site, quem avalia entende que é a demonstração fora do ar, não um defeito do código. Meta: falha visível e testada nas duas demos que usam a API; acessibilidade sem alertas no Lighthouse; os 8 aplicativos percorridos por teclado com teste.
+- **O que a pesquisa trouxe:**
+  - O `fetchBaseQuery` do RTK Query aceita `timeout`; quando o prazo estoura, o erro vem com status `TIMEOUT_ERROR`, separado de `FETCH_ERROR` ([Redux Toolkit, fetchBaseQuery](https://redux-toolkit.js.org/rtk-query/api/fetchBaseQuery)). Uma página de erro em HTML (502/504 do encaminhamento) chega como `PARSING_ERROR`, com o status real em `originalStatus` (conferido no teste).
+  - Slides de carrossel que não estão em destaque não devem receber foco; o atributo `inert` tira o conteúdo do foco e da árvore de acessibilidade de uma vez, o que `tabindex="-1"` no contêiner não faz ([WebKit, inert](https://webkit.org/blog/12578/non-interactive-elements-with-the-inert-attribute/); [WebAIM, carrosséis](https://webaim.org/techniques/carousels/)).
+  - O atraso de renderização do LCP vem de JavaScript ou tarefas longas antes da pintura, inclusive hidratação; o Lighthouse simula a rede e a CPU, então serve para comparar versões, não para prever o campo ([web.dev, otimizar o LCP](https://web.dev/articles/optimize-lcp); [DebugBear, atraso de renderização](https://www.debugbear.com/blog/lcp-render-delay)).
+- **Backlog (impacto × esforço):**
+  1. Prazo e 502/503/504 como "API fora do ar", com texto do site (alto × baixo). Este ciclo.
+  2. Contraste dos cartões de vídeo (#24) (médio × baixo). Este ciclo.
+  3. Teste de teclado nos 8 aplicativos (#25) (médio × médio). Este ciclo.
+  4. LCP local de 3,88 s: atraso de renderização do topo (alto × alto). Experimento feito, vira #36.
+  5. Aviso no hub quando o Formulários está fora do ar (médio × baixo). Vira #37.
+- **Fora do escopo:** servidor no Render, hospedagem, fontes.
+
+### Engenharia
+- **Arquitetura:** `packages/ui/src/utilitarios/api.ts` reúne o prazo (`PRAZO_API_MS`, 15 s), os status de servidor fora do ar (502, 503, 504) e o texto da falha (desenvolvimento ou site). O Cadastro aplica o prazo no `criarRepositorioHttp` (cancela o pedido com `AbortController`); as Tarefas usam o `timeout` do `fetchBaseQuery` e `apiForaDoAr` para escolher o estado de falha.
+- **Contraste:** a coluna `.categorias` da seção Flix ganhou `min-width: 0`; antes, no celular, o trilho alargava a coluna e a seção cortava cartões e a lista de tecnologias fora da tela. Os cartões têm fundo próprio. No carrossel "espiar", os vizinhos esmaecidos ficam `inert`.
+- **Teclado:** `packages/testes-e2e/testes/navegacao/teclado.spec.ts` varre as 25 primeiras paradas de Tab de cada filho (nome, foco visível no elemento ou no contêiner, sem foco preso) e conclui o fluxo principal só com teclado.
+- **LCP:** a pré-renderização do `App` (`renderToString` no `dist/index.html` + `hydrateRoot`) foi testada e descartada: LCP simulado de 3,62 a 4,40 s, igual ao de antes. Registro em #36.
+- **Riscos:** prazo de 15 s pode cortar um servidor que acorda devagar; o botão "Tentar de novo" cobre esse caso.
+- **Definição de pronto:** CI do GitHub verde, PR para a sprint aberto ou mesclado, comentário no PR #35.
+
+### Plano de ação
+- **Executa:** critérios 6 e 8; medição local do 7 com fases e elemento do LCP; `MVP.md` com a tabela do ciclo; README.
+- **Vira issue:** #36 (atraso de renderização do topo), #37 (aviso do Formulários no hub). Seguem: #23 (LCP no site), #26, #27, #28 (responsável).
+
 ## Ciclo de 07/11/2026
 
 > Executado em 09/11/2026. Branch `feature/2026-11-07` → `developer/sprint-2026-11-12` → `main` (o merge na `main` fica com o responsável). Nível: Produto (N3), 12 critérios.
