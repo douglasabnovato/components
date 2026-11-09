@@ -104,12 +104,22 @@ type Filho = {
   fluxo: (page: Page) => Promise<void>
 }
 
-/* Tab até o primeiro link cujo endereço casa com o padrão, Enter e confere a URL. */
+/*
+ * Tab até o primeiro link cujo endereço casa com o padrão, Enter e confere a URL.
+ * Em desenvolvimento, o Vite pode recarregar a página na primeira visita (otimização
+ * de dependências do Formulários) e desfazer o percurso; nesse caso, recomeça do início.
+ */
 function abrirPorLink(padrao: RegExp) {
   return async (page: Page) => {
-    await tabularAte(page, `link ${padrao}`, (p) => padrao.test(p.href))
-    await page.keyboard.press('Enter')
-    await expect(page).toHaveURL(padrao)
+    const inicio = page.url()
+    let tentativa = 0
+    await expect(async () => {
+      if (tentativa++ > 0) await page.goto(inicio)
+      await page.waitForLoadState('networkidle')
+      await tabularAte(page, `link ${padrao}`, (p) => padrao.test(p.href))
+      await page.keyboard.press('Enter')
+      await expect(page).toHaveURL(padrao, { timeout: 5_000 })
+    }).toPass({ timeout: 45_000 })
   }
 }
 
