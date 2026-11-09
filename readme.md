@@ -4,18 +4,18 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 
 **Site:** https://components-dusky-nine.vercel.app
 
-## Estado e próximos passos (ciclo de 03/11/2026)
+## Estado e próximos passos (ciclo de 07/11/2026)
 
 **O que foi feito**
-- Cada seção do hub ganhou o link "Ver o código de …", com teste (PR deste ciclo para a `developer/sprint-2026-11-12`).
-- O [`docs/MVP.md`](docs/MVP.md) explica o que falta em cada critério "Parcial", com a issue de cada um.
-- Novo [`docs/PLANO-DE-ACAO.md`](docs/PLANO-DE-ACAO.md), com produto, engenharia e pesquisa citada.
-- Antes: área de toque do carrossel (#19) e medições de LCP e teclado (#21).
+- As seções de projeto do hub carregam sob demanda (`React.lazy`). O JavaScript inicial caiu de 685 KB para 241 KB no build de 09/11/2026 (#23).
+- O título do topo aparece no primeiro quadro: a entrada virou animação CSS sem opacidade 0, e o Motion saiu do pacote inicial.
+- O [`docs/MVP.md`](docs/MVP.md) tem uma tabela só, a atual; as anteriores estão no Histórico.
+- Antes (ciclo de 03/11): link "Ver o código de …" em cada seção, área de toque do carrossel (#19) e medições (#21).
 
-**Site:** https://components-dusky-nine.vercel.app respondeu 200 em 06/11/2026. O servidor no Render (`/api` e `/formularios`) não respondeu em 60 s; ver #28.
+**Site:** https://components-dusky-nine.vercel.app respondeu 200 em 09/11/2026. O servidor no Render (`/api` e `/formularios`) não respondeu em 30 s; ver #28.
 
 **O que queremos fazer**
-- #23 Dividir o JavaScript da primeira carga (LCP de 3,32 s para até 2,5 s).
+- #23 Medir o LCP no site depois do merge na `main` (meta de 2,5 s).
 - #24 Corrigir o contraste dos cartões de vídeo.
 - #25 Percorrer os aplicativos internos por teclado.
 - #26 Proteger a `main` com PR e CI obrigatórios (responsável).

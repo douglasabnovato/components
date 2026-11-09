@@ -4,10 +4,24 @@
  */
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { beforeAll, describe, expect, it, vi } from 'vitest'
 import { violacoesAxe } from '@components/ui/testes/axe'
 import { App } from '../App'
 import { projetos } from '../dados/projetos'
+
+/* Baixa o módulo das seções uma vez, para o tempo de transformação não cair no teste. */
+beforeAll(async () => {
+  await import('../secoes/SecoesProjetos')
+}, 120_000)
+
+/* Renderiza o App e espera as seções de projeto, que carregam sob demanda. */
+async function renderizarApp() {
+  const resultado = render(<App />)
+  await waitFor(() => expect(document.getElementById('arquitetura')).not.toBeNull(), {
+    timeout: 15_000,
+  })
+  return resultado
+}
 
 describe('Dados dos projetos', () => {
   it('tem 8 filhos publicados, com números, ids e fases únicos', () => {
@@ -32,7 +46,7 @@ describe('Dados dos projetos', () => {
 describe('Página do hub', () => {
   it('tem um h1, uma seção por projeto e o menu com os 8 projetos', async () => {
     const usuario = userEvent.setup()
-    render(<App />)
+    await renderizarApp()
     expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
     for (const p of projetos) {
       expect(screen.getByRole('region', { name: p.titulo })).toHaveAttribute('id', p.id)
@@ -42,8 +56,8 @@ describe('Página do hub', () => {
     expect(within(nav).getAllByRole('link', { name: /No ar/ }).length).toBeGreaterThanOrEqual(8)
   })
 
-  it('liga cada seção à pasta do código no GitHub', () => {
-    render(<App />)
+  it('liga cada seção à pasta do código no GitHub', async () => {
+    await renderizarApp()
     for (const p of projetos) {
       const secao = screen.getByRole('region', { name: p.titulo })
       const link = within(secao).getByRole('link', { name: `Ver o código de ${p.nome}` })
@@ -53,16 +67,32 @@ describe('Página do hub', () => {
     expect(new Set(projetos.map((p) => p.codigo)).size).toBe(8)
   })
 
-  it('não tem violações do axe', async () => {
-    const { container } = render(<App />)
-    expect(await violacoesAxe(container)).toEqual([])
+  it('leva até a âncora do endereço quando as seções montam', async () => {
+    const rolar = vi.fn()
+    const original = Element.prototype.scrollIntoView
+    Element.prototype.scrollIntoView = rolar
+    window.history.replaceState(null, '', '#filho-3')
+    try {
+      render(<App />)
+      expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument()
+      await waitFor(() => expect(rolar).toHaveBeenCalled(), { timeout: 15_000 })
+      expect(rolar.mock.contexts[0]).toBe(document.getElementById(projetos[2]!.id))
+    } finally {
+      Element.prototype.scrollIntoView = original
+      window.history.replaceState(null, '', '/')
+    }
   })
+
+  it('não tem violações do axe', async () => {
+    const { container } = await renderizarApp()
+    expect(await violacoesAxe(container)).toEqual([])
+  }, 60_000)
 })
 
 describe('Cadastro', () => {
   it('valida pelo contrato, recusa e-mail repetido e cadastra', async () => {
     const usuario = userEvent.setup()
-    render(<App />)
+    await renderizarApp()
     const secao = screen.getByRole('region', { name: projetos[1]!.titulo })
     await usuario.click(within(secao).getByRole('button', { name: 'Formulário' }))
     await usuario.click(within(secao).getByRole('button', { name: 'Cadastrar' }))
@@ -85,7 +115,7 @@ describe('Cadastro', () => {
 describe('Tarefas', () => {
   it('adiciona em destaque e só exclui tarefas concluídas', async () => {
     const usuario = userEvent.setup()
-    render(<App />)
+    await renderizarApp()
     const secao = screen.getByRole('region', { name: projetos[4]!.titulo })
 
     await usuario.type(within(secao).getByLabelText('Título'), 'Nova demo{Enter}')
@@ -106,7 +136,7 @@ describe('Tarefas', () => {
 describe('Lista da Pelada', () => {
   it('confirma presença e, com a lista cheia, entra na espera', async () => {
     const usuario = userEvent.setup()
-    render(<App />)
+    await renderizarApp()
     const secao = screen.getByRole('region', { name: projetos[5]!.titulo })
 
     await usuario.click(
@@ -129,7 +159,7 @@ describe('Lista da Pelada', () => {
 describe('Laboratório', () => {
   it('troca de lição e mostra a solução rodando', async () => {
     const usuario = userEvent.setup()
-    render(<App />)
+    await renderizarApp()
     const secao = screen.getByRole('region', { name: projetos[6]!.titulo })
 
     await usuario.click(within(secao).getByRole('button', { name: /useContext/ }))
@@ -142,7 +172,7 @@ describe('Laboratório', () => {
 describe('Trilha React', () => {
   it('abre um módulo e lista os aprendizados reais', async () => {
     const usuario = userEvent.setup()
-    render(<App />)
+    await renderizarApp()
     const secao = screen.getByRole('region', { name: projetos[7]!.titulo })
     expect(within(secao).getByText('116')).toBeInTheDocument()
     const modulo = within(secao).getByRole('button', { name: /CRUD completo passo a passo/ })
