@@ -1,14 +1,16 @@
 /*
  * Seção 04 · Formulários no Servidor. Referência: editorial escuro com título
  * serifado, seletor de modo e cards escuros. O seletor mostra o mesmo envio de
- * formulário com e sem JavaScript, passo a passo.
+ * formulário com e sem JavaScript, passo a passo. No site publicado, avisa
+ * ao lado do link quando o servidor do Formulários está fora do ar (#37).
  */
-import { SeletorPilula } from '@components/ui'
+import { explicacaoApiFora, SeletorPilula } from '@components/ui'
 import { AnimatePresence, motion } from 'motion/react'
 import { useId, useState } from 'react'
 import { projeto } from '../../dados/projetos'
 import { CabecalhoSecao, RodapeSecao, Secao } from '../../componentes/Secao/Secao'
 import styles from './SecaoServidor.module.css'
+import { useServidorNoAr } from './useServidorNoAr'
 
 type Modo = 'com-js' | 'sem-js'
 
@@ -56,6 +58,7 @@ export function SecaoServidor() {
   const p = projeto(4)
   const [modo, setModo] = useState<Modo>('com-js')
   const idLista = useId()
+  const servidor = useServidorNoAr()
 
   return (
     <Secao projeto={p} className={styles.secao}>
@@ -109,6 +112,13 @@ export function SecaoServidor() {
       </ul>
 
       <RodapeSecao projeto={p} />
+      <div role="status" className={styles.estadoServidor}>
+        {servidor === 'fora' ? (
+          <p className={styles.aviso}>
+            {explicacaoApiFora(false)} O link continua aqui para quando ele voltar.
+          </p>
+        ) : null}
+      </div>
     </Secao>
   )
 }
