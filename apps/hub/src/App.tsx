@@ -14,6 +14,7 @@ import { Rodape } from './secoes/Rodape/Rodape'
 const SecoesProjetos = lazy(() => import('./secoes/SecoesProjetos'))
 
 const todosIds = ['topo', ...projetos.map((p) => p.id), 'arquitetura']
+const soTopo = ['topo']
 const acentoPadrao = '#c4f042'
 
 /* Espaço reservado enquanto as seções carregam, sem texto para leitor de tela. */
@@ -24,13 +25,14 @@ function CarregandoSecoes() {
 /* Renderiza a página e atualiza --acento-ativo conforme a rolagem. */
 export function App() {
   const [secoesProntas, setSecoesProntas] = useState(false)
-  const ativa = useSecaoAtiva(secoesProntas ? todosIds : ['topo'])
+  const ativa = useSecaoAtiva(secoesProntas ? todosIds : soTopo)
 
-  /* Quando as seções entram no documento, leva até a âncora do endereço. */
+  /* Quando as seções entram no documento, leva até a âncora do endereço,
+     se a pessoa ainda não rolou a página enquanto elas carregavam. */
   const aoMontarSecoes = useCallback(() => {
     setSecoesProntas(true)
     const alvo = window.location.hash.slice(1)
-    if (alvo) document.getElementById(decodeURIComponent(alvo))?.scrollIntoView()
+    if (alvo && window.scrollY === 0) document.getElementById(decodeURIComponent(alvo))?.scrollIntoView()
   }, [])
 
   useEffect(() => {

@@ -67,7 +67,7 @@ describe('Página do hub', () => {
     expect(new Set(projetos.map((p) => p.codigo)).size).toBe(8)
   })
 
-  it('carrega as seções depois do topo e leva até a âncora do endereço', async () => {
+  it('leva até a âncora do endereço quando as seções montam', async () => {
     const rolar = vi.fn()
     const original = Element.prototype.scrollIntoView
     Element.prototype.scrollIntoView = rolar
