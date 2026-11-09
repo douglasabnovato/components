@@ -2,6 +2,33 @@
 
 Plano por ciclo. O estado dos critérios fica só no [`MVP.md`](MVP.md).
 
+## Ciclo de 07/11/2026
+
+> Executado em 09/11/2026. Branch `feature/2026-11-07` → `developer/sprint-2026-11-12` → `main` (o merge na `main` fica com o responsável). Nível: Produto (N3), 12 critérios.
+
+### Produto
+- **Problema e público:** quem avalia o portfólio precisa ver as 8 aplicações rodando sem esperar. Hoje o topo do hub leva 3,41 s (mediana de 06/11) para aparecer no celular.
+- **Hipótese e meta:** se o topo aparecer em até 2,5 s, quem chega rola até pelo menos uma demo. Meta técnica: LCP móvel de até 2,5 s (#23).
+- **O que a pesquisa trouxe:**
+  - O Chrome não conta como candidato a LCP um elemento com opacidade 0; o LCP só é marcado quando ele fica visível. Uma entrada animada com `opacity: 0` feita por JavaScript atrasa o LCP até o script rodar ([web.dev, LCP](https://web.dev/lcp/); [Shopify, não esconder o LCP atrás de animações](https://shopify.dev/docs/storefronts/themes/best-practices/performance/dont-hide-lcp-image-behind-animations)).
+  - `React.lazy` com `Suspense` e `import()` dinâmico faz o Vite gerar um arquivo separado, baixado só quando o componente aparece ([web.dev, divisão de código com React.lazy e Suspense](https://web.dev/articles/code-splitting-suspense)).
+- **Backlog (impacto × esforço):**
+  1. Tirar as seções de projeto do pacote inicial (alto × baixo). Este ciclo.
+  2. Topo visível no primeiro quadro, sem `opacity: 0` (alto × baixo). Este ciclo.
+  3. Contraste dos cartões de vídeo (#24) e teclado nos aplicativos internos (#25) (médio × médio). Issues.
+  4. Servidor no Render (#28) e medição de uso (#27) (alto, dependem do responsável).
+- **Fora do escopo:** trocar fontes, remover demos, mexer na hospedagem (Vercel e Render).
+
+### Engenharia
+- **Arquitetura:** o `App` carrega eagerly só `Cabecalho`, `Topo` e `Rodape`. As 9 seções (8 projetos e arquitetura) ficam em `apps/hub/src/secoes/SecoesProjetos.tsx`, carregado com `React.lazy`, junto com o `MotionConfig`; a entrada do texto do topo passou a ser uma animação CSS só de deslocamento, então o Motion saiu do pacote inicial. Quando as seções montam, o `App` passa a observar todos os ids em `useSecaoAtiva` e rola até a âncora do endereço, se houver.
+- **Riscos:** âncora aberta direto (`/#filho-3`) antes do carregamento, coberta por teste; acento da seção ativa, que dependia dos ids já existirem.
+- **Qualidade:** testes do hub esperam as seções carregarem; teste novo da âncora; axe sem violações; `pnpm verificar`, `test:navegacao` e `test:e2e` no CI.
+- **Definição de pronto:** pacote inicial do hub abaixo de 300 KB no `vite build`, CI verde, PR para a sprint mesclado e PR para a `main` aberto com `revisao-responsavel`.
+
+### Plano de ação
+- **Executa:** divisão do pacote inicial (de 685 KB para 241 KB no `vite build` de 09/11/2026); topo sem `opacity: 0`; `MVP.md` com uma tabela só; README com o estado de 07/11.
+- **Vira issue:** LCP medido no site publicado depois do merge (#23 segue aberta até a medição), contraste (#24), teclado (#25), servidor (#28), medição de uso (#27), proteção da `main` (#26).
+
 ## Ciclo de 03/11/2026
 
 > Executado em 06/11/2026. Branch `feature/2026-11-06` → `developer/sprint-2026-11-12` → `main`. Nível: Produto (N3), 12 critérios.
