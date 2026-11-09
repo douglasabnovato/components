@@ -4,6 +4,41 @@ Plano por ciclo. O estado dos critérios fica só no [`MVP.md`](MVP.md).
 
 ## Ciclo de 09/11/2026
 
+### Segunda rodada (`feature/2026-11-09-2`)
+
+> Executada em 09/11/2026. Branch `feature/2026-11-09-2`, criada a partir da `developer/sprint-2026-11-12` atualizada, com PR para a sprint. A `main` fica com o responsável (PR #35). Escopo: o que o código resolve nos critérios 3, 7 e 9.
+
+**Produto**
+- **Problema:** no celular, o título do topo só aparecia depois de baixar e rodar o JavaScript (LCP local de 3,68 a 3,91 s). No site, quem clica em "Abrir Formulários no Servidor" com o servidor fora do ar cai numa página de erro sem explicação.
+- **Meta:** LCP local de até 2,5 s (mediana de 3 execuções válidas); aviso de servidor fora do ar na seção 04; `pnpm audit --prod` sem vulnerabilidades.
+- **O que a pesquisa trouxe:**
+  - O Lantern, simulador do Lighthouse, conta no LCP os pedidos de alta prioridade que terminam antes da pintura, mesmo os que não bloqueiam a renderização; por isso o LCP de texto ficava bem acima do FCP. O Lighthouse 13.6 passou a igualar LCP e FCP quando os dois saem na mesma pintura e o elemento é texto ([Framer, Lighthouse 13.6](https://www.framer.com/blog/lighthouse-13-6/); [Chrome, pedidos que bloqueiam a renderização](https://developer.chrome.com/docs/performance/insights/render-blocking)).
+  - O React recomenda `hydrateRoot` sobre HTML gerado no servidor ou no build; `renderToString` continua válido quando não há dados a esperar ([react.dev, renderToString](https://react.dev/reference/react-dom/server/renderToString)).
+- **Fora do escopo:** servidor no Render (#28), fontes, TBT (vira #42).
+
+**Engenharia**
+- **Diagnóstico (fases no JSON do Lighthouse):** TTFB ~460 ms e atraso de renderização ~3,2 s. O LCP observado já era ~1 s; o simulado subia porque o `index-*.js` (77 KB com gzip) e o módulo das seções (134 KB) eram pedidos antes da primeira pintura e entravam no grafo do Lantern. Só adiar o módulo das seções (variante testada) não bastou: 3,64 a 3,72 s, porque o próprio React ainda pintava o título.
+- **Mudança:** `apps/hub/scripts/pre-renderizar.mjs` roda depois do `vite build`: coloca no `#raiz` o HTML do `App` (`src/pre-renderizar.tsx`, `renderToString`) e troca o `<script type="module">` do head por um carregador no fim do body que pede o JavaScript depois da entrada `first-contentful-paint` (com espera de 3 s para aba em segundo plano). O `main.tsx` usa `hydrateRoot` quando o `#raiz` vem preenchido. O `App` só monta as seções depois da primeira pintura, o que também mantém o primeiro render igual ao HTML.
+- **Conferência no navegador (Playwright, build local, 09/11/2026):** com e sem `prefers-reduced-motion`, sem erro nem aviso de hidratação no console, menu "Projetos" abre, âncora `/#filho-3` rola até a seção.
+- **Seção 04 (#37):** `useServidorNoAr` consulta `/api/saude` só no build de produção, com `PRAZO_API_MS`; sem resposta, com 502/503/504 ou corpo inesperado, mostra o aviso numa região `role="status"` abaixo do link.
+- **Dependências (critério 9):** `zod` 4.6.7, `hono` 4.13.17, `@hono/node-server` 2.1.6 no catálogo; `body-parser` 2.4.0 e `qs` 6.17.1 no lock. `pnpm audit --prod`: 5 → 0. As 5 de desenvolvimento viram #40; Dependabot e varredura de segredos desligados viram #41 (responsável).
+- **Riscos:** sem JavaScript, o topo aparece mas não reage; o HTML pré-renderizado precisa bater com o primeiro render do cliente (estado inicial das seções em `false`; preferências do sistema por `useSyncExternalStore`).
+
+**Medição (Lighthouse 12.8.2 móvel local, build servido com gzip em portas próprias, `timeout 150`, alternando antes e depois)**
+
+| Versão | LCP das execuções válidas (s) | Mediana | TBT (ms) | Atraso de renderização |
+|---|---|---|---|---|
+| Sprint (antes) | 3,91 · 3,68 · 3,43 | 3,68 s | 2012 · 833 · 1355 | ~2,9 a 3,4 s |
+| Esta rodada (depois) | 1,84 · 1,81 · 1,82 · 1,82 | 1,82 s | 891 · 1313 · 3740* · 701 | ~1,37 s |
+
+Execuções descartadas: FCP observado acima de ~2 s ou `NO_FCP` (CPU da máquina em 100% com outros agentes). *TBT de uma execução válida no limite (FCP observado 1,9 s).
+
+**Plano de ação**
+- **Executa:** #36 (LCP local 3,68 → 1,82 s), #37 (aviso da seção 04), vulnerabilidades de produção; `MVP.md` e README.
+- **Vira issue:** #40 (vulnerabilidades de desenvolvimento), #41 (Dependabot e varredura de segredos, responsável), #42 (TBT). #23 passa a `depende-do-responsavel`: medir no site depois do merge na `main`.
+
+### Primeira rodada (`feature/2026-11-09`)
+
 > Executado em 09/11/2026. Branch `feature/2026-11-09`, criada a partir da `developer/sprint-2026-11-12`, com PR para a sprint. A `main` fica com o responsável (PR #35). Nível: Produto (N3). Escopo: só os critérios que o código resolve (6, 7, 8); o servidor no Render (#28) é do responsável.
 
 ### Produto

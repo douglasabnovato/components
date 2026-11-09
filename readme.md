@@ -7,19 +7,21 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 ## Estado e próximos passos (ciclo de 09/11/2026)
 
 **O que foi feito**
-- Sem o servidor, Cadastro (origem API) e Tarefas desistem em 15 s e mostram "A API não respondeu", com um texto próprio do site publicado. Testes de prazo, de 504 e do texto do site.
-- Contraste dos cartões de vídeo corrigido (#24): Lighthouse de acessibilidade 100 no build local, axe sem violações de contraste no celular e no desktop.
-- Teste de teclado nos 8 aplicativos internos (#25), no `test:navegacao` do CI.
-- LCP medido localmente: mediana de 3,88 s, presa no atraso de renderização do topo (#36).
-- Antes (ciclo de 07/11): seções do hub sob demanda, JavaScript inicial de 685 KB para 241 KB (#23).
+- Topo do hub pré-renderizado no build e JavaScript pedido só depois da primeira pintura (#36): LCP local de 3,68 s para 1,82 s (mediana, Lighthouse móvel).
+- A seção 04 avisa quando o servidor do Formulários está fora do ar, com o link no lugar (#37).
+- Dependências de produção sem vulnerabilidades (`pnpm audit --prod`: 5 → 0), sem troca de versão maior.
+- Sem o servidor, Cadastro (origem API) e Tarefas desistem em 15 s e mostram "A API não respondeu", com texto próprio do site.
+- Contraste dos cartões de vídeo corrigido (#24) e teclado nos 8 aplicativos internos no CI (#25).
+- Antes (ciclo de 07/11): seções do hub sob demanda, JavaScript inicial de 685 KB para 241 KB.
 
 **Site:** https://components-dusky-nine.vercel.app respondeu 200 em 09/11/2026, ainda com o build da `main`. O servidor no Render (`/api` e `/formularios`) não respondeu em 40 s; ver #28. As mudanças deste ciclo chegam ao site depois do merge na `main` (PR #35).
 
 **O que queremos fazer**
-- #36 Baixar o atraso de renderização do topo (LCP).
-- #23 Medir o LCP no site depois do merge na `main` (meta de 2,5 s).
-- #37 Avisar no hub quando o Formulários estiver fora do ar.
+- #23 Medir o LCP no site depois do merge na `main` (responsável).
+- #42 Baixar o tempo de bloqueio (TBT) do hub.
+- #40 Zerar as vulnerabilidades das dependências de desenvolvimento.
 - #34 Pré-carregar as seções do hub no tempo ocioso.
+- #41 Ligar os alertas do Dependabot e a varredura de segredos (responsável).
 - #26 Proteger a `main` com PR e CI obrigatórios (responsável).
 - #27 Ligar a medição de uso (responsável).
 - #28 Decidir o servidor no Render (responsável).
