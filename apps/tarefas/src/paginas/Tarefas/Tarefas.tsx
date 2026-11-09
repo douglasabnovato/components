@@ -4,13 +4,20 @@
  * O estado do servidor vem do RTK Query; o do campo, da fatia de interface.
  */
 import { SITUACOES_TAREFA, type SituacaoTarefa, type Tarefa } from '@components/contratos'
-import { BotaoPilula, BotaoVoltar, SeletorPilula, SkipLink, useAvisos } from '@components/ui'
+import {
+  BotaoPilula,
+  BotaoVoltar,
+  explicacaoApiFora,
+  SeletorPilula,
+  SkipLink,
+  useAvisos,
+} from '@components/ui'
 import { useId, useRef, type KeyboardEvent } from 'react'
 import { URL_HUB } from '../../config'
 import { EstadoVazio } from '../../componentes/Estados/Estados'
 import { ItemTarefa } from '../../componentes/ItemTarefa/ItemTarefa'
 import { comandoDaTecla, contar, filtrarPorSituacao } from '../../dominio/tarefas'
-import { mensagemDeErro } from '../../store/api'
+import { apiForaDoAr, mensagemDeErro } from '../../store/api'
 import { useApiTarefas } from '../../store/contexto'
 import { buscar, limpar, situacaoMudou, textoMudou } from '../../store/interface'
 import { useDespacho, useSeletor } from '../../store/store'
@@ -41,8 +48,7 @@ export function Tarefas() {
   const visiveis = filtrarPorSituacao(todas, situacao)
   const contagem = contar(todas)
   const erroLista = lista.isError ? mensagemDeErro(lista.error) : ''
-  const apiDesligada =
-    lista.isError && (lista.error as { status?: unknown }).status === 'FETCH_ERROR'
+  const apiDesligada = lista.isError && apiForaDoAr(lista.error)
 
   /* Cria a tarefa com o texto do campo e devolve o foco a ele. */
   async function adicionar() {
@@ -210,8 +216,7 @@ export function Tarefas() {
             titulo="A API não respondeu"
             acoes={<BotaoPilula onClick={() => lista.refetch()}>Tentar de novo</BotaoPilula>}
           >
-            Na raiz do monorepo, rode <code>pnpm dev:api</code>. As tarefas ficam no banco SQL da
-            API compartilhada.
+            {explicacaoApiFora()} As tarefas ficam no banco SQL da API compartilhada.
           </EstadoVazio>
         ) : erroLista ? (
           <EstadoVazio titulo="Não foi possível listar">{erroLista}</EstadoVazio>

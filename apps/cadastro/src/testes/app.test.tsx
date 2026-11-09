@@ -8,7 +8,7 @@ import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { violacoesAxe } from '@components/ui/testes/axe'
 import { MemoryRouter } from 'react-router'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { App } from '../App'
 import type { RepositorioClientes } from '../dados/repositorio'
 import { criarRepositorioHttp } from '../dados/repositorioHttp'
@@ -120,6 +120,23 @@ describe('Origem', () => {
     expect(await screen.findByRole('heading', { name: 'A API não respondeu' })).toBeInTheDocument()
     await usuario.click(screen.getByRole('button', { name: 'Usar memória' }))
     expect(await screen.findByRole('rowheader', { name: /Ana Ribeiro/ })).toBeInTheDocument()
+  })
+
+  it('no site publicado, explica que o servidor está fora do ar e oferece a memória', async () => {
+    vi.stubEnv('DEV', false)
+    try {
+      const pendurada = criarRepositorioHttp('', () => new Promise<Response>(() => {}), 30)
+      const { usuario } = abrir('/?origem=api', pendurada)
+      expect(
+        await screen.findByRole('heading', { name: 'A API não respondeu' }),
+      ).toBeInTheDocument()
+      expect(screen.getByText(/servidor desta demonstração está fora do ar/)).toBeInTheDocument()
+      expect(screen.queryByText(/pnpm dev:api/)).not.toBeInTheDocument()
+      await usuario.click(screen.getByRole('button', { name: 'Usar memória' }))
+      expect(await screen.findByRole('rowheader', { name: /Ana Ribeiro/ })).toBeInTheDocument()
+    } finally {
+      vi.unstubAllEnvs()
+    }
   })
 
   it('usa a API de verdade (Hono + PGlite) com a mesma tela', async () => {
