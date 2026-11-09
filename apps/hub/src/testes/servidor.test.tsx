@@ -87,7 +87,12 @@ describe('Seção 04 no site publicado', () => {
     vi.stubGlobal('fetch', buscar)
     render(<SecaoServidor />)
     await waitFor(() => expect(buscar).toHaveBeenCalled())
-    await waitFor(() => expect(screen.getByRole('status')).toBeEmptyDOMElement())
+    /* Espera a resposta e o corpo serem lidos antes de conferir. */
+    await act(async () => {
+      await buscar.mock.results[0]!.value
+      await new Promise((resolver) => setTimeout(resolver, 0))
+    })
+    expect(screen.getByRole('status')).toBeEmptyDOMElement()
   })
 })
 /* Fim dos testes do aviso de servidor. */

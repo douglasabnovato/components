@@ -22,6 +22,7 @@ const scriptModulo = /\s*<script type="module" crossorigin src="([^"]+)"><\/scri
 
 function falhar(mensagem) {
   console.error(mensagem)
+  rmSync(pastaSsr, { recursive: true, force: true })
   process.exit(1)
 }
 
@@ -31,7 +32,7 @@ if (!html.includes(marcador)) falhar(`dist/index.html sem ${marcador}: rode o vi
 
 const corpo = renderizar()
 if (!corpo.includes('id="topo-titulo"')) falhar('A pré-renderização não gerou o título do topo.')
-html = html.replace(marcador, `<div id="raiz">${corpo}</div>`)
+html = html.replace(marcador, () => `<div id="raiz">${corpo}</div>`)
 
 const achado = html.match(scriptModulo)
 if (!achado) falhar('dist/index.html sem o <script type="module"> do Vite.')
@@ -39,7 +40,7 @@ const src = achado[1]
 html = html.replace(scriptModulo, '')
 
 /* Espera a primeira pintura com conteúdo (entrada first-contentful-paint) e
-   pede o JavaScript logo depois. Sem a API de pintura, usa o par
+   pede o JavaScript logo depois. Sem o tipo 'paint' no PerformanceObserver, usa o par
    requestAnimationFrame + setTimeout. A espera de 3 s cobre a aba aberta em
    segundo plano, onde não há pintura. */
 const carregador = `<script>
@@ -55,18 +56,19 @@ const carregador = `<script>
           document.head.appendChild(s)
         }
         function depois() { setTimeout(carregar, 0) }
-        try {
+        var tipos = window.PerformanceObserver && PerformanceObserver.supportedEntryTypes
+        if (tipos && tipos.indexOf('paint') >= 0) {
           new PerformanceObserver(function (lista) {
             if (lista.getEntriesByName('first-contentful-paint').length) depois()
           }).observe({ type: 'paint', buffered: true })
-        } catch (e) {
+        } else {
           requestAnimationFrame(depois)
         }
         setTimeout(carregar, 3000)
       })()
     </script>
   </body>`
-html = html.replace('</body>', carregador)
+html = html.replace('</body>', () => carregador)
 
 writeFileSync(caminhoHtml, html)
 rmSync(pastaSsr, { recursive: true, force: true })

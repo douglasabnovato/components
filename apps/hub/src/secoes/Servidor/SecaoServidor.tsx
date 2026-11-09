@@ -112,7 +112,7 @@ export function SecaoServidor() {
       </ul>
 
       <RodapeSecao projeto={p} />
-      <div role="status" className={styles.estadoServidor}>
+      <div role="status">
         {servidor === 'fora' ? (
           <p className={styles.aviso}>
             {explicacaoApiFora(false)} O link continua aqui para quando ele voltar.

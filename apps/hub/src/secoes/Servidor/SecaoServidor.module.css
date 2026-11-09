@@ -102,11 +102,9 @@ section.secao {
     grid-template-columns: 1fr;
   }
 }
-/* Aviso de servidor fora do ar, abaixo do link (#37). */
-.estadoServidor:empty {
-  display: none;
-}
-
+/* Aviso de servidor fora do ar, abaixo do link (#37). A região role="status"
+   fica sempre no documento (vazia não ocupa espaço), para o leitor de tela
+   anunciar o aviso quando ele entra. */
 .aviso {
   margin: var(--esp-4) 0 0;
   padding: var(--esp-3) var(--esp-4);

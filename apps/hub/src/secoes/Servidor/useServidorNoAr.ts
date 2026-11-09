@@ -2,7 +2,9 @@
  * useServidorNoAr: no site publicado, consulta /api/saude do servidor que
  * entrega o Formulários (#37). Sem resposta no prazo da API, com status de
  * fora do ar ou com corpo inesperado, devolve "fora". Em desenvolvimento o
- * hub não tem /api (cada filho roda na sua porta), então não consulta.
+ * hub não tem /api (cada filho roda na sua porta), então não consulta. No
+ * `vite preview` também não há /api: lá o aviso aparece, como no site sem
+ * servidor. Um servidor que leva mais de 15 s para acordar também cai em "fora".
  */
 import { PRAZO_API_MS } from '@components/ui'
 import { useEffect, useState } from 'react'
