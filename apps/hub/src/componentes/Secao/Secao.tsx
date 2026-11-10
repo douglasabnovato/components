@@ -119,7 +119,13 @@ export function ChamadaProjeto({ projeto, variante = 'preenchido', icone, apoio 
   return (
     <div className={styles.chamada}>
       {publicado ? (
-        <BotaoPilula href={projeto.href} tamanho="g" variante={variante} icone={icone}>
+        <BotaoPilula
+          href={projeto.href}
+          tamanho="g"
+          variante={variante}
+          icone={icone}
+          data-goatcounter-click={`abrir-${projeto.id}`}
+        >
           Abrir {projeto.nome}
         </BotaoPilula>
       ) : (
