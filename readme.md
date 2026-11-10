@@ -22,7 +22,7 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 - #40 Zerar as vulnerabilidades das dependências de desenvolvimento.
 - #34 Pré-carregar as seções do hub no tempo ocioso.
 - #41 Ligar os alertas do Dependabot e a varredura de segredos (responsável).
-- #26 Proteger a `main` com PR e CI obrigatórios (responsável).
+- #26 Proteger a `main`: feito em 10/11/2026 (ruleset `principal-protegida`); a issue fecha no merge da `main`.
 - #27 Ligar a medição de uso (responsável).
 - #28 Decidir o servidor no Render (responsável).
 

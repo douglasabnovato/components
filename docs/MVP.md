@@ -1,8 +1,8 @@
 # MVP — critérios
 
-**Nível:** Produto (N3), 12 critérios. Estado em 09/11/2026 (ciclo de 09/11/2026, segunda rodada: `feature/2026-11-09-2`).
+**Nível:** Produto (N3), 12 critérios. Estado em 09/11/2026 (ciclo de 09/11/2026, segunda rodada: `feature/2026-11-09-2`), com o critério 10 revisto em 10/11/2026.
 
-**Resumo:** 7 de 12 aplicáveis atendidos
+**Resumo:** 8 de 12 aplicáveis atendidos
 
 **Finalizado:** sim
 
@@ -17,13 +17,13 @@
 | 7 | Desempenho aceitável | Parcial | Lighthouse 12.8.2 móvel local, build servido com gzip, 09/11/2026, execuções válidas (FCP observado < 2 s) alternadas: antes 3,91 / 3,68 / 3,43 s (mediana 3,68 s, TBT 833 a 2012 ms); depois 1,84 / 1,81 / 1,82 / 1,82 s (mediana **1,82 s**, TBT 701, 891, 1313 e 3740 ms). Elemento: `h1#topo-titulo`; atraso de renderização de ~3,2 s para ~1,37 s. O topo vem pré-renderizado e o JavaScript só é pedido depois da primeira pintura (#36). Build final do PR (depois da revisão independente), 3 execuções: 1,81 / 1,81 / 1,81 s, TBT 463 / 582 / 331 ms. Falta medir no site, que só muda depois do merge na `main` | #23 (responsável) |
 | 8 | Acessibilidade básica | Atende | Lighthouse local: acessibilidade 100. axe `color-contrast` no navegador: 0 violações. Teclado nos 8 aplicativos: `playwright test testes/navegacao` no ensaio de produção, 27 de 27 (09/11/2026). Aviso novo da seção 04 sem violações do axe | — |
 | 9 | Segurança e conformidade | Parcial | Sem segredo no código. `pnpm audit --prod` em 09/11/2026: 5 → 0 vulnerabilidades (zod, hono, @hono/node-server, body-parser e qs, sem troca de versão maior). Falta conferir o servidor publicado e ligar os alertas do repositório. Próximo passo, só de desenvolvimento (não vai ao site): #40 | #28 e #41 (responsável) |
-| 10 | Entrega confiável | Parcial | `main` sem proteção (regra 3 do processo) | #26 (responsável) |
+| 10 | Entrega confiável | Atende | `gh api repos/douglasabnovato/components/rulesets` em 10/11/2026: ruleset `principal-protegida` ativo (exige PR, bloqueia force push e exclusão); o workflow `CI` roda em todo push e PR | #26 |
 | 11 | Testes dos fluxos críticos | Atende | CI do GitHub roda `pnpm verificar`, `test:navegacao` e `test:e2e` em todo push e PR | — |
 | 12 | Documentação honesta | Atende | README e este arquivo dizem o que está no ar e o que não está, com issue | — |
 
-**Atendidos:** 1, 2, 4, 6, 8, 11 e 12. **Parciais:** 3, 7, 9 e 10. **Não atendidos:** 5.
+**Atendidos:** 1, 2, 4, 6, 8, 10, 11 e 12. **Parciais:** 3, 7 e 9. **Não atendidos:** 5.
 
-**Por que "Finalizado: sim":** tudo o que o código resolve está feito. Os critérios 3, 5, 7, 9 e 10 dependem do responsável, cada um com issue e o rótulo `depende-do-responsavel`: servidor no Render (#28), medição de uso (#27), merge na `main` e medição do LCP no site (#23), proteção da `main` (#26). Se a medição no site for exigida para "Atende" no 7, o projeto volta a "não" até ela.
+**Por que "Finalizado: sim":** tudo o que o código resolve está feito. Os critérios 3, 5, 7 e 9 dependem do responsável, cada um com issue e o rótulo `depende-do-responsavel`: servidor no Render (#28), medição de uso (#27), merge na `main` e medição do LCP no site (#23). A `main` está protegida desde 10/11/2026 (#26). Se a medição no site for exigida para "Atende" no 7, o projeto volta a "não" até ela.
 
 ## Histórico
 
