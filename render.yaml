@@ -1,0 +1,51 @@
+# Blueprint do Render para o servidor de produção do components (API em /api e
+# Formulários em /formularios/ num único processo Node). O hub e os filhos
+# estáticos seguem na Vercel, que repassa /api e /formularios para este serviço
+# (vercel.json). Quem cria o serviço é o responsável: Render → New → Blueprint.
+# Passo a passo na issue "Publicar o servidor no Render pelo Blueprint" e em
+# docs/04-hospedagem.md. Nenhum segredo neste arquivo: o banco é o PGlite,
+# dentro do próprio processo, e não pede senha.
+services:
+  - type: web
+    name: components-servidor
+    runtime: node
+    plan: free
+    region: oregon
+    branch: main
+    # A pasta do serviço é apps/servidor; o build volta à raiz porque o pnpm
+    # instala o monorepo inteiro (workspace) e o Formulários e a API são pacotes
+    # irmãos.
+    rootDir: apps/servidor
+    buildCommand: >-
+      cd ../.. &&
+      corepack pnpm install --frozen-lockfile &&
+      corepack pnpm --filter @components/formularios build &&
+      corepack pnpm --filter @components/api banco:preparar
+    # Processo único, sem Corepack nem pnpm, para caber nos 512 MB do plano
+    # gratuito (docs/04-hospedagem.md, seção Memória).
+    startCommand: node --max-old-space-size=200 --import tsx src/servidor.ts
+    # /api/saude consulta o banco (select 1): 200 só com o banco aberto.
+    healthCheckPath: /api/saude
+    autoDeployTrigger: commit
+    # Com rootDir, o Render só reimplanta com mudanças em apps/servidor; estes
+    # caminhos (a partir da raiz do repositório) incluem as peças de que o
+    # servidor depende. NODE_ENV fica de fora: no build ele faria o pnpm pular
+    # as dependências de desenvolvimento (Vite); o servidor já assume produção.
+    buildFilter:
+      paths:
+        - apps/servidor/**
+        - apps/api/**
+        - apps/formularios/**
+        - packages/**
+        - pnpm-lock.yaml
+        - pnpm-workspace.yaml
+        - package.json
+        - .node-version
+    envVars:
+      - key: NODE_VERSION
+        value: '24.22.1'
+      - key: COREPACK_ENABLE_DOWNLOAD_PROMPT
+        value: '0'
+      # Origem do site na Vercel. Se o endereço real for outro, corrigir aqui.
+      - key: ORIGENS
+        value: https://components-dusky-nine.vercel.app

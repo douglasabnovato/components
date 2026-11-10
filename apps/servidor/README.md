@@ -25,7 +25,7 @@ O servidor sobe em `http://localhost:3333`, ou na porta definida em `PORT`.
 
 | Caminho | Quem responde | Observação |
 | --- | --- | --- |
-| `/api/*` | API (`@components/api`) | `GET /api/saude` → `{"ok":true}`; rota inexistente → 404 em JSON |
+| `/api/*` | API (`@components/api`) | `GET /api/saude` consulta o banco e responde `{"ok":true,"banco":"ok"}` (503 se o banco não responder); rota inexistente → 404 em JSON |
 | `/formularios/assets/*` e demais arquivos | `apps/formularios/build/client` | Arquivos estáticos do Formulários |
 | `/formularios` e `/formularios/*` | SSR do React Router (`build/server`) | Responde 503 se o build não existir |
 | `/` e `/<filho>/*` | Pasta `publicar/` | **Só no ensaio**; rota interna de filho devolve o `index.html` da pasta, caminho desconhecido na raiz devolve 404 |

@@ -10,6 +10,7 @@ import './estilos/global.css'
 import { StrictMode } from 'react'
 import { createRoot, hydrateRoot } from 'react-dom/client'
 import { App } from './App'
+import { iniciarMedicao } from './medicao'
 
 const raiz = document.getElementById('raiz')
 if (!raiz) throw new Error('Elemento #raiz não encontrado no index.html')
@@ -28,4 +29,7 @@ const app = (
  */
 if (raiz.hasChildNodes()) hydrateRoot(raiz, app)
 else createRoot(raiz).render(app)
+
+/* Medição de uso só no build de produção e fora de testes automatizados (D5). */
+iniciarMedicao(document, { producao: import.meta.env.PROD, automatizado: navigator.webdriver })
 /* Fim do ponto de entrada. */

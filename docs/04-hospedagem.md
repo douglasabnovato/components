@@ -138,8 +138,8 @@ As regras por pasta só valem quando o arquivo pedido não existe: arquivos JS e
 | # | Verificação | Esperado | Situação |
 | --- | --- | --- | --- |
 | 1 | Abrir o hub | Carrega na hora | ✅ |
-| 2 | Abrir `https://components-servidor.onrender.com/api/saude` | `{"ok":true}` | ⏳ A-09 |
-| 3 | Abrir `/api/saude` pelo domínio da Vercel | `{"ok":true}` | ⏳ A-09 |
+| 2 | Abrir `https://components-servidor.onrender.com/api/saude` | `{"ok":true,"banco":"ok"}` | ⏳ A-09 |
+| 3 | Abrir `/api/saude` pelo domínio da Vercel | `{"ok":true,"banco":"ok"}` | ⏳ A-09 |
 | 4 | Clicar nos 8 projetos e voltar | Todos funcionam | ⏳ Formulários depende do A-09 |
 | 5 | Abrir uma rota interna direto (`/trilha/aprendizado/1`) | Carrega o app | ⏳ A-08 |
 | 6 | Criar cliente (modo API) e concluir tarefa | Funcionam | ⏳ A-09 |
