@@ -4,9 +4,11 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 
 **Site:** https://components-dusky-nine.vercel.app
 
-## Estado e próximos passos (ciclo de 09/11/2026)
+## Estado e próximos passos (ciclo de 10/11/2026)
 
 **O que foi feito**
+- Blueprint do Render (`render.yaml`, `rootDir: apps/servidor`) para o servidor de produção, e `/api/saude` que consulta o banco (503 sem banco).
+- Medição de uso pronta no hub: GoatCounter sem cookie, só em produção, com o evento de abrir cada projeto. Falta a conta (#27).
 - Topo do hub pré-renderizado no build e JavaScript pedido só depois da primeira pintura (#36): LCP local de 3,68 s para 1,82 s (mediana, Lighthouse móvel).
 - A seção 04 avisa quando o servidor do Formulários está fora do ar, com o link no lugar (#37).
 - Dependências de produção sem vulnerabilidades (`pnpm audit --prod`: 5 → 0), sem troca de versão maior.
@@ -23,8 +25,8 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 - #34 Pré-carregar as seções do hub no tempo ocioso.
 - #41 Ligar os alertas do Dependabot e a varredura de segredos (responsável).
 - #26 Proteger a `main`: feito em 10/11/2026 (ruleset `principal-protegida`); a issue fecha no merge da `main`.
-- #27 Ligar a medição de uso (responsável).
-- #28 Decidir o servidor no Render (responsável).
+- #27 Criar a conta do GoatCounter `douglasabnovato` (responsável; o código já está no hub).
+- #28 Publicar o servidor no Render pelo Blueprint (responsável; passo a passo na issue).
 
 **Onde está a documentação**
 - Estado dos critérios: [`docs/MVP.md`](docs/MVP.md)
