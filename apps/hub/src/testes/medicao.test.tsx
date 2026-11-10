@@ -4,10 +4,10 @@
  * como evento sem dado pessoal.
  */
 import { render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ChamadaProjeto } from '../componentes/Secao/Secao'
 import { projetos } from '../dados/projetos'
-import { ENDERECO_CONTAGEM, deveMedir, iniciarMedicao } from '../medicao'
+import { ENDERECO_CONTAGEM, contarClique, deveMedir, iniciarMedicao } from '../medicao'
 
 const seletor = 'script[data-goatcounter]'
 
@@ -46,7 +46,23 @@ describe('medição de uso', () => {
     if (!projeto) throw new Error('Nenhum projeto publicado nos dados')
     render(<ChamadaProjeto projeto={projeto} />)
     const link = screen.getByRole('link', { name: `Abrir ${projeto.nome}` })
-    expect(link).toHaveAttribute('data-goatcounter-click', `abrir-${projeto.id}`)
+    expect(link).toHaveAttribute('data-evento', `abrir-${projeto.id}`)
+    const contador = { count: vi.fn() }
+    expect(contarClique(link, contador)).toBe(true)
+    expect(contador.count).toHaveBeenCalledWith({
+      path: `abrir-${projeto.id}`,
+      title: `Abrir ${projeto.nome}`,
+      event: true,
+    })
+  })
+
+  it('não conta clique fora dos botões marcados nem sem o contador', () => {
+    const contador = { count: vi.fn() }
+    expect(contarClique(document.body, contador)).toBe(false)
+    const botao = document.createElement('a')
+    botao.dataset.evento = 'abrir-filho-1'
+    expect(contarClique(botao, undefined)).toBe(false)
+    expect(contador.count).not.toHaveBeenCalled()
   })
 })
 /* Fim dos testes da medição. */

@@ -124,7 +124,7 @@ export function ChamadaProjeto({ projeto, variante = 'preenchido', icone, apoio 
           tamanho="g"
           variante={variante}
           icone={icone}
-          data-goatcounter-click={`abrir-${projeto.id}`}
+          data-evento={`abrir-${projeto.id}`}
         >
           Abrir {projeto.nome}
         </BotaoPilula>
