@@ -78,7 +78,7 @@ Os endereços entre projetos vêm sempre de `packages/ui/src/utilitarios/ecossis
 | Expor a API em `/api` | Monta o `criarApp` de `@components/api` sob o prefixo; rota inexistente devolve 404 em JSON |
 | Expor o SSR do Formulários em `/formularios/` | Carrega `apps/formularios/build/server` e entrega `build/client` como arquivos estáticos |
 | Ler a porta do provedor | `PORT`, com `PORTA` e 3333 como alternativas |
-| Saúde | `GET /api/saude` → `{"ok":true}` |
+| Saúde | `GET /api/saude` → `{"ok":true,"banco":"ok"}` (consulta o banco; 503 se ele não responder) |
 | Ensaio de produção local | Com `--ensaio` (ou `SERVIR_ESTATICOS=1`), entrega também `publicar/`, com as mesmas regras do `vercel.json` |
 | Estrutura | `src/app.ts` compõe as partes e é testado com Vitest; `src/servidor.ts` abre o banco, carrega o build e escuta na porta |
 

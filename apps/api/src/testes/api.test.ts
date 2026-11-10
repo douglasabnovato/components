@@ -7,6 +7,7 @@
 import type { Cliente, Tarefa } from '@components/contratos'
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest'
 import { abrirBanco, criarApp, reiniciarBanco, type AppApi } from '../app'
+import type { Banco } from '../banco/conexao'
 
 let app: AppApi
 let cliente: Awaited<ReturnType<typeof abrirBanco>>['cliente']
@@ -160,8 +161,19 @@ describe('tarefas', () => {
 
 describe('geral', () => {
   it('responde saúde e 404 em JSON', async () => {
-    expect((await pedir('GET', '/saude')).corpo).toEqual({ ok: true })
+    expect(await pedir('GET', '/saude')).toEqual({ status: 200, corpo: { ok: true, banco: 'ok' } })
     expect((await pedir('GET', '/nada')).corpo).toEqual({ erro: 'Rota não encontrada.' })
+  })
+})
+
+describe('saúde com o banco fora', () => {
+  it('responde 503 quando o banco não responde', async () => {
+    const bancoFora = {
+      execute: () => Promise.reject(new Error('sem conexão')),
+    } as unknown as Banco
+    const resposta = await criarApp(bancoFora).request('/saude')
+    expect(resposta.status).toBe(503)
+    expect(await resposta.json()).toEqual({ ok: false, banco: 'fora' })
   })
 })
 /* Fim dos testes da API. */
