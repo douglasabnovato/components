@@ -174,6 +174,37 @@ describe('Carrossel', () => {
     expect(screen.getByRole('group', { name: '1 de 2' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Ir para o slide 2' })).toBeInTheDocument()
   })
+
+  it('no "espiar", deixa inertes os vizinhos esmaecidos (#24)', () => {
+    const { container } = render(
+      <Carrossel
+        rotulo="Destaques"
+        itens={[
+          <a key="1" href="#um">
+            Um
+          </a>,
+          <a key="2" href="#dois">
+            Dois
+          </a>,
+        ]}
+      />,
+    )
+    const slides = container.querySelectorAll('[aria-roledescription="slide"]')
+    expect(slides[0]).not.toHaveAttribute('inert')
+    expect(slides[1]).toHaveAttribute('inert')
+  })
+
+  it('no "trilho", todos os cartões seguem focáveis', () => {
+    const { container } = render(
+      <Carrossel
+        rotulo="Jogos"
+        variante="trilho"
+        itens={[<p key="1">Um</p>, <p key="2">Dois</p>]}
+      />,
+    )
+    const slides = container.querySelectorAll('[aria-roledescription="slide"]')
+    expect([...slides].some((s) => s.hasAttribute('inert'))).toBe(false)
+  })
 })
 
 describe('BarraWidget', () => {

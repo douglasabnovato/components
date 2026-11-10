@@ -10,11 +10,11 @@ import { Tarefas } from './paginas/Tarefas/Tarefas'
 import { ApiContexto } from './store/contexto'
 import { criarStore } from './store/store'
 
-type Props = { base?: string; fetchFn?: typeof fetch }
+type Props = { base?: string; fetchFn?: typeof fetch; prazoMs?: number }
 
 /* Cria store e API uma vez por App. */
-export function App({ base = URL_API, fetchFn }: Props) {
-  const [{ store, api }] = useState(() => criarStore(base, fetchFn))
+export function App({ base = URL_API, fetchFn, prazoMs }: Props) {
+  const [{ store, api }] = useState(() => criarStore(base, fetchFn, prazoMs))
   return (
     <Provider store={store}>
       <ApiContexto.Provider value={api}>

@@ -4,23 +4,29 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 
 **Site:** https://components-dusky-nine.vercel.app
 
-## Estado e próximos passos (ciclo de 03/11/2026)
+## Estado e próximos passos (ciclo de 10/11/2026)
 
 **O que foi feito**
-- Cada seção do hub ganhou o link "Ver o código de …", com teste (PR deste ciclo para a `developer/sprint-2026-11-12`).
-- O [`docs/MVP.md`](docs/MVP.md) explica o que falta em cada critério "Parcial", com a issue de cada um.
-- Novo [`docs/PLANO-DE-ACAO.md`](docs/PLANO-DE-ACAO.md), com produto, engenharia e pesquisa citada.
-- Antes: área de toque do carrossel (#19) e medições de LCP e teclado (#21).
+- Blueprint do Render (`render.yaml`, `rootDir: apps/servidor`) para o servidor de produção, e `/api/saude` que consulta o banco (503 sem banco).
+- Medição de uso pronta no hub: GoatCounter sem cookie, só em produção, com o evento de abrir cada projeto. Falta a conta (#27).
+- Topo do hub pré-renderizado no build e JavaScript pedido só depois da primeira pintura (#36): LCP local de 3,68 s para 1,82 s (mediana, Lighthouse móvel).
+- A seção 04 avisa quando o servidor do Formulários está fora do ar, com o link no lugar (#37).
+- Dependências de produção sem vulnerabilidades (`pnpm audit --prod`: 5 → 0), sem troca de versão maior.
+- Sem o servidor, Cadastro (origem API) e Tarefas desistem em 15 s e mostram "A API não respondeu", com texto próprio do site.
+- Contraste dos cartões de vídeo corrigido (#24) e teclado nos 8 aplicativos internos no CI (#25).
+- Antes (ciclo de 07/11): seções do hub sob demanda, JavaScript inicial de 685 KB para 241 KB.
 
-**Site:** https://components-dusky-nine.vercel.app respondeu 200 em 06/11/2026. O servidor no Render (`/api` e `/formularios`) não respondeu em 60 s; ver #28.
+**Site:** https://components-dusky-nine.vercel.app respondeu 200 em 09/11/2026, ainda com o build da `main`. O servidor no Render (`/api` e `/formularios`) não respondeu em 40 s; ver #28. As mudanças deste ciclo chegam ao site depois do merge na `main` (PR #35).
 
 **O que queremos fazer**
-- #23 Dividir o JavaScript da primeira carga (LCP de 3,32 s para até 2,5 s).
-- #24 Corrigir o contraste dos cartões de vídeo.
-- #25 Percorrer os aplicativos internos por teclado.
-- #26 Proteger a `main` com PR e CI obrigatórios (responsável).
-- #27 Ligar a medição de uso (responsável).
-- #28 Decidir o servidor no Render (responsável).
+- #23 Medir o LCP no site depois do merge na `main` (responsável).
+- #42 Baixar o tempo de bloqueio (TBT) do hub.
+- #40 Zerar as vulnerabilidades das dependências de desenvolvimento.
+- #34 Pré-carregar as seções do hub no tempo ocioso.
+- #41 Ligar os alertas do Dependabot e a varredura de segredos (responsável).
+- #26 Proteger a `main`: feito em 10/11/2026 (ruleset `principal-protegida`); a issue fecha no merge da `main`.
+- #27 Criar a conta do GoatCounter `douglasabnovato` (responsável; o código já está no hub).
+- #28 Publicar o servidor no Render pelo Blueprint (responsável; passo a passo na issue).
 
 **Onde está a documentação**
 - Estado dos critérios: [`docs/MVP.md`](docs/MVP.md)

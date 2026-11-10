@@ -1,6 +1,7 @@
 # Dependências e saídas de build
 node_modules/
 dist/
+dist-ssr/
 build/
 publicar/
 coverage/

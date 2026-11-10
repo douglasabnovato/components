@@ -33,6 +33,20 @@
 .texto {
   display: grid;
   gap: var(--esp-6);
+  animation: entrada-texto 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Só desloca: o texto fica visível desde o primeiro quadro (LCP, #23). */
+@keyframes entrada-texto {
+  from {
+    transform: translateY(32px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .texto {
+    animation: none;
+  }
 }
 
 .rotulo {

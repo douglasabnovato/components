@@ -1,5 +1,74 @@
 # MVP — critérios
 
+**Nível:** Produto (N3), 12 critérios. Estado em 10/11/2026 (ciclo da faixa de 90%: `feature/2026-11-10-b`, decisões D1 a D7 de `engenharia/decisoes/2026-11-10-ciclo-faixa-90.md`).
+
+**Resumo:** 8 de 12 aplicáveis atendidos
+
+**Finalizado:** sim
+
+| # | Critério | Situação em 10/11/2026 | Evidência ou o que falta | Issue |
+|---|---|---|---|---|
+| 1 | Problema e público claros | Atende | Um hub para avaliar 7 aplicações React de um monorepo, e uma trilha de estudo | — |
+| 2 | Hipótese a validar | Atende | Hipótese com meta na seção de 02/11/2026 do Histórico | — |
+| 3 | Fluxo principal completo | Parcial | O código está pronto. Playwright no CI: `test:navegacao` (8 aplicativos) e `test:e2e` (Formulários). O servidor ganhou o Blueprint `render.yaml` (`rootDir: apps/servidor`) e `/api/saude` passou a consultar o banco (`select 1`; 503 sem banco), testado em `apps/api` e `apps/servidor` (`vitest run` em 10/11/2026: `apps/servidor` 11 de 11; `apps/api` 11 de 12 no computador local, com o teste de conexão estourando 20 s por carga da máquina, e verde no CI do PR). Falta o servidor no ar: `curl -m 60` em `https://components-servidor.onrender.com/api/saude` e em `https://components-dusky-nine.vercel.app/api/saude` em 10/11/2026 ficaram sem resposta (código 000) | #28 (responsável) |
+| 4 | Escopo enxuto | Atende | Lista "Fora do MVP" no Histórico (02/11/2026) | — |
+| 5 | Medição de uso | Parcial | Código pronto; falta a conta (decisão D5). O hub carrega o GoatCounter (`https://douglasabnovato.goatcounter.com/count`, sem cookie) só no build de produção e fora do Playwright, e conta o clique em "Abrir <projeto>" como evento `abrir-filho-N`. `vitest run src/testes/medicao.test.tsx` em `apps/hub`, 10/11/2026: 6 de 6 | #27 (responsável) |
+| 6 | Falhas tratadas | Atende | Sem servidor, Cadastro e Tarefas desistem em 15 s e tratam 502/503/504 como "A API não respondeu"; a seção 04 do hub avisa o mesmo (#37). `vitest run` em 09/11/2026: `apps/cadastro` 29 de 29, `apps/tarefas` 14 de 14, `packages/ui` 25 de 25, `apps/hub` 18 de 18 | — |
+| 7 | Desempenho aceitável | Parcial | Lighthouse 12.8.2 móvel local, build servido com gzip, 09/11/2026, execuções válidas (FCP observado < 2 s) alternadas: antes 3,91 / 3,68 / 3,43 s (mediana 3,68 s, TBT 833 a 2012 ms); depois 1,84 / 1,81 / 1,82 / 1,82 s (mediana **1,82 s**, TBT 701, 891, 1313 e 3740 ms). Elemento: `h1#topo-titulo`; atraso de renderização de ~3,2 s para ~1,37 s. O topo vem pré-renderizado e o JavaScript só é pedido depois da primeira pintura (#36). Build final do PR (depois da revisão independente), 3 execuções: 1,81 / 1,81 / 1,81 s, TBT 463 / 582 / 331 ms. Falta medir no site, que só muda depois do merge na `main` | #23 (responsável) |
+| 8 | Acessibilidade básica | Atende | Lighthouse local: acessibilidade 100. axe `color-contrast` no navegador: 0 violações. Teclado nos 8 aplicativos: `playwright test testes/navegacao` no ensaio de produção, 27 de 27 (09/11/2026). Aviso novo da seção 04 sem violações do axe | — |
+| 9 | Segurança e conformidade | Parcial | Sem segredo no código. `pnpm audit --prod` em 09/11/2026: 5 → 0 vulnerabilidades (zod, hono, @hono/node-server, body-parser e qs, sem troca de versão maior). `pnpm audit --prod` de novo em 10/11/2026: nenhuma vulnerabilidade; Dependabot pela API: 403, alertas desligados. Falta conferir o servidor publicado e ligar os alertas do repositório. Próximo passo, só de desenvolvimento (não vai ao site): #40 | #28 e #41 (responsável) |
+| 10 | Entrega confiável | Atende | `gh api repos/douglasabnovato/components/rulesets` em 10/11/2026: ruleset `principal-protegida` ativo (exige PR, bloqueia force push e exclusão); o workflow `CI` roda em todo push e PR | #26 |
+| 11 | Testes dos fluxos críticos | Atende | CI do GitHub roda `pnpm verificar`, `test:navegacao` e `test:e2e` em todo push e PR | — |
+| 12 | Documentação honesta | Atende | README e este arquivo dizem o que está no ar e o que não está, com issue | — |
+
+**Atendidos:** 1, 2, 4, 6, 8, 10, 11 e 12. **Parciais:** 3, 5, 7 e 9. **Não atendidos:** nenhum.
+
+**Por que "Finalizado: sim":** tudo o que o código resolve está feito. Os critérios 3, 5, 7 e 9 dependem do responsável, cada um com issue e o rótulo `depende-do-responsavel`: servidor no Render pelo Blueprint (#28, passo a passo na issue), conta do GoatCounter (#27), merge na `main` e medição do LCP no site (#23). A `main` está protegida desde 10/11/2026 (#26). Se a medição no site for exigida para "Atende" no 7, o projeto volta a "não" até ela.
+
+## Histórico
+
+Tabelas e revisões anteriores, mantidas como registro. O estado vale só na tabela do topo.
+
+### Estado de 09/11/2026 (ciclo de 09/11/2026, segunda rodada)
+
+**Resumo:** 8 de 12 aplicáveis atendidos (1, 2, 4, 6, 8, 10, 11 e 12). **Finalizado:** sim.
+
+| # | Critério | Situação | Evidência ou o que falta | Issue |
+|---|---|---|---|---|
+| 3 | Fluxo principal completo | Parcial | Servidor sem resposta em 40 s; sem Blueprint e com `/api/saude` sem tocar o banco | #28 |
+| 5 | Medição de uso | Não atende | Nada coleta uso | #27 |
+
+Os demais critérios seguiam como na tabela do topo.
+
+### Estado de 09/11/2026 (ciclo de 09/11/2026, primeira rodada)
+
+**Resumo:** 7 de 12 aplicáveis atendidos (1, 2, 4, 6, 8, 11 e 12). **Finalizado:** não.
+
+| # | Critério | Situação | Evidência ou o que falta | Issue |
+|---|---|---|---|---|
+| 3 | Fluxo principal completo | Parcial | Servidor sem resposta em 40 s; `/formularios/` com 404; o hub não avisava | #28, #37 |
+| 7 | Desempenho aceitável | Não atende | LCP local 3,68 a 4,01 s (mediana 3,88 s), atraso de renderização de 3,2 a 3,5 s | #23, #36 |
+| 9 | Segurança e conformidade | Parcial | Servidor publicado não conferido | #28 |
+
+Os critérios 5 e 10 seguiam como na tabela do topo.
+
+### Estado de 09/11/2026 (ciclo de 07/11/2026)
+
+**Resumo:** 5 de 12 aplicáveis atendidos (1, 2, 4, 11 e 12). **Finalizado:** não.
+
+| # | Critério | Situação | Evidência ou o que falta | Issue |
+|---|---|---|---|---|
+| 3 | Fluxo principal completo | Parcial | `curl -m 30 .../api/saude`: sem resposta em 30 s | #28 |
+| 5 | Medição de uso | Não atende | Nada coleta uso | #27 |
+| 6 | Falhas tratadas | Parcial | Sem o servidor, a falha da API no site não estava testada | #28 |
+| 7 | Desempenho aceitável | Não atende | 3,41 s no site (06/11); JavaScript inicial de 685 para 241 KB no PR #33 | #23 |
+| 8 | Acessibilidade básica | Parcial | Faltavam o contraste dos cartões de vídeo e o teclado nos aplicativos internos | #24, #25 |
+| 9 | Segurança e conformidade | Parcial | Servidor publicado não conferido | #28 |
+| 10 | Entrega confiável | Parcial | `main` sem proteção | #26 |
+
+Os critérios 1, 2, 4, 11 e 12 estavam em "Atende".
+
+### Avaliação de 31/10/2026
 > Avaliação de 31/10/2026 com os mesmos 12 critérios usados no `movies`. "Não medido" significa que não há evidência, não que falhe.
 
 | # | Critério | Como verificar | Situação |
@@ -17,7 +86,7 @@
 | 11 | Testes dos fluxos críticos | Testes automatizados no CI | Atende |
 | 12 | Documentação honesta | Qualquer pessoa roda o projeto, e os números estão certos | Parcial |
 
-## Medições de 01/11/2026
+### Medições de 01/11/2026
 
 Lighthouse 12.8.2 local, móvel, na página inicial do site publicado. O resultado varia entre execuções.
 
@@ -33,7 +102,7 @@ Lighthouse 12.8.2 local, móvel, na página inicial do site publicado. O resulta
 
 **Teclado:** 40 tabulações em 412 px, nas quais todo elemento teve nome e foco visível. Testei só a sequência de foco da página inicial, sem percorrer os aplicativos internos nem usar leitor de tela.
 
-## Revisão de 02/11/2026
+### Revisão de 02/11/2026
 
 **Hipótese (proposta, sem validação):** Se o hub mostrar 7 aplicações React funcionando em um só lugar, quem avalia abre ao menos 2 delas na mesma visita.
 
@@ -43,7 +112,7 @@ Lighthouse 12.8.2 local, móvel, na página inicial do site publicado. O resulta
 
 **Critério 5:** segue sem atender, porque nada coleta uso; depende de uma conta de medição do responsável.
 
-## Revisão de 06/11/2026 (ciclo de 03/11/2026)
+### Revisão de 06/11/2026 (ciclo de 03/11/2026)
 
 **Nível:** Produto (N3), 12 critérios. **Resumo:** 5 de 12 atendidos (1, 2, 4, 11 e 12), 5 parciais (3, 6, 8, 9 e 10) e 2 não atendidos (5 e 7). **Finalizado:** não.
 
