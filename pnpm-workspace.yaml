@@ -55,6 +55,7 @@ catalog:
   '@types/mdx': ^2.0.13
   remark-gfm: ^4.0.1
   '@playwright/test': ^1.63.0
+  '@axe-core/playwright': ^4.14.0
   '@react-router/node': ^8.4.0
   '@react-router/serve': ^8.4.0
   '@react-router/dev': ^8.4.0
