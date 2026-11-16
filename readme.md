@@ -6,7 +6,7 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 
 ## Estado e próximos passos (ciclo de 16/11/2026)
 
-**Critérios do MVP:** 9 de 12 atendidos; os 3 parciais dependem do responsável (#28, #27, #41). Detalhes em [`docs/MVP.md`](docs/MVP.md).
+**Critérios do MVP:** 10 de 12 atendidos; Finalizado: sim. Os 2 parciais dependem do responsável (#28, #27). O único alerta do Dependabot (`minimatch`, só do lint) está aceito na [ADR 0005](docs/adr/0005-aceitar-alertas-de-desenvolvimento-do-dependabot.md). Detalhes em [`docs/MVP.md`](docs/MVP.md).
 
 **O que foi feito**
 - Neste ciclo (PR da `feature/2026-11-16` para a `developer/sprint-2026-11-19`):
@@ -24,7 +24,7 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 - #27 Criar a conta do GoatCounter `douglasabnovato` (responsável; o código já está no site).
 - #41 Ligar os alertas do Dependabot e a varredura de segredos (responsável).
 - #42 Baixar o tempo de bloqueio (TBT) do hub.
-- #46 Tirar o `minimatch` vulnerável das dependências de lint.
+- #46 Tirar o `minimatch` vulnerável das dependências de lint: risco aceito na [ADR 0005](docs/adr/0005-aceitar-alertas-de-desenvolvimento-do-dependabot.md) até o `typescript-eslint` aceitar o `minimatch` 11.
 - #47 Rodar a navegação e o axe no site depois de cada merge na `main`.
 - #48 Alinhar o guia de hospedagem ao Blueprint do Render.
 - #49 Pôr a checagem de formatação no CI.
