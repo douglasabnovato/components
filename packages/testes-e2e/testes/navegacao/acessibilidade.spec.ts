@@ -29,13 +29,21 @@ async function violacoes(page: Page) {
   )
 }
 
-/* Abre o projeto e espera o conteúdo principal e a rede pararem. */
+/* Abre o projeto e espera o conteúdo principal, a rede e as animações finitas pararem.
+   O Motion mantém o fade de opacidade mesmo com movimento reduzido; medir o
+   contraste no meio dele acusa um texto que, parado, passa (run 43819879782). */
 async function abrir(page: Page, numero: number) {
   await page.goto(endereco(numero))
   await expect(page.locator('main').first()).toBeVisible()
   if (numero === 0)
     await expect(page.locator('#filho-8')).toBeAttached({ timeout: ESPERA_SECOES_MS })
   await page.waitForLoadState('networkidle')
+  await page.waitForFunction(() =>
+    document
+      .getAnimations()
+      .filter((animacao) => animacao.effect?.getTiming().iterations !== Infinity)
+      .every((animacao) => animacao.playState !== 'running'),
+  )
 }
 
 for (const { numero, nome } of ecossistema) {
