@@ -46,6 +46,24 @@ describe('Tabela', () => {
     expect(screen.getByText(/· origem:/)).toHaveTextContent('1 cliente · origem: memória')
   })
 
+  it('mostra o estado vazio quando a busca não encontra ninguém', async () => {
+    const { usuario } = abrir()
+    await screen.findByRole('rowheader', { name: /Ana Ribeiro/ })
+    await usuario.type(screen.getByLabelText('Buscar'), 'ninguém com este nome')
+    expect(
+      await screen.findByRole('heading', { name: 'Nenhum cliente encontrado' }),
+    ).toBeInTheDocument()
+    expect(screen.queryByRole('table', { name: 'Clientes cadastrados' })).not.toBeInTheDocument()
+  })
+
+  it('marca a tabela como ocupada enquanto a API ainda não respondeu', async () => {
+    const esperando = criarRepositorioHttp('', () => new Promise<Response>(() => {}), 60_000)
+    abrir('/?origem=api', esperando)
+    const tabela = await screen.findByRole('table', { name: 'Clientes cadastrados' })
+    expect(tabela).toHaveAttribute('aria-busy', 'true')
+    expect(screen.queryByRole('rowheader')).not.toBeInTheDocument()
+  })
+
   it('ordena por idade', async () => {
     const { usuario } = abrir()
     await screen.findByRole('rowheader', { name: /Ana Ribeiro/ })

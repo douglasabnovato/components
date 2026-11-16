@@ -1,33 +1,50 @@
 # MVP — critérios
 
-**Nível:** Produto (N3), 12 critérios. Estado em 10/11/2026 (ciclo da faixa de 90%: `feature/2026-11-10-b`, decisões D1 a D7 de `engenharia/decisoes/2026-11-10-ciclo-faixa-90.md`).
+**Nível:** Produto (N3), 12 critérios. Estado em 16/11/2026 (ciclo de 16/11/2026, `feature/2026-11-16` → `developer/sprint-2026-11-19`).
 
-**Resumo:** 8 de 12 aplicáveis atendidos
+**Resumo:** 9 de 12 aplicáveis atendidos
 
 **Finalizado:** sim
 
-| # | Critério | Situação em 10/11/2026 | Evidência ou o que falta | Issue |
+**Problema e público:** quem avalia o portfólio quer ver, num só lugar, 8 projetos React funcionando com dados e regras reais, sem instalar nada.
+
+**Hipótese:** acreditamos que mostrar os 8 projetos funcionando num só lugar fará quem avalia abrir ao menos 2 deles na mesma visita. **Meta:** na primeira semana com dados, eventos `abrir-filho-N` em número igual ou maior que o dobro das visitas em `/`. **Saberemos quando** o painel do GoatCounter (`douglasabnovato`) mostrar essa razão, que depende da conta (#27).
+
+**Fora do MVP:** novas aplicações, conta única entre as aplicações, publicação do pacote de interface, banco persistente no Render (o disco gratuito volta aos dados de exemplo) e domínio próprio ou plano pago.
+
+| # | Critério | Situação em 16/11/2026 | Evidência ou o que falta | Issue |
 |---|---|---|---|---|
-| 1 | Problema e público claros | Atende | Um hub para avaliar 7 aplicações React de um monorepo, e uma trilha de estudo | — |
-| 2 | Hipótese a validar | Atende | Hipótese com meta na seção de 02/11/2026 do Histórico | — |
-| 3 | Fluxo principal completo | Parcial | O código está pronto. Playwright no CI: `test:navegacao` (8 aplicativos) e `test:e2e` (Formulários). O servidor ganhou o Blueprint `render.yaml` (`rootDir: apps/servidor`) e `/api/saude` passou a consultar o banco (`select 1`; 503 sem banco), testado em `apps/api` e `apps/servidor` (`vitest run` em 10/11/2026: `apps/servidor` 11 de 11; `apps/api` 11 de 12 no computador local, com o teste de conexão estourando 20 s por carga da máquina, e verde no CI do PR). Falta o servidor no ar: `curl -m 60` em `https://components-servidor.onrender.com/api/saude` e em `https://components-dusky-nine.vercel.app/api/saude` em 10/11/2026 ficaram sem resposta (código 000) | #28 (responsável) |
-| 4 | Escopo enxuto | Atende | Lista "Fora do MVP" no Histórico (02/11/2026) | — |
-| 5 | Medição de uso | Parcial | Código pronto; falta a conta (decisão D5). O hub carrega o GoatCounter (`https://douglasabnovato.goatcounter.com/count`, sem cookie) só no build de produção e fora do Playwright, e conta o clique em "Abrir <projeto>" como evento `abrir-filho-N`. `vitest run src/testes/medicao.test.tsx` em `apps/hub`, 10/11/2026: 6 de 6 | #27 (responsável) |
-| 6 | Falhas tratadas | Atende | Sem servidor, Cadastro e Tarefas desistem em 15 s e tratam 502/503/504 como "A API não respondeu"; a seção 04 do hub avisa o mesmo (#37). `vitest run` em 09/11/2026: `apps/cadastro` 29 de 29, `apps/tarefas` 14 de 14, `packages/ui` 25 de 25, `apps/hub` 18 de 18 | — |
-| 7 | Desempenho aceitável | Parcial | Lighthouse 12.8.2 móvel local, build servido com gzip, 09/11/2026, execuções válidas (FCP observado < 2 s) alternadas: antes 3,91 / 3,68 / 3,43 s (mediana 3,68 s, TBT 833 a 2012 ms); depois 1,84 / 1,81 / 1,82 / 1,82 s (mediana **1,82 s**, TBT 701, 891, 1313 e 3740 ms). Elemento: `h1#topo-titulo`; atraso de renderização de ~3,2 s para ~1,37 s. O topo vem pré-renderizado e o JavaScript só é pedido depois da primeira pintura (#36). Build final do PR (depois da revisão independente), 3 execuções: 1,81 / 1,81 / 1,81 s, TBT 463 / 582 / 331 ms. Falta medir no site, que só muda depois do merge na `main` | #23 (responsável) |
-| 8 | Acessibilidade básica | Atende | Lighthouse local: acessibilidade 100. axe `color-contrast` no navegador: 0 violações. Teclado nos 8 aplicativos: `playwright test testes/navegacao` no ensaio de produção, 27 de 27 (09/11/2026). Aviso novo da seção 04 sem violações do axe | — |
-| 9 | Segurança e conformidade | Parcial | Sem segredo no código. `pnpm audit --prod` em 09/11/2026: 5 → 0 vulnerabilidades (zod, hono, @hono/node-server, body-parser e qs, sem troca de versão maior). `pnpm audit --prod` de novo em 10/11/2026: nenhuma vulnerabilidade; Dependabot pela API: 403, alertas desligados. Falta conferir o servidor publicado e ligar os alertas do repositório. Próximo passo, só de desenvolvimento (não vai ao site): #40 | #28 e #41 (responsável) |
-| 10 | Entrega confiável | Atende | `gh api repos/douglasabnovato/components/rulesets` em 10/11/2026: ruleset `principal-protegida` ativo (exige PR, bloqueia force push e exclusão); o workflow `CI` roda em todo push e PR | #26 |
-| 11 | Testes dos fluxos críticos | Atende | CI do GitHub roda `pnpm verificar`, `test:navegacao` e `test:e2e` em todo push e PR | — |
-| 12 | Documentação honesta | Atende | README e este arquivo dizem o que está no ar e o que não está, com issue | — |
+| 1 | Problema e público claros | Atende | Frase "Problema e público" acima e o início do README | — |
+| 2 | Hipótese a validar | Atende | Hipótese, meta e "saberemos quando" acima. A validação em si depende do critério 5 | #27 |
+| 3 | Fluxo principal completo | Parcial | No CI, Playwright de ponta a ponta no navegador: `test:navegacao` (hub abre e volta de cada um dos 8 filhos; fluxo principal de cada filho só por teclado) e `test:e2e` (Formulários com POST real). Run 43821216220 do PR #51: verde. Falta o servidor no ar: em 16/11/2026, `curl -m 60 https://components-dusky-nine.vercel.app/api/saude` ficou sem resposta (000) e `/formularios/` deu 404, então Cadastro (modo API), Tarefas e Formulários não funcionam no site | #28 (responsável) |
+| 4 | Escopo enxuto | Atende | Lista "Fora do MVP" acima | — |
+| 5 | Medição de uso | Parcial | O código está no site: o `index-CuG9TW5l.js` publicado contém `douglasabnovato.goatcounter.com/count` (`curl` + `grep`, 16/11/2026), e `vitest run src/testes/medicao.test.tsx` em `apps/hub` passa (6 de 6, dentro dos 28 do hub em 16/11/2026). A conta não existe: `https://douglasabnovato.goatcounter.com/` respondeu 400 em 16/11/2026. Sem painel com visitas, não atende | #27 (responsável) |
+| 6 | Falhas tratadas | Atende | Falha de rede, prazo de 15 s e 502/503/504 viram "A API não respondeu" (`apps/cadastro/src/dados/repositorios.test.ts`; tela em `apps/cadastro/src/testes/app.test.tsx`, "mostra o aviso de API desligada"). Lista vazia ("mostra o estado vazio quando a busca não encontra ninguém") e espera ("marca a tabela como ocupada enquanto a API ainda não respondeu") no mesmo arquivo, novos em 16/11/2026. A seção 04 do hub avisa quando o servidor não responde (`apps/hub/src/testes/servidor.test.tsx`), e o aviso aparece no site (Playwright, 16/11/2026). `vitest run` em 16/11/2026: `apps/cadastro` 31 de 31, `apps/tarefas` 16 de 16, `packages/ui` 25 de 25, `apps/hub` 28 de 28. Nas Tarefas, os testes novos "mostra o estado vazio quando a busca não casa com nenhuma tarefa" e "anuncia o carregamento enquanto a API ainda não respondeu" (`apps/tarefas/src/testes/app.test.tsx`, #50) | — |
+| 7 | Desempenho aceitável | Atende | `npx lighthouse@12.8.2 https://components-dusky-nine.vercel.app/ --only-categories=performance,accessibility --form-factor=mobile --output=json --chrome-flags="--headless --no-sandbox"` (móvel, **site publicado**), 16/11/2026, entre 03h04 e 03h06, 3 execuções válidas (FCP observado abaixo de 2 s): LCP 1,74 / 1,61 / 1,67 s, **mediana 1,67 s**; TBT 605 / 338 / 388 ms; elemento do LCP `h1#topo-titulo`. Na série anterior do mesmo dia, 5 execuções: 3 descartadas por FCP observado de 9,1 s (cache frio), 2,1 s e 2,9 s; as 2 válidas deram 1,68 e 1,66 s | #23 |
+| 8 | Acessibilidade básica | Atende | axe completo (`@axe-core/playwright`, tags `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa` e `wcag22aa`) no navegador, com os dados reais de cada projeto: `packages/testes-e2e/testes/navegacao/acessibilidade.spec.ts`, hub e 8 filhos em 1280 px e o hub em 412 px, sem violações no run 43821216220 do CI. O axe achou e o ciclo corrigiu o contraste do selo "concluída" das Tarefas (4,1:1 → 5,9:1); antes da correção, o teste falhou com `color-contrast` no run 43816560648 do CI. No run 43819879782 o axe do hub oscilou no meio do fade do Motion (seção 04); o teste passou a esperar as animações finitas e, no run 43821216220, o Playwright deu 37 de 37 sem repetição. O mesmo arquivo contra o site publicado (`URL_BASE=https://components-dusky-nine.vercel.app`, 16/11/2026): 9 de 10, e a falha é o Formulários, que dá 404 sem o servidor (#28). Teclado (Tab, Enter, foco visível, sem armadilha) nos 8 filhos: `teclado.spec.ts`, no mesmo run. Lighthouse no site: acessibilidade 100 nas 8 execuções de 16/11/2026. Os projetos não seguem o tema do sistema (não há `prefers-color-scheme`; cada um tem tema fixo), por isso não há teste de modo escuro | — |
+| 9 | Segurança e conformidade | Parcial | Sem segredo no código (o banco é o PGlite, sem senha). `pnpm audit --prod` em 16/11/2026: nenhuma vulnerabilidade. `pnpm audit` completo: 5 → 1 (sobra o `minimatch` 10.2.6, moderada, que só sai com a versão 11, fora da faixa do `typescript-eslint`; #40). Mas os alertas do Dependabot estão desligados: `gh api "repos/douglasabnovato/components/dependabot/alerts?state=open&per_page=100"` respondeu 403 em 16/11/2026. Pela regra em decisão (engenharia#33), o audit sozinho não basta | #41 (responsável), #40 |
+| 10 | Entrega confiável | Atende | `gh api repos/douglasabnovato/components/rulesets/26932515` em 16/11/2026: `principal-protegida` ativo, com `deletion`, `non_fast_forward`, `pull_request` e o check obrigatório "Verificação e navegação". O CI roda em todo push e PR; o último da `main` (run 43799396804, 16/11/2026) passou | — |
+| 11 | Testes dos fluxos críticos | Atende | O run 43821216220 do CI roda `pnpm verificar` (lint, tipos, 293 testes Vitest, build), `test:navegacao` (Playwright: navegação, teclado e axe, 37 de 37) e `test:e2e` (Formulários), sem `# skipped` no log | — |
+| 12 | Documentação honesta | Atende | README com "Estado e próximos passos" de 16/11/2026, link do site conferido no mesmo dia (200), comandos iguais aos do `package.json`; `docs/DEPLOY.md` com o estado de cada parte | — |
 
-**Atendidos:** 1, 2, 4, 6, 8, 10, 11 e 12. **Parciais:** 3, 5, 7 e 9. **Não atendidos:** nenhum.
+**Atendidos:** 1, 2, 4, 6, 7, 8, 10, 11 e 12. **Parciais:** 3, 5 e 9. **Não atendidos:** nenhum.
 
-**Por que "Finalizado: sim":** tudo o que o código resolve está feito. Os critérios 3, 5, 7 e 9 dependem do responsável, cada um com issue e o rótulo `depende-do-responsavel`: servidor no Render pelo Blueprint (#28, passo a passo na issue), conta do GoatCounter (#27), merge na `main` e medição do LCP no site (#23). A `main` está protegida desde 10/11/2026 (#26). Se a medição no site for exigida para "Atende" no 7, o projeto volta a "não" até ela.
+**Por que "Finalizado: sim":** tudo o que o código resolve está feito e com evidência. Os 3 parciais dependem do responsável, cada um com issue e o rótulo `depende-do-responsavel`: servidor no Render pelo Blueprint (#28, passo a passo em `docs/DEPLOY.md`), conta do GoatCounter (#27) e alertas do Dependabot (#41).
 
 ## Histórico
 
 Tabelas e revisões anteriores, mantidas como registro. O estado vale só na tabela do topo.
+
+### Estado de 10/11/2026 (ciclo da faixa de 90%)
+
+**Resumo declarado:** 8 de 12 (1, 2, 4, 6, 8, 10, 11 e 12). **Finalizado:** sim. Revisão de 16/11/2026: o critério 8 estava "Atende" só com a regra `color-contrast` do axe, sem o axe completo no navegador que a régua pede; pela régua, eram 7 de 12.
+
+| # | Critério | Situação | Evidência ou o que falta | Issue |
+|---|---|---|---|---|
+| 3 | Fluxo principal completo | Parcial | Servidor sem resposta (000) em 10/11/2026 | #28 |
+| 5 | Medição de uso | Parcial | Código pronto; falta a conta | #27 |
+| 7 | Desempenho aceitável | Parcial | LCP local 1,82 s; faltava medir no site | #23 |
+| 9 | Segurança e conformidade | Parcial | `pnpm audit --prod` sem vulnerabilidades; Dependabot 403 | #28, #41 |
 
 ### Estado de 09/11/2026 (ciclo de 09/11/2026, segunda rodada)
 

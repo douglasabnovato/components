@@ -2,6 +2,32 @@
 
 Plano por ciclo. O estado dos critérios fica só no [`MVP.md`](MVP.md).
 
+## Ciclo de 16/11/2026
+
+> Branch `feature/2026-11-16`, criada da `developer/sprint-2026-11-19` (nova, a partir da `main` depois do merge do #35 em 16/11/2026). PR para a sprint; a `main` fica com o responsável.
+
+**Produto**
+- **Problema e público:** quem avalia o portfólio abre o hub e quer ver 8 projetos React funcionando num só lugar. Desde 16/11 o site publicado já tem o topo pré-renderizado (#36), mas o servidor do Render (`/api` e `/formularios/`) segue fora do ar (#28).
+- **Hipótese (sem mudança):** se o hub mostrar os projetos funcionando num lugar só, quem avalia abre ao menos 2 deles na mesma visita.
+- **Meta do ciclo:** medir o LCP no site publicado (critério 7), ter o axe completo no navegador dentro do CI (critério 8) e baixar as vulnerabilidades de desenvolvimento (#40).
+- **O que a pesquisa trouxe:**
+  - O guia do Playwright recomenda o `@axe-core/playwright` com `withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])` para cobrir as regras A e AA da WCAG, e lembra que o teste automático não pega tudo ([Playwright, Accessibility testing](https://playwright.dev/docs/accessibility-testing)). Até hoje o critério 8 se apoiava só na regra `color-contrast`.
+  - O `requestIdleCallback` aceita um `timeout`: o pedido roda no tempo ocioso e, se o navegador não ficar ocioso, roda no fim do prazo ([MDN, requestIdleCallback](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback)). Serve à #34 sem atrasar demais as seções.
+  - O TBT soma o que passa de 50 ms em cada tarefa longa entre o FCP e o TTI ([web.dev, Total Blocking Time](https://web.dev/articles/tbt)); por isso a #42 olha a hidratação e a montagem das seções, não o topo.
+- **Backlog (impacto × esforço):** 1) LCP no site (alto, baixo); 2) axe completo no CI (alto, médio); 3) vulnerabilidades de desenvolvimento (médio, baixo); 4) #34, pré-carga no tempo ocioso (baixo, baixo); 5) #42, TBT (médio, alto, fica para depois).
+- **Fora do escopo:** servidor no Render (#28), conta do GoatCounter (#27), alertas do Dependabot (#41): todos do responsável.
+
+**Engenharia**
+- **Arquitetura (sem mudança):** monorepo pnpm; hub e 7 filhos estáticos na Vercel; API e Formulários num processo Node no Render (`render.yaml`), com a Vercel repassando `/api` e `/formularios`.
+- **Riscos:** o axe completo pode achar violações em filhos nunca medidos; o `pnpm update --depth Infinity` reescreve o `pnpm-workspace.yaml` inteiro (editar o catálogo à mão); a CPU dividida com outros agentes distorce o Lighthouse (aceitar só execuções com FCP observado abaixo de ~2 s).
+- **Qualidade:** `pnpm verificar`, `test:navegacao` (com o axe novo) e `test:e2e` no CI; Lighthouse móvel no site, 3 execuções válidas, mediana, TBT e elemento do LCP.
+- **Tema:** os projetos não seguem o tema do sistema (não há `prefers-color-scheme`); cada um tem tema fixo pelos tokens de `@components/ui`. Por isso não há teste de "modo escuro" à parte.
+- **Pronto:** CI verde no PR; `MVP.md` com evidência de comando, data e resultado em cada "Atende".
+
+**Plano de ação**
+- **Executa:** #40 (vulnerabilidades de desenvolvimento), Lighthouse no site (#23), axe completo no Playwright (critério 8), #34, `docs/DEPLOY.md`, `MVP.md` e README.
+- **Vira issue:** o que sobrar do axe, o `minimatch` que só sai com versão maior e as tarefas do responsável.
+
 ## Ciclo de 09/11/2026
 
 ### Segunda rodada (`feature/2026-11-09-2`)

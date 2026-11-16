@@ -10,8 +10,9 @@ import { Cabecalho } from './componentes/Cabecalho/Cabecalho'
 import { Topo } from './componentes/Topo/Topo'
 import { projetos } from './dados/projetos'
 import { Rodape } from './secoes/Rodape/Rodape'
+import { pedirSecoes, quandoOcioso } from './secoes/pedirSecoes'
 
-const SecoesProjetos = lazy(() => import('./secoes/SecoesProjetos'))
+const SecoesProjetos = lazy(pedirSecoes)
 
 const todosIds = ['topo', ...projetos.map((p) => p.id), 'arquitetura']
 const soTopo = ['topo']
@@ -24,19 +25,33 @@ function CarregandoSecoes() {
 
 /* Liga depois da primeira pintura: o requestAnimationFrame roda antes dela e
    o setTimeout, logo depois. Assim o módulo das seções (e as fontes e demos
-   que ele puxa) só é pedido com o título já na tela (#36). Começar em false
-   também faz o primeiro render bater com o HTML pré-renderizado, que traz
-   só o espaço reservado das seções. */
+   que ele puxa) só é pedido com o título já na tela (#36). Depois disso, o
+   pedido espera o tempo ocioso do navegador, com prazo (#34), para não
+   disputar a thread com a hidratação; as seções montam quando o módulo chega
+   (ou quando o pedido falha: aí o React.lazy pede de novo).
+   Começar em false também faz o primeiro render bater com o HTML
+   pré-renderizado, que traz só o espaço reservado das seções. */
 function useDepoisDaPrimeiraPintura() {
   const [pronto, setPronto] = useState(false)
   useEffect(() => {
+    let ativo = true
     let espera: ReturnType<typeof setTimeout> | undefined
+    let cancelarOcioso: (() => void) | undefined
     const quadro = requestAnimationFrame(() => {
-      espera = setTimeout(() => setPronto(true), 0)
+      espera = setTimeout(() => {
+        cancelarOcioso = quandoOcioso(() => {
+          const montar = () => {
+            if (ativo) setPronto(true)
+          }
+          pedirSecoes().then(montar, montar)
+        })
+      }, 0)
     })
     return () => {
+      ativo = false
       cancelAnimationFrame(quadro)
       clearTimeout(espera)
+      cancelarOcioso?.()
     }
   }, [])
   return pronto
