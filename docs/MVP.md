@@ -2,9 +2,11 @@
 
 **Nível:** Produto (N3), 12 critérios. Estado em 16/11/2026 (ciclo de 16/11/2026, `feature/2026-11-16` → `developer/sprint-2026-11-19`).
 
+**Revisto em:** 16/11/2026, 12h04 (alertas do Dependabot ligados; critério 9 revisto).
+
 **Resumo:** 9 de 12 aplicáveis atendidos
 
-**Finalizado:** sim
+**Finalizado:** não
 
 **Problema e público:** quem avalia o portfólio quer ver, num só lugar, 8 projetos React funcionando com dados e regras reais, sem instalar nada.
 
@@ -22,18 +24,22 @@
 | 6 | Falhas tratadas | Atende | Falha de rede, prazo de 15 s e 502/503/504 viram "A API não respondeu" (`apps/cadastro/src/dados/repositorios.test.ts`; tela em `apps/cadastro/src/testes/app.test.tsx`, "mostra o aviso de API desligada"). Lista vazia ("mostra o estado vazio quando a busca não encontra ninguém") e espera ("marca a tabela como ocupada enquanto a API ainda não respondeu") no mesmo arquivo, novos em 16/11/2026. A seção 04 do hub avisa quando o servidor não responde (`apps/hub/src/testes/servidor.test.tsx`), e o aviso aparece no site (Playwright, 16/11/2026). `vitest run` em 16/11/2026: `apps/cadastro` 31 de 31, `apps/tarefas` 16 de 16, `packages/ui` 25 de 25, `apps/hub` 28 de 28. Nas Tarefas, os testes novos "mostra o estado vazio quando a busca não casa com nenhuma tarefa" e "anuncia o carregamento enquanto a API ainda não respondeu" (`apps/tarefas/src/testes/app.test.tsx`, #50) | — |
 | 7 | Desempenho aceitável | Atende | `npx lighthouse@12.8.2 https://components-dusky-nine.vercel.app/ --only-categories=performance,accessibility --form-factor=mobile --output=json --chrome-flags="--headless --no-sandbox"` (móvel, **site publicado**), 16/11/2026, entre 03h04 e 03h06, 3 execuções válidas (FCP observado abaixo de 2 s): LCP 1,74 / 1,61 / 1,67 s, **mediana 1,67 s**; TBT 605 / 338 / 388 ms; elemento do LCP `h1#topo-titulo`. Na série anterior do mesmo dia, 5 execuções: 3 descartadas por FCP observado de 9,1 s (cache frio), 2,1 s e 2,9 s; as 2 válidas deram 1,68 e 1,66 s | #23 |
 | 8 | Acessibilidade básica | Atende | axe completo (`@axe-core/playwright`, tags `wcag2a`, `wcag2aa`, `wcag21a`, `wcag21aa` e `wcag22aa`) no navegador, com os dados reais de cada projeto: `packages/testes-e2e/testes/navegacao/acessibilidade.spec.ts`, hub e 8 filhos em 1280 px e o hub em 412 px, sem violações no run 43821216220 do CI. O axe achou e o ciclo corrigiu o contraste do selo "concluída" das Tarefas (4,1:1 → 5,9:1); antes da correção, o teste falhou com `color-contrast` no run 43816560648 do CI. No run 43819879782 o axe do hub oscilou no meio do fade do Motion (seção 04); o teste passou a esperar as animações finitas e, no run 43821216220, o Playwright deu 37 de 37 sem repetição. O mesmo arquivo contra o site publicado (`URL_BASE=https://components-dusky-nine.vercel.app`, 16/11/2026): 9 de 10, e a falha é o Formulários, que dá 404 sem o servidor (#28). Teclado (Tab, Enter, foco visível, sem armadilha) nos 8 filhos: `teclado.spec.ts`, no mesmo run. Lighthouse no site: acessibilidade 100 nas 8 execuções de 16/11/2026. Os projetos não seguem o tema do sistema (não há `prefers-color-scheme`; cada um tem tema fixo), por isso não há teste de modo escuro | — |
-| 9 | Segurança e conformidade | Parcial | Sem segredo no código (o banco é o PGlite, sem senha). `pnpm audit --prod` em 16/11/2026: nenhuma vulnerabilidade. `pnpm audit` completo: 5 → 1 (sobra o `minimatch` 10.2.6, moderada, que só sai com a versão 11, fora da faixa do `typescript-eslint`; #40). Mas os alertas do Dependabot estão desligados: `gh api "repos/douglasabnovato/components/dependabot/alerts?state=open&per_page=100"` respondeu 403 em 16/11/2026. Pela regra em decisão (engenharia#33), o audit sozinho não basta | #41 (responsável), #40 |
+| 9 | Segurança e conformidade | Parcial | Sem segredo no código (o banco é o PGlite, sem senha). `pnpm audit --prod` em 16/11/2026: nenhuma vulnerabilidade. Alertas do Dependabot ligados pelo responsável em 16/11/2026: `gh api "repos/douglasabnovato/components/dependabot/alerts?state=open&per_page=100"` às 12h04 deu 1 aberto, o #5 (`minimatch` 10.2.6, moderada, desenvolvimento, GHSA-g3hv-75wg-m249). O mesmo pacote é a única linha do `pnpm audit` completo (12h04). 0 alertas corrigidos na sprint-19; 1 resta (#46): a correção só existe no `minimatch` 11, e o `@typescript-eslint/typescript-estree` 8.72.2 (o mais novo) ainda pede `^10.2.2`. Sem correção nem decisão escrita, fica Parcial | #46 |
 | 10 | Entrega confiável | Atende | `gh api repos/douglasabnovato/components/rulesets/26932515` em 16/11/2026: `principal-protegida` ativo, com `deletion`, `non_fast_forward`, `pull_request` e o check obrigatório "Verificação e navegação". O CI roda em todo push e PR; o último da `main` (run 43799396804, 16/11/2026) passou | — |
 | 11 | Testes dos fluxos críticos | Atende | O run 43821216220 do CI roda `pnpm verificar` (lint, tipos, 293 testes Vitest, build), `test:navegacao` (Playwright: navegação, teclado e axe, 37 de 37) e `test:e2e` (Formulários), sem `# skipped` no log | — |
 | 12 | Documentação honesta | Atende | README com "Estado e próximos passos" de 16/11/2026, link do site conferido no mesmo dia (200), comandos iguais aos do `package.json`; `docs/DEPLOY.md` com o estado de cada parte | — |
 
 **Atendidos:** 1, 2, 4, 6, 7, 8, 10, 11 e 12. **Parciais:** 3, 5 e 9. **Não atendidos:** nenhum.
 
-**Por que "Finalizado: sim":** tudo o que o código resolve está feito e com evidência. Os 3 parciais dependem do responsável, cada um com issue e o rótulo `depende-do-responsavel`: servidor no Render pelo Blueprint (#28, passo a passo em `docs/DEPLOY.md`), conta do GoatCounter (#27) e alertas do Dependabot (#41).
+**Por que "Finalizado: não":** os parciais 3 e 5 dependem do responsável, cada um com issue e o rótulo `depende-do-responsavel`: servidor no Render pelo Blueprint (#28, passo a passo em `docs/DEPLOY.md`) e conta do GoatCounter (#27). O 9 não: com os alertas ligados, resta 1 alerta do Dependabot (`minimatch`, #46) sem correção dentro da versão maior aceita pelo `typescript-eslint`. Ele sai quando o `typescript-eslint` aceitar o `minimatch` 11, ou se o responsável aceitar o risco em ADR.
 
 ## Histórico
 
 Tabelas e revisões anteriores, mantidas como registro. O estado vale só na tabela do topo.
+
+### Revisão de 16/11/2026, 12h04 (alertas do Dependabot)
+
+Antes: **Resumo** 9 de 12, **Finalizado:** sim, com o 9 em Parcial por alertas desligados (403, #41). Depois: os alertas foram ligados; resta 1 aberto (`minimatch`, #46), sem correção sem versão maior. O 9 segue Parcial, agora por um motivo que não é só do responsável, e o Finalizado cai para não. Resumo segue 9 de 12.
 
 ### Estado de 10/11/2026 (ciclo da faixa de 90%)
 
