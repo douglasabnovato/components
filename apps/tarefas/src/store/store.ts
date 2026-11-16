@@ -9,8 +9,8 @@ import { criarApiTarefas, type ApiTarefas } from './api'
 import { interfaceSlice } from './interface'
 
 /* Cria store e API juntos. */
-export function criarStore(base: string, fetchFn?: typeof fetch) {
-  const api = criarApiTarefas(base, fetchFn)
+export function criarStore(base: string, fetchFn?: typeof fetch, prazoMs?: number) {
+  const api = criarApiTarefas(base, fetchFn, prazoMs)
   const store = configureStore({
     reducer: {
       interface: interfaceSlice.reducer,

@@ -21,7 +21,7 @@ Os filhos chamam sempre `/api/...` no próprio endereço. Em desenvolvimento, o 
 
 | Método | Rota                  | O que faz                                                                 |
 | ------ | --------------------- | ------------------------------------------------------------------------- |
-| GET    | `/saude`              | Responde `{ ok: true }`                                                   |
+| GET    | `/saude`              | Consulta o banco (`select 1`): `{ ok: true, banco: "ok" }`, ou 503      |
 | GET    | `/clientes`           | Lista, com `?busca=` (nome ou e-mail) e `?ordem=nome\|idade\|recentes`    |
 | GET    | `/clientes/:id`       | Um cliente                                                                |
 | POST   | `/clientes`           | Cria (400 com erro por campo; 409 se o e-mail já existe)                  |

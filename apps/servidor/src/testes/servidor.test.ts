@@ -49,7 +49,7 @@ describe('API em /api', () => {
   it('responde a saúde', async () => {
     const resposta = await criarServidor({ api }).request('/api/saude')
     expect(resposta.status).toBe(200)
-    expect(await resposta.json()).toEqual({ ok: true })
+    expect(await resposta.json()).toEqual({ ok: true, banco: 'ok' })
   })
 
   it('lista tarefas pelo prefixo', async () => {

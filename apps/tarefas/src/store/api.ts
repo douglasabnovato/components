@@ -4,13 +4,18 @@
  * O fetch é injetável para os testes chamarem a API em memória.
  */
 import type { AlteracaoTarefa, ConsultaTarefas, NovaTarefa, Tarefa } from '@components/contratos'
+import { PRAZO_API_MS, statusForaDoAr } from '@components/ui'
 import { createApi, fetchBaseQuery, type FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 
-/* Cria a fatia de API sobre a URL base e o fetch informados. */
-export function criarApiTarefas(base: string, fetchFn?: typeof fetch) {
+/*
+ * Cria a fatia de API sobre a URL base e o fetch informados. O prazo cancela
+ * o pedido que não responde (status TIMEOUT_ERROR), para a tela não ficar
+ * carregando para sempre quando o servidor publicado está fora do ar.
+ */
+export function criarApiTarefas(base: string, fetchFn?: typeof fetch, prazoMs = PRAZO_API_MS) {
   const api = createApi({
     reducerPath: 'api',
-    baseQuery: fetchBaseQuery({ baseUrl: base, fetchFn }),
+    baseQuery: fetchBaseQuery({ baseUrl: base, fetchFn, timeout: prazoMs }),
     tagTypes: ['Tarefa'],
     endpoints: (build) => ({
       listarTarefas: build.query<Tarefa[], ConsultaTarefas>({
@@ -65,11 +70,26 @@ export function criarApiTarefas(base: string, fetchFn?: typeof fetch) {
 
 export type ApiTarefas = ReturnType<typeof criarApiTarefas>
 
+/*
+ * Diz se o erro é de API fora do ar: falha de rede, prazo esgotado ou 502,
+ * 503 e 504 do encaminhamento do site publicado.
+ */
+export function apiForaDoAr(erro: unknown): boolean {
+  const e = erro as { status?: unknown; originalStatus?: unknown } | undefined
+  /* Página de erro em HTML vira PARSING_ERROR; o status real fica em originalStatus. */
+  return (
+    e?.status === 'FETCH_ERROR' ||
+    e?.status === 'TIMEOUT_ERROR' ||
+    statusForaDoAr(e?.status) ||
+    statusForaDoAr(e?.originalStatus)
+  )
+}
+
 /* Extrai a mensagem do corpo de erro da API ({ erro }) ou uma mensagem padrão. */
 export function mensagemDeErro(erro: unknown): string {
   const e = erro as FetchBaseQueryError | undefined
   if (!e) return ''
-  if (e.status === 'FETCH_ERROR') return 'A API não respondeu. Ela está ligada?'
+  if (apiForaDoAr(e)) return 'A API não respondeu. Tente de novo em alguns minutos.'
   const dados = (e as { data?: { erro?: string } }).data
   return dados?.erro ?? 'Algo deu errado. Tente de novo.'
 }

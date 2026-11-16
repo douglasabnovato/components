@@ -8,7 +8,7 @@ import { abrirBanco, criarApp, reiniciarBanco } from '@components/api'
 import { render, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { violacoesAxe } from '@components/ui/testes/axe'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { App } from '../App'
 
 const bancoDaApi = abrirBanco()
@@ -122,6 +122,39 @@ describe('API desligada', () => {
       />,
     )
     expect(await screen.findByRole('heading', { name: 'A API não respondeu' })).toBeInTheDocument()
+  })
+
+  it('desiste do pedido que não responde dentro do prazo', async () => {
+    /* Simula o servidor publicado pendurado: só termina quando o pedido é cancelado. */
+    const pendurado = ((entrada: RequestInfo | URL) =>
+      new Promise<Response>((_, rejeitar) => {
+        const sinal = entrada instanceof Request ? entrada.signal : undefined
+        sinal?.addEventListener('abort', () =>
+          rejeitar(new DOMException('cancelado', 'AbortError')),
+        )
+      })) as typeof fetch
+    render(<App base="http://localhost/api" fetchFn={pendurado} prazoMs={50} />)
+    expect(await screen.findByRole('heading', { name: 'A API não respondeu' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Tentar de novo' })).toBeInTheDocument()
+  })
+
+  it('no site publicado, trata o 504 do encaminhamento como servidor fora do ar', async () => {
+    vi.stubEnv('DEV', false)
+    try {
+      render(
+        <App
+          base="http://localhost/api"
+          fetchFn={() => Promise.resolve(new Response('Gateway Timeout', { status: 504 }))}
+        />,
+      )
+      expect(
+        await screen.findByRole('heading', { name: 'A API não respondeu' }),
+      ).toBeInTheDocument()
+      expect(screen.getByText(/servidor desta demonstração está fora do ar/)).toBeInTheDocument()
+      expect(screen.queryByText(/pnpm dev:api/)).not.toBeInTheDocument()
+    } finally {
+      vi.unstubAllEnvs()
+    }
   })
 })
 /* Fim dos testes de integração das Tarefas. */

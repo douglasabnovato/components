@@ -1,9 +1,10 @@
 /*
  * Topo: abertura do hub. Título, dois botões em pílula, números do projeto
  * e um mosaico animado com os 8 filhos, que pode ser pausado (WCAG 2.2.2).
+ * A entrada do texto é só CSS e sem opacidade 0, para o título contar como
+ * LCP no primeiro quadro, sem esperar o JavaScript do Motion (#23).
  */
 import { BotaoPausa, BotaoPilula, useMovimentoReduzido } from '@components/ui'
-import { motion } from 'motion/react'
 import { useState, type CSSProperties } from 'react'
 import { doisDigitos, projetos, site } from '../../dados/projetos'
 import styles from './Topo.module.css'
@@ -24,12 +25,7 @@ export function Topo() {
     <section id="topo" className={styles.topo} aria-labelledby="topo-titulo">
       <div className={styles.fundo} aria-hidden="true" />
       <div className={styles.conteudo}>
-        <motion.div
-          className={styles.texto}
-          initial={{ opacity: 0, y: 32 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        >
+        <div className={styles.texto}>
           <p className={styles.rotulo}>Monorepo React · projeto 0</p>
           <h1 id="topo-titulo" className={styles.titulo}>
             Sete ideias antigas, <span className={styles.destaque}>reconstruídas</span> com React
@@ -61,7 +57,7 @@ export function Topo() {
               </div>
             ))}
           </dl>
-        </motion.div>
+        </div>
 
         <div className={styles.mosaicoArea}>
           <ul

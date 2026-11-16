@@ -65,9 +65,15 @@
   font-size: clamp(1.75rem, 4vw, 3rem);
 }
 
+/*
+ * min-width: 0 deixa o trilho rolar dentro da seção. Sem isso, no celular, o
+ * trilho alargava a coluna e cortava cartões e a lista de tecnologias fora da
+ * tela (o axe via o texto escuro sobre o fundo da página).
+ */
 .categorias {
   display: grid;
   gap: var(--esp-4);
+  min-width: 0;
 }
 
 .subtitulo {
@@ -92,6 +98,8 @@
   align-content: start;
   gap: var(--esp-2);
   scroll-snap-align: start;
+  /* Fundo próprio: o cartão rolado para fora da tela não "herda" o fundo escuro da página no axe */
+  background: var(--fundo);
 }
 
 .miniatura {
