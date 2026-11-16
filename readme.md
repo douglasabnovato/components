@@ -14,7 +14,7 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
   - axe completo no navegador, no CI, para o hub e os 8 filhos; ele achou o contraste do selo "concluída" das Tarefas, já corrigido.
   - Seções do hub pedidas no tempo ocioso, num pedido só (#34).
   - Vulnerabilidades de desenvolvimento de 5 para 1 (#40); produção segue sem nenhuma.
-  - Testes de lista vazia e de espera no Cadastro, e o [`docs/DEPLOY.md`](docs/DEPLOY.md).
+  - Testes de lista vazia e de espera no Cadastro e nas Tarefas, e o [`docs/DEPLOY.md`](docs/DEPLOY.md).
 - Já na `main` (PR #35, 16/11/2026): topo pré-renderizado (#36), aviso de servidor fora do ar na seção 04 (#37), contraste dos cartões (#24), teclado nos 8 aplicativos (#25), Blueprint do Render (`render.yaml`) e medição pronta no código.
 
 **Site:** https://components-dusky-nine.vercel.app respondeu 200 em 16/11/2026, com o build da `main`. O servidor no Render (`/api` e `/formularios/`) não respondeu; ver #28.
@@ -28,7 +28,8 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 - #47 Rodar a navegação e o axe no site depois de cada merge na `main`.
 - #48 Alinhar o guia de hospedagem ao Blueprint do Render.
 - #49 Pôr a checagem de formatação no CI.
-- #50 Cobrir lista vazia e espera nas Tarefas.
+- #50 Cobrir lista vazia e espera nas Tarefas: feito neste ciclo; fecha no merge da `main`.
+- #52 Testar o Esc nos diálogos e tirar o `networkidle` do teste do axe.
 
 **Onde está a documentação**
 - Estado dos critérios: [`docs/MVP.md`](docs/MVP.md)
