@@ -8,9 +8,13 @@ type ModuloDasSecoes = typeof import('./SecoesProjetos')
 
 let pedido: Promise<ModuloDasSecoes> | undefined
 
-/* Devolve a promessa do módulo das seções, criando-a só na primeira chamada. */
+/* Devolve a promessa do módulo das seções, criando-a só na primeira chamada. Se o
+   pedido falhar, esquece a promessa para a próxima chamada tentar de novo. */
 export function pedirSecoes(): Promise<ModuloDasSecoes> {
-  pedido ??= import('./SecoesProjetos')
+  pedido ??= import('./SecoesProjetos').catch((erro: unknown) => {
+    pedido = undefined
+    throw erro
+  })
   return pedido
 }
 

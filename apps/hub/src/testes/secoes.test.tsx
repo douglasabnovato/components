@@ -45,7 +45,7 @@ describe('Pedido das seções', () => {
 })
 
 describe('App com pré-carga no tempo ocioso', () => {
-  it('só monta as seções depois do tempo ocioso, pedindo uma vez', async () => {
+  it('só monta as seções depois do tempo ocioso, com um pedido de tempo ocioso só', async () => {
     const pendentes: IdleRequestCallback[] = []
     const pedir = vi.fn((fazer: IdleRequestCallback) => pendentes.push(fazer))
     vi.stubGlobal('requestIdleCallback', pedir)

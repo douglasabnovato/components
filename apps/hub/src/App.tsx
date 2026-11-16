@@ -27,7 +27,8 @@ function CarregandoSecoes() {
    o setTimeout, logo depois. Assim o módulo das seções (e as fontes e demos
    que ele puxa) só é pedido com o título já na tela (#36). Depois disso, o
    pedido espera o tempo ocioso do navegador, com prazo (#34), para não
-   disputar a thread com a hidratação; as seções montam quando o módulo chega.
+   disputar a thread com a hidratação; as seções montam quando o módulo chega
+   (ou quando o pedido falha: aí o React.lazy pede de novo).
    Começar em false também faz o primeiro render bater com o HTML
    pré-renderizado, que traz só o espaço reservado das seções. */
 function useDepoisDaPrimeiraPintura() {
@@ -39,9 +40,10 @@ function useDepoisDaPrimeiraPintura() {
     const quadro = requestAnimationFrame(() => {
       espera = setTimeout(() => {
         cancelarOcioso = quandoOcioso(() => {
-          void pedirSecoes().then(() => {
+          const montar = () => {
             if (ativo) setPronto(true)
-          })
+          }
+          pedirSecoes().then(montar, montar)
         })
       }, 0)
     })
