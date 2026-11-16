@@ -17,7 +17,7 @@ Regra para os alertas, ordem do responsável repassada pelo DG líder em 16/11/2
 
 | Alerta | Pacote | Severidade | Quem o puxa | Por que não chega à produção |
 |---|---|---|---|---|
-| #5 | `minimatch` 10.2.6 (GHSA-g3hv-75wg-m249) | média | `typescript-eslint` → `@typescript-eslint/typescript-estree` 8.70.1, dependência de desenvolvimento da raiz do monorepo | É do lint (`pnpm lint`), que roda na máquina de quem desenvolve e no CI. Nenhum pacote de `apps/` ou `packages/` depende do `typescript-eslint`, e o build não leva o lint. A correção só existe no `minimatch` 11; o `@typescript-eslint/typescript-estree` mais novo (8.72.2) ainda pede `^10.2.2`. |
+| #5 | `minimatch` 10.2.6 (GHSA-g3hv-75wg-m249) | média | `typescript-eslint` → `@typescript-eslint/typescript-estree` 8.70.1, dependência de desenvolvimento da raiz do monorepo | É do lint (`pnpm lint`), que roda na máquina de quem desenvolve e no CI. Nenhum pacote de `apps/` ou `packages/` depende do `typescript-eslint`, e o build não leva o lint. A correção só existe no `minimatch` 11. O `@typescript-eslint/typescript-estree` 8.73.0, publicado em 16/11/2026 às 14h06, já pede `^11.0.1`; até a versão anterior (8.72.2) pedia `^10.2.2`. |
 
 Prova, em 16/11/2026, no clone de `developer/sprint-2026-11-19`:
 
@@ -43,5 +43,5 @@ Não se fecha nem se dispensa alerta pela API. Esta ADR só registra a decisão.
 ## Quando revisar
 
 - Se o `minimatch` passar a aparecer no `pnpm audit --prod`.
-- Quando o `typescript-eslint` aceitar o `minimatch` 11 (correção sem versão maior do nosso lado).
+- Já existe correção sem versão maior: o `typescript-eslint` 8.73.0 (16/11/2026) aceita o `minimatch` 11. Atualizar no próximo ciclo (#46), quando a versão tiver alguns dias de uso, com `pnpm lint` e o CI verdes. Com isso, esta ADR deixa de ter alerta para cobrir.
 - Numa troca da ferramenta de lint.
