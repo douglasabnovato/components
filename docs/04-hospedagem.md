@@ -7,7 +7,7 @@ Guia de operação da publicação: onde cada parte roda, como foi configurada e
 | Parte | Provedor | Endereço | Situação |
 | --- | --- | --- | --- |
 | Hub e 7 filhos estáticos | Vercel (Hobby) | https://components-dusky-nine.vercel.app | ✅ No ar |
-| API e Formulários (`apps/servidor`) | Render (Free) | https://components-servidor.onrender.com | ⏳ Serviço criado; não sobe por falta de memória (A-38) |
+| API e Formulários (`apps/servidor`) | Render (Free) | https://components-servidor.onrender.com | ⏳ Fora do ar em 16/11/2026 (`/api/saude` sem resposta em 60 s). O `render.yaml` (Blueprint) está pronto; criar o serviço é do responsável (#28). Passo a passo curto em [`DEPLOY.md`](DEPLOY.md) |
 
 O visitante usa só o domínio da Vercel. Os caminhos `/api` e `/formularios` são repassados ao Render pelo `vercel.json`, sem o visitante perceber.
 
@@ -157,8 +157,8 @@ Remove-Item Env:URL_BASE
 
 Os dois provedores publicam automaticamente a cada push na `main`:
 
-1. Trabalho em `feature/*`, pull request para `developer-mvp`, CI verde.
-2. Pull request de `developer-mvp` para `main`, CI verde, merge.
+1. Trabalho em `feature/AAAA-MM-DD`, pull request para `developer/sprint-<próxima quinta>`, CI verde.
+2. Pull request da sprint para a `main`, CI verde, merge feito pelo responsável (a `main` é protegida pelo ruleset `principal-protegida`).
 3. Vercel e Render fazem o deploy sozinhos. Cada branch enviada ao GitHub também ganha uma prévia na Vercel.
 4. Rodar o T-05 contra o domínio publicado.
 
@@ -198,5 +198,5 @@ Ao atualizar o Node para a linha 25 ou superior, o Corepack deixa de vir junto c
 
 ## Opcional
 
-- Domínio próprio ou mais legível na Vercel (A-36); ao trocar, atualizar `ORIGENS` no Render e esta documentação.
-- Se a espera do Render incomodar: plano pago do Render ou outra hospedagem sem hibernação.
+- O portfólio usa só planos gratuitos e os domínios gerados pelos provedores (regra do responsável): nada de domínio próprio nem plano pago. Se o endereço da Vercel mudar, atualizar `ORIGENS` no `render.yaml` e esta documentação.
+- A espera do Render ao acordar (cerca de 1 minuto) é aceita no plano gratuito; o hub avisa quando o servidor não responde (#37).
