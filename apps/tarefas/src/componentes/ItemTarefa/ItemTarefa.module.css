@@ -55,7 +55,7 @@
   padding: 0 var(--esp-2);
   border-radius: var(--raio-pilula);
   background: color-mix(in srgb, var(--sucesso) 14%, transparent);
-  color: var(--sucesso);
+  color: var(--sucesso-texto);
   font-weight: 600;
 }
 

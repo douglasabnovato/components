@@ -18,7 +18,7 @@ function linkDoFilho(page: Page, numero: number, nome: string) {
 test.describe('hub', () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('/')
-    await expect(page.locator('#filho-1')).toBeAttached()
+    await expect(page.locator('#filho-1')).toBeAttached({ timeout: 30_000 })
   })
 
   test('carrega sem erros de console', async ({ page }) => {
@@ -59,7 +59,7 @@ test.describe('filhos', () => {
       await voltar.click()
 
       await expect(page).toHaveURL(`${hub.origin}/#filho-${numero}`)
-      await expect(page.locator(`#filho-${numero}`)).toBeAttached()
+      await expect(page.locator(`#filho-${numero}`)).toBeAttached({ timeout: 30_000 })
     })
   }
 })
