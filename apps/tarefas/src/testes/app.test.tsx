@@ -114,6 +114,29 @@ describe('Tarefas', () => {
 })
 
 describe('API desligada', () => {
+  it('mostra o estado vazio quando a busca não casa com nenhuma tarefa', async () => {
+    const { usuario } = await abrir()
+    const campo = screen.getByLabelText('Tarefa ou padrão de busca')
+    await usuario.type(campo, 'zzz-nada-assim{Shift>}{Enter}{/Shift}')
+    expect(
+      await screen.findByRole('heading', { name: 'Nada casa com esse padrão' }),
+    ).toBeInTheDocument()
+    await usuario.click(screen.getByRole('button', { name: 'Limpar busca' }))
+    await waitFor(() => expect(tarefasVisiveis().length).toBeGreaterThan(0))
+  })
+
+  it('anuncia o carregamento enquanto a API ainda não respondeu', async () => {
+    render(
+      <App
+        base="http://localhost/api"
+        fetchFn={() => new Promise<Response>(() => {})}
+        prazoMs={60_000}
+      />,
+    )
+    expect(await screen.findByText('Carregando tarefas…')).toHaveAttribute('role', 'status')
+    expect(screen.queryByRole('list', { name: 'Tarefas' })).not.toBeInTheDocument()
+  })
+
   it('explica como ligar a API', async () => {
     render(
       <App
