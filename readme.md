@@ -24,7 +24,7 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 - #27 Criar a conta do GoatCounter `douglasabnovato` (responsável; o código já está no site).
 - #41 Ligar os alertas do Dependabot e a varredura de segredos (responsável).
 - #42 Baixar o tempo de bloqueio (TBT) do hub.
-- #46 Tirar o `minimatch` vulnerável das dependências de lint: risco aceito na [ADR 0005](docs/adr/0005-aceitar-alertas-de-desenvolvimento-do-dependabot.md) até o `typescript-eslint` aceitar o `minimatch` 11.
+- #46 Tirar o `minimatch` vulnerável das dependências de lint: `typescript-eslint` 8.73.0 na sprint (18/11/2026); o alerta fecha no merge da `main`.
 - #47 Rodar a navegação e o axe no site depois de cada merge na `main`.
 - #48 Alinhar o guia de hospedagem ao Blueprint do Render.
 - #49 Pôr a checagem de formatação no CI.
