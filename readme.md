@@ -28,7 +28,7 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 - #42 Baixar o tempo de bloqueio (TBT) do hub.
 - #46 Tirar o `minimatch` vulnerável das dependências de lint: `typescript-eslint` 8.73.0 na sprint (18/11/2026); o alerta fecha no merge da `main`.
 - #47 Rodar a navegação e o axe no site depois de cada merge na `main`.
-- #48 Alinhar o guia de hospedagem ao Blueprint do Render.
+- #48 Alinhar o guia de hospedagem ao Blueprint do Render: feito na sprint (18/11/2026); fecha no merge da `main`.
 - #49 Pôr a checagem de formatação no CI: feita na sprint (18/11/2026); fecha no merge da `main`.
 - #50 Cobrir lista vazia e espera nas Tarefas: feito neste ciclo; fecha no merge da `main`.
 - #52 Testar o Esc nos diálogos e tirar o `networkidle` do teste do axe.

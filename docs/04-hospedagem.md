@@ -51,31 +51,25 @@ O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta 
 
 ### Criação do serviço
 
-1. Em https://dashboard.render.com, entrar com a conta do GitHub.
-2. **+ New → Web Service** e escolher o repositório `douglasabnovato/components`.
-3. Preencher:
+O serviço nasce do Blueprint (`render.yaml` na raiz), não de um Web Service montado à mão. O passo a passo, clique a clique, está em [`docs/DEPLOY.md`](DEPLOY.md#render-pelo-blueprint-responsável-28) (issue #28, do responsável): **New → Blueprint** → `douglasabnovato/components` → branch `main` → **Apply**. Nenhum valor é pedido.
 
-| Campo          | Valor                                                                                                                                                      |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Name           | `components-servidor` (é o endereço que o `vercel.json` usa; se for outro, atualizar as regras de `/api` e `/formularios`)                                 |
-| Language       | Node                                                                                                                                                       |
-| Branch         | `main`                                                                                                                                                     |
-| Region         | Oregon (US West), a mesma dos outros serviços da conta                                                                                                     |
-| Root Directory | vazio (raiz do repositório)                                                                                                                                |
-| Build Command  | `corepack pnpm install --frozen-lockfile && corepack pnpm --filter @components/formularios build && corepack pnpm --filter @components/api banco:preparar` |
-| Start Command  | `cd apps/servidor && node --max-old-space-size=200 --import tsx src/servidor.ts`                                                                           |
-| Instance Type  | Free                                                                                                                                                       |
+O que o `render.yaml` define (os mesmos valores, para conferir no painel depois do **Apply**):
 
-4. Em **Environment Variables**:
+| Campo                   | Valor no `render.yaml`                                                                                                                                                 |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Nome                    | `components-servidor` (é o endereço que o `vercel.json` usa; se o Render der outro, atualizar as regras de `/api` e `/formularios` por PR)                             |
+| Runtime, plano e região | `node`, `free`, `oregon`                                                                                                                                               |
+| Branch                  | `main`                                                                                                                                                                 |
+| `rootDir`               | `apps/servidor`                                                                                                                                                        |
+| `buildCommand`          | `cd ../.. && corepack pnpm install --frozen-lockfile && corepack pnpm --filter @components/formularios build && corepack pnpm --filter @components/api banco:preparar` |
+| `startCommand`          | `node --max-old-space-size=200 --import tsx src/servidor.ts` (roda dentro de `apps/servidor`)                                                                          |
+| `healthCheckPath`       | `/api/saude`                                                                                                                                                           |
+| `buildFilter.paths`     | `apps/servidor/**`, `apps/api/**`, `apps/formularios/**`, `packages/**`, `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `package.json`, `.node-version`                      |
+| Variáveis               | `NODE_VERSION=24.22.1` (a mesma do `.node-version`), `COREPACK_ENABLE_DOWNLOAD_PROMPT=0`, `ORIGENS=https://components-dusky-nine.vercel.app`                           |
 
-| Variável                          | Valor                                      |
-| --------------------------------- | ------------------------------------------ |
-| `NODE_VERSION`                    | `24.22.1` (a mesma do `.node-version`)     |
-| `ORIGENS`                         | `https://components-dusky-nine.vercel.app` |
-| `COREPACK_ENABLE_DOWNLOAD_PROMPT` | `0`                                        |
+Com `rootDir: apps/servidor`, o build volta à raiz (`cd ../..`) porque o pnpm instala o monorepo inteiro. O Render só reimplanta quando muda um dos caminhos do `buildFilter`. O deploy termina quando o log mostra `Servidor do components em http://localhost:10000 · produção (API e Formulários)`; a porta é a que o Render informa em `PORT`.
 
-5. Em **Advanced → Health Check Path**: `/api/saude`.
-6. **Deploy Web Service**. O deploy termina quando o log mostra `Servidor do components em http://localhost:10000 · produção (API e Formulários)`. A porta é a que o Render informa em `PORT`.
+Para mudar build, start ou variáveis, editar o `render.yaml` por PR: o Blueprint reaplica a cada commit na `main`.
 
 ### O que o build faz
 
@@ -86,7 +80,7 @@ O ensaio usa a porta da API: pare o `pnpm dev:api` antes, ou defina outra porta 
 | Compilar o Formulários | `pnpm --filter @components/formularios build`  | Gera `build/server` e `build/client`, que o servidor carrega. A API e o servidor rodam direto do TypeScript, com `tsx`                                                                                                                 |
 | Preparar o banco       | `pnpm --filter @components/api banco:preparar` | Cria o banco com os dados de exemplo em `apps/api/.dados`. O Render guarda essa pasta com o resultado do build, e o servidor sobe sem rodar o `initdb`                                                                                 |
 
-O Start Command não usa o Corepack nem o pnpm: chama o Node direto, num único processo (ver Memória). Salvar Build ou Start Command no painel do Render já dispara um novo deploy.
+O `startCommand` não usa o Corepack nem o pnpm: chama o Node direto, num único processo (ver Memória).
 
 ### Memória (limite de 512 MB)
 
@@ -94,9 +88,9 @@ O plano gratuito encerra o serviço acima de 512 MB (`Out of memory (used over 5
 
 | Medida                     | Onde                                                             | Efeito                                                                                                                                                                               |
 | -------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Banco criado no build      | `banco:preparar` no Build Command                                | Evita o `initdb` na subida, o maior pico                                                                                                                                             |
+| Banco criado no build      | `banco:preparar` no `buildCommand` (`render.yaml`)               | Evita o `initdb` na subida, o maior pico                                                                                                                                             |
 | Modo econômico do Postgres | `abrirBanco({ memoriaReduzida: true })` no preparo e no servidor | `shared_buffers` de 16 MB e áreas de trabalho pequenas, gravados com `ALTER SYSTEM` no preparo e em vigor quando o servidor abre o banco. O PGlite ignora parâmetros `-c` na partida |
-| Um único processo Node     | Start Command com `node --import tsx`                            | Sem Corepack, pnpm e processo pai do tsx ocupando memória                                                                                                                            |
+| Um único processo Node     | `startCommand` com `node --import tsx`                           | Sem Corepack, pnpm e processo pai do tsx ocupando memória                                                                                                                            |
 
 O log do servidor mostra a memória em cada etapa (`[memória] início`, `banco aberto`, `Formulários carregado`, `porta aberta`), se o banco veio pronto do build e o `shared_buffers` em vigor (deve ser 16MB). A aba **Metrics** do Render mostra o uso ao longo do tempo. Se ainda faltar memória, a próxima medida é compilar o servidor para JavaScript no build, eliminando o tsx e o esbuild da execução.
 
@@ -135,18 +129,18 @@ As regras por pasta só valem quando o arquivo pedido não existe: arquivos JS e
 
 ## Validação
 
-| #   | Verificação                                                | Esperado                   | Situação                       |
-| --- | ---------------------------------------------------------- | -------------------------- | ------------------------------ |
-| 1   | Abrir o hub                                                | Carrega na hora            | ✅                             |
-| 2   | Abrir `https://components-servidor.onrender.com/api/saude` | `{"ok":true,"banco":"ok"}` | ⏳ A-09                        |
-| 3   | Abrir `/api/saude` pelo domínio da Vercel                  | `{"ok":true,"banco":"ok"}` | ⏳ A-09                        |
-| 4   | Clicar nos 8 projetos e voltar                             | Todos funcionam            | ⏳ Formulários depende do A-09 |
-| 5   | Abrir uma rota interna direto (`/trilha/aprendizado/1`)    | Carrega o app              | ⏳ A-08                        |
-| 6   | Criar cliente (modo API) e concluir tarefa                 | Funcionam                  | ⏳ A-09                        |
-| 7   | Enviar formulário com JavaScript desligado                 | Funciona                   | ⏳ A-09                        |
-| 8   | Rodar o T-05                                               | 11 de 11                   | ⏳ A-11                        |
+Situação em 18/11/2026, 18h09. Comandos: `curl -s -o /dev/null -w "%{http_code}" -m 40 <endereço>` e `URL_BASE=https://components-dusky-nine.vercel.app/ pnpm test:navegacao`.
 
-Para o item 8, acordar o Render antes (abrir a URL do item 2) e rodar:
+| #   | Verificação                                                       | Esperado                   | Situação em 18/11/2026                                                                                                                           |
+| --- | ----------------------------------------------------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1   | Abrir o hub (`/`)                                                 | 200                        | ✅ 200                                                                                                                                           |
+| 2   | Abrir `https://components-servidor.onrender.com/api/saude`        | `{"ok":true,"banco":"ok"}` | ⏳ sem resposta (000); o serviço ainda não existe (#28)                                                                                          |
+| 3   | Abrir `/api/saude` pelo domínio da Vercel                         | `{"ok":true,"banco":"ok"}` | ⏳ sem resposta (000), mesmo motivo (#28)                                                                                                        |
+| 4   | Abrir `/formularios/` pelo domínio da Vercel                      | 200                        | ⏳ 404 (#28)                                                                                                                                     |
+| 5   | Abrir uma rota interna direto (`/trilha/aprendizado/1`)           | 200, carrega o app         | ✅ 200                                                                                                                                           |
+| 6   | Rodar a navegação contra o site (`test:navegacao` com `URL_BASE`) | 37 de 37                   | ⏳ 32 de 37. As 5 falhas dependem do servidor: 4 do Formulários (abrir pelo hub, axe e dois de teclado) e o fluxo das Tarefas pelo teclado (#28) |
+
+Para o item 6, acordar o Render antes (abrir a URL do item 2) e rodar:
 
 ```powershell
 $env:URL_BASE="https://components-dusky-nine.vercel.app/"; pnpm test:navegacao
@@ -166,20 +160,20 @@ Para voltar a uma versão anterior: na Vercel, **Deployments → (versão anteri
 
 ## Problemas comuns
 
-| Sintoma                                                                                                 | Causa provável                                                      | Ação                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
-| Render: `EROFS: read-only file system, unlink '/usr/bin/pnpm'`                                          | `corepack enable` tentando substituir o pnpm do Render              | Usar `corepack pnpm ...` nos comandos, sem `corepack enable`                                                              |
-| Render: `pnpm: command not found` ou versão errada do pnpm                                              | Comando sem o Corepack                                              | Conferir `corepack pnpm` no Build Command                                                                                 |
-| Render: `Out of memory (used over 512Mi)`                                                               | Pico de memória na subida                                           | Conferir o `banco:preparar` no Build Command e o Start Command de processo único; ver a seção Memória e o log `[memória]` |
-| Render ou local: `LinkError ... memory import has ... pages which is smaller than the declared initial` | Memória inicial do PGlite abaixo do piso de 128 MB do `pglite.wasm` | Não usar a opção `initialMemory` abaixo de 128 MB                                                                         |
-| Log mostra `Banco ausente: criando agora.` ou `shared_buffers de 128MB`                                 | Banco não foi preparado no build                                    | Conferir o fim do Build Command                                                                                           |
-| Render: erro de versão do Node ou `Unsupported engine`                                                  | `NODE_VERSION` ausente ou diferente                                 | Definir `24.22.1` e fazer **Manual Deploy**                                                                               |
-| Render ou Vercel: `ERR_PNPM_OUTDATED_LOCKFILE`                                                          | `pnpm-lock.yaml` desatualizado                                      | Rodar `pnpm install` local, fazer commit do lockfile e push                                                               |
-| Vercel usa outra versão do pnpm                                                                         | Vercel ignorou o `packageManager`                                   | Variável `ENABLE_EXPERIMENTAL_COREPACK=1` no projeto e novo deploy                                                        |
-| `/api/...` ou `/formularios/` com erro pela Vercel                                                      | Render fora do ar, dormindo ou com outro nome                       | Abrir a URL do Render direto; conferir o nome no `vercel.json`                                                            |
-| Formulários responde 503                                                                                | Build do Formulários não foi gerado                                 | Conferir o Build Command do Render                                                                                        |
-| Primeira resposta da API leva cerca de 1 minuto                                                         | Render acordando                                                    | Esperado no plano gratuito                                                                                                |
-| Clientes e tarefas criados somem                                                                        | Disco temporário do Render                                          | Esperado no plano gratuito (A-37)                                                                                         |
+| Sintoma                                                                                                 | Causa provável                                                      | Ação                                                                                                                                        |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Render: `EROFS: read-only file system, unlink '/usr/bin/pnpm'`                                          | `corepack enable` tentando substituir o pnpm do Render              | Usar `corepack pnpm ...` nos comandos, sem `corepack enable`                                                                                |
+| Render: `pnpm: command not found` ou versão errada do pnpm                                              | Comando sem o Corepack                                              | Conferir `corepack pnpm` no `buildCommand` (`render.yaml`)                                                                                  |
+| Render: `Out of memory (used over 512Mi)`                                                               | Pico de memória na subida                                           | Conferir o `banco:preparar` no `buildCommand` (`render.yaml`) e o `startCommand` de processo único; ver a seção Memória e o log `[memória]` |
+| Render ou local: `LinkError ... memory import has ... pages which is smaller than the declared initial` | Memória inicial do PGlite abaixo do piso de 128 MB do `pglite.wasm` | Não usar a opção `initialMemory` abaixo de 128 MB                                                                                           |
+| Log mostra `Banco ausente: criando agora.` ou `shared_buffers de 128MB`                                 | Banco não foi preparado no build                                    | Conferir o fim do `buildCommand` (`render.yaml`)                                                                                            |
+| Render: erro de versão do Node ou `Unsupported engine`                                                  | `NODE_VERSION` ausente ou diferente                                 | Definir `24.22.1` e fazer **Manual Deploy**                                                                                                 |
+| Render ou Vercel: `ERR_PNPM_OUTDATED_LOCKFILE`                                                          | `pnpm-lock.yaml` desatualizado                                      | Rodar `pnpm install` local, fazer commit do lockfile e push                                                                                 |
+| Vercel usa outra versão do pnpm                                                                         | Vercel ignorou o `packageManager`                                   | Variável `ENABLE_EXPERIMENTAL_COREPACK=1` no projeto e novo deploy                                                                          |
+| `/api/...` ou `/formularios/` com erro pela Vercel                                                      | Render fora do ar, dormindo ou com outro nome                       | Abrir a URL do Render direto; conferir o nome no `vercel.json`                                                                              |
+| Formulários responde 503                                                                                | Build do Formulários não foi gerado                                 | Conferir o `buildCommand` do `render.yaml` e o log do build no Render                                                                       |
+| Primeira resposta da API leva cerca de 1 minuto                                                         | Render acordando                                                    | Esperado no plano gratuito                                                                                                                  |
+| Clientes e tarefas criados somem                                                                        | Disco temporário do Render                                          | Esperado no plano gratuito (A-37)                                                                                                           |
 
 Ao atualizar o Node para a linha 25 ou superior, o Corepack deixa de vir junto com o Node: será preciso trocar a estratégia no build (por exemplo, `npx corepack pnpm ...`).
 
