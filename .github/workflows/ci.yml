@@ -1,7 +1,7 @@
-# CI do components: verificação completa (lint, tipos, testes e build), teste de
-# navegação do ecossistema (T-01) e ponta a ponta do Formulários, em todo push
-# e pull request. A versão do Node vem do .node-version e a do pnpm, do
-# campo packageManager do package.json.
+# CI do components: formatação (Prettier), verificação completa (lint, tipos,
+# testes e build), teste de navegação do ecossistema (T-01) e ponta a ponta do
+# Formulários, em todo push e pull request. A versão do Node vem do
+# .node-version e a do pnpm, do campo packageManager do package.json.
 name: CI
 
 on:
@@ -35,6 +35,9 @@ jobs:
 
       - name: Instalar dependências
         run: pnpm install --frozen-lockfile
+
+      - name: Formatação
+        run: pnpm format:check
 
       - name: Verificação (lint, tipos, testes e build)
         run: pnpm verificar
