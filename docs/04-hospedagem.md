@@ -7,7 +7,7 @@ Guia de operação da publicação: onde cada parte roda, como foi configurada e
 | Parte                               | Provedor       | Endereço                                 | Situação                                                                                                                                                                                          |
 | ----------------------------------- | -------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Hub e 7 filhos estáticos            | Vercel (Hobby) | https://components-dusky-nine.vercel.app | ✅ No ar                                                                                                                                                                                          |
-| API e Formulários (`apps/servidor`) | Render (Free)  | https://components-servidor.onrender.com | ⏳ Fora do ar em 16/11/2026 (`/api/saude` sem resposta em 60 s). O `render.yaml` (Blueprint) está pronto; criar o serviço é do responsável (#28). Passo a passo curto em [`DEPLOY.md`](DEPLOY.md) |
+| API e Formulários (`apps/servidor`) | Render (Free)  | https://components-servidor.onrender.com | ⏳ Fora do ar em 18/11/2026 (`/api/saude` sem resposta em 40 s). O `render.yaml` (Blueprint) está pronto; criar o serviço é do responsável (#28). Passo a passo curto em [`DEPLOY.md`](DEPLOY.md) |
 
 O visitante usa só o domínio da Vercel. Os caminhos `/api` e `/formularios` são repassados ao Render pelo `vercel.json`, sem o visitante perceber.
 
@@ -154,7 +154,7 @@ Os dois provedores publicam automaticamente a cada push na `main`:
 1. Trabalho em `feature/AAAA-MM-DD`, pull request para `developer/sprint-<próxima quinta>`, CI verde.
 2. Pull request da sprint para a `main`, CI verde, merge feito pelo responsável (a `main` é protegida pelo ruleset `principal-protegida`).
 3. Vercel e Render fazem o deploy sozinhos. Cada branch enviada ao GitHub também ganha uma prévia na Vercel.
-4. Rodar o T-05 contra o domínio publicado.
+4. Rodar a navegação contra o domínio publicado (`URL_BASE=https://components-dusky-nine.vercel.app/ pnpm test:navegacao`, item 6 da Validação).
 
 Para voltar a uma versão anterior: na Vercel, **Deployments → (versão anterior) → Promote to Production**; no Render, **Events → (deploy anterior) → Rollback**.
 
@@ -167,7 +167,7 @@ Para voltar a uma versão anterior: na Vercel, **Deployments → (versão anteri
 | Render: `Out of memory (used over 512Mi)`                                                               | Pico de memória na subida                                           | Conferir o `banco:preparar` no `buildCommand` (`render.yaml`) e o `startCommand` de processo único; ver a seção Memória e o log `[memória]` |
 | Render ou local: `LinkError ... memory import has ... pages which is smaller than the declared initial` | Memória inicial do PGlite abaixo do piso de 128 MB do `pglite.wasm` | Não usar a opção `initialMemory` abaixo de 128 MB                                                                                           |
 | Log mostra `Banco ausente: criando agora.` ou `shared_buffers de 128MB`                                 | Banco não foi preparado no build                                    | Conferir o fim do `buildCommand` (`render.yaml`)                                                                                            |
-| Render: erro de versão do Node ou `Unsupported engine`                                                  | `NODE_VERSION` ausente ou diferente                                 | Definir `24.22.1` e fazer **Manual Deploy**                                                                                                 |
+| Render: erro de versão do Node ou `Unsupported engine`                                                  | `NODE_VERSION` ausente ou diferente                                 | Conferir `NODE_VERSION` (`24.22.1`) no `render.yaml` e corrigir por PR                                                                      |
 | Render ou Vercel: `ERR_PNPM_OUTDATED_LOCKFILE`                                                          | `pnpm-lock.yaml` desatualizado                                      | Rodar `pnpm install` local, fazer commit do lockfile e push                                                                                 |
 | Vercel usa outra versão do pnpm                                                                         | Vercel ignorou o `packageManager`                                   | Variável `ENABLE_EXPERIMENTAL_COREPACK=1` no projeto e novo deploy                                                                          |
 | `/api/...` ou `/formularios/` com erro pela Vercel                                                      | Render fora do ar, dormindo ou com outro nome                       | Abrir a URL do Render direto; conferir o nome no `vercel.json`                                                                              |

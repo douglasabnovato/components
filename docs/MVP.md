@@ -2,7 +2,7 @@
 
 **Nível:** Produto (N3), 12 critérios. Estado em 16/11/2026 (ciclo de 16/11/2026, `feature/2026-11-16` → `developer/sprint-2026-11-19`).
 
-**Revisto em:** 18/11/2026, 18h (critério 9: `typescript-eslint` 8.73.0 tira o `minimatch` vulnerável, #46; nenhuma situação mudou).
+**Revisto em:** 18/11/2026, 18h (critérios 9, 11 e 12: `minimatch` fora do lint, #46; formatação no CI, #49; guia do Render, #48. Nenhuma situação mudou).
 
 **Resumo:** 10 de 12 aplicáveis atendidos
 
