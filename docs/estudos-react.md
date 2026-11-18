@@ -20,4 +20,4 @@ Ter uma aplicação, desenvolvida em reactjs para expor os conteúdos teóricos 
 
 - [ ] Tech2 LP : https://www.youtube.com/watch?v=0h2b4ftbZcU&list=PLs_UfelOxGL25jmkIJ4pU16Ku-jfdFGC4&index=30
 
-- [ ] Codemarketi Ecommerce  : https://www.youtube.com/watch?v=1NWBO8L81J8&list=PLs_UfelOxGL25jmkIJ4pU16Ku-jfdFGC4&index=34
+- [ ] Codemarketi Ecommerce : https://www.youtube.com/watch?v=1NWBO8L81J8&list=PLs_UfelOxGL25jmkIJ4pU16Ku-jfdFGC4&index=34

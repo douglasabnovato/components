@@ -9,6 +9,7 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 **Critérios do MVP:** 10 de 12 atendidos; Finalizado: sim. Os 2 parciais dependem do responsável (#28, #27). O único alerta do Dependabot (`minimatch`, só do lint) está aceito na [ADR 0005](docs/adr/0005-aceitar-alertas-de-desenvolvimento-do-dependabot.md). Detalhes em [`docs/MVP.md`](docs/MVP.md).
 
 **O que foi feito**
+
 - Neste ciclo (PR da `feature/2026-11-16` para a `developer/sprint-2026-11-19`):
   - LCP medido no site publicado: mediana de 1,67 s no Lighthouse móvel (3 execuções válidas, 16/11/2026).
   - axe completo no navegador, no CI, para o hub e os 8 filhos; ele achou o contraste do selo "concluída" das Tarefas, já corrigido.
@@ -20,6 +21,7 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 **Site:** https://components-dusky-nine.vercel.app respondeu 200 em 16/11/2026, com o build da `main`. O servidor no Render (`/api` e `/formularios/`) não respondeu; ver #28.
 
 **O que queremos fazer**
+
 - #28 Publicar o servidor no Render pelo Blueprint (responsável; passo a passo em [`docs/DEPLOY.md`](docs/DEPLOY.md)).
 - #27 Criar a conta do GoatCounter `douglasabnovato` (responsável; o código já está no site).
 - #41 Ligar os alertas do Dependabot e a varredura de segredos (responsável).
@@ -32,24 +34,25 @@ Portfólio de engenharia front-end em React: um **hub** que apresenta **8 projet
 - #52 Testar o Esc nos diálogos e tirar o `networkidle` do teste do axe.
 
 **Onde está a documentação**
+
 - Estado dos critérios: [`docs/MVP.md`](docs/MVP.md)
 - Plano do ciclo: [`docs/PLANO-DE-ACAO.md`](docs/PLANO-DE-ACAO.md)
 - Publicação: [`docs/DEPLOY.md`](docs/DEPLOY.md) e [`docs/04-hospedagem.md`](docs/04-hospedagem.md)
 
 ## Projetos
 
-| # | Projeto | O que faz | Destaque técnico |
-| --- | --- | --- | --- |
-| 0 | Hub | Apresenta os filhos com demos ao vivo | React 19, MDX |
-| 1 | Flix | Catálogo de vídeos | TanStack Query |
-| 2 | Cadastro | CRUD de clientes com repositório trocável (memória ou API) | TanStack Query, React Hook Form, Zod |
-| 3 | Portal de Heróis | Universo original com equipes, fichas e comparação | Tailwind v4, Motion |
-| 4 | Formulários no Servidor | Formulários que funcionam sem JavaScript | React Router em modo framework (SSR) |
-| 5 | Tarefas | Atalhos de teclado, busca por regex e conclusão otimista | Redux Toolkit, RTK Query |
-| 6 | Lista da Pelada | Vagas, lista de espera e sorteio equilibrado de times | Hooks puros, reducer |
-| 7 | Laboratório | 17 lições em MDX com demo, código e teste | MDX, React 19 |
-| 8 | Trilha React | 116 aprendizados em 12 módulos e o mapa da stack | Estado na URL, `useSyncExternalStore` |
-| — | API | Clientes (02) e tarefas (05) | Hono, Drizzle, PGlite |
+| #   | Projeto                 | O que faz                                                  | Destaque técnico                      |
+| --- | ----------------------- | ---------------------------------------------------------- | ------------------------------------- |
+| 0   | Hub                     | Apresenta os filhos com demos ao vivo                      | React 19, MDX                         |
+| 1   | Flix                    | Catálogo de vídeos                                         | TanStack Query                        |
+| 2   | Cadastro                | CRUD de clientes com repositório trocável (memória ou API) | TanStack Query, React Hook Form, Zod  |
+| 3   | Portal de Heróis        | Universo original com equipes, fichas e comparação         | Tailwind v4, Motion                   |
+| 4   | Formulários no Servidor | Formulários que funcionam sem JavaScript                   | React Router em modo framework (SSR)  |
+| 5   | Tarefas                 | Atalhos de teclado, busca por regex e conclusão otimista   | Redux Toolkit, RTK Query              |
+| 6   | Lista da Pelada         | Vagas, lista de espera e sorteio equilibrado de times      | Hooks puros, reducer                  |
+| 7   | Laboratório             | 17 lições em MDX com demo, código e teste                  | MDX, React 19                         |
+| 8   | Trilha React            | 116 aprendizados em 12 módulos e o mapa da stack           | Estado na URL, `useSyncExternalStore` |
+| —   | API                     | Clientes (02) e tarefas (05)                               | Hono, Drizzle, PGlite                 |
 
 Cada projeto tem o próprio README, com telas, regras de negócio numeradas, estrutura e stack.
 
@@ -94,15 +97,15 @@ Comandos por projeto, portas e o ensaio de produção estão em [docs/02 · Arqu
 
 ## Documentação
 
-| Para saber | Leia |
-| --- | --- |
-| Situação atual, riscos e evolução desde o início | [01 · Estado atual](docs/01-estado-atual.md) |
-| Arquitetura, ambientes e caminho das requisições | [02 · Arquitetura](docs/02-plano-de-arquitetura.md) |
-| Estratégia e situação dos testes | [03 · Plano de testes](docs/03-plano-de-testes.md) |
-| Como publicar, validar e diagnosticar | [04 · Hospedagem](docs/04-hospedagem.md) |
-| Ajustes, prioridades e histórico | [05 · Ajustes e backlog](docs/05-ajustes-e-backlog.md) |
-| O que vem a seguir | [06 · Próximos passos](docs/06-proximos-passos.md) |
-| Por que as coisas são como são | [ADRs](docs/adr/) |
+| Para saber                                       | Leia                                                   |
+| ------------------------------------------------ | ------------------------------------------------------ |
+| Situação atual, riscos e evolução desde o início | [01 · Estado atual](docs/01-estado-atual.md)           |
+| Arquitetura, ambientes e caminho das requisições | [02 · Arquitetura](docs/02-plano-de-arquitetura.md)    |
+| Estratégia e situação dos testes                 | [03 · Plano de testes](docs/03-plano-de-testes.md)     |
+| Como publicar, validar e diagnosticar            | [04 · Hospedagem](docs/04-hospedagem.md)               |
+| Ajustes, prioridades e histórico                 | [05 · Ajustes e backlog](docs/05-ajustes-e-backlog.md) |
+| O que vem a seguir                               | [06 · Próximos passos](docs/06-proximos-passos.md)     |
+| Por que as coisas são como são                   | [ADRs](docs/adr/)                                      |
 
 ## Estrutura
 

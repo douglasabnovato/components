@@ -4,11 +4,11 @@ Passo a passo curto para publicar o `components`. O guia completo, com memória,
 
 ## Estado em 16/11/2026
 
-| Parte | Onde | Arquivo | Situação (comando e resultado em 16/11/2026) |
-| --- | --- | --- | --- |
-| Hub e 7 filhos estáticos | Vercel (Hobby) | [`vercel.json`](../vercel.json) | No ar. `curl -s -o /dev/null -w "%{http_code}"` em `/`, `/flix/`, `/cadastro/` e `/trilha/`: 200. O HTML traz o topo pré-renderizado (`grep -c topo-titulo`: 1) e o mesmo `index-CuG9TW5l.js` do build local da `main` |
-| API e Formulários (`apps/servidor`) | Render (Free) | [`render.yaml`](../render.yaml) (Blueprint) | Fora do ar. `curl -m 60 https://components-dusky-nine.vercel.app/api/saude`: sem resposta (000); `/formularios/`: 404. Criar o serviço é do responsável: #28 |
-| Medição de uso | GoatCounter | código no hub (`apps/hub/src/medicao.ts`) | O site já carrega o script; a conta `douglasabnovato` não existe (`https://douglasabnovato.goatcounter.com/`: 400). É do responsável: #27 |
+| Parte                               | Onde           | Arquivo                                     | Situação (comando e resultado em 16/11/2026)                                                                                                                                                                           |
+| ----------------------------------- | -------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hub e 7 filhos estáticos            | Vercel (Hobby) | [`vercel.json`](../vercel.json)             | No ar. `curl -s -o /dev/null -w "%{http_code}"` em `/`, `/flix/`, `/cadastro/` e `/trilha/`: 200. O HTML traz o topo pré-renderizado (`grep -c topo-titulo`: 1) e o mesmo `index-CuG9TW5l.js` do build local da `main` |
+| API e Formulários (`apps/servidor`) | Render (Free)  | [`render.yaml`](../render.yaml) (Blueprint) | Fora do ar. `curl -m 60 https://components-dusky-nine.vercel.app/api/saude`: sem resposta (000); `/formularios/`: 404. Criar o serviço é do responsável: #28                                                           |
+| Medição de uso                      | GoatCounter    | código no hub (`apps/hub/src/medicao.ts`)   | O site já carrega o script; a conta `douglasabnovato` não existe (`https://douglasabnovato.goatcounter.com/`: 400). É do responsável: #27                                                                              |
 
 Tudo em plano gratuito. Nenhum segredo: o banco é o PGlite, dentro do processo do servidor.
 
