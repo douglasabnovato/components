@@ -15,12 +15,12 @@ O projeto tem partes estáticas (hub e 7 filhos) e partes que exigem um processo
 
 ## Alternativas consideradas
 
-| Alternativa | Por que não (por ora) |
-| --- | --- |
-| Tudo no Render gratuito (`apps/servidor` em modo ensaio) | O serviço dorme após 15 minutos e leva cerca de 1 minuto para acordar; o hub inteiro ficaria lento na primeira visita. Continua disponível como plano B, sem mudar código |
-| Vercel Services (beta), sugerido pela Vercel no import | Transformaria cada pasta em um serviço e a API em funções sem processo contínuo, o que não serve para o PGlite em disco. A sugestão automática também tratava pacotes internos (`ui`, `testes-e2e`) como aplicações |
-| Um projeto da Vercel por pasta | Um domínio por projeto, contrariando a [ADR 0002](0002-um-dominio-com-pastas.md) |
-| Hospedagem paga sem hibernação | Custo mensal desnecessário para o MVP |
+| Alternativa                                              | Por que não (por ora)                                                                                                                                                                                               |
+| -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Tudo no Render gratuito (`apps/servidor` em modo ensaio) | O serviço dorme após 15 minutos e leva cerca de 1 minuto para acordar; o hub inteiro ficaria lento na primeira visita. Continua disponível como plano B, sem mudar código                                           |
+| Vercel Services (beta), sugerido pela Vercel no import   | Transformaria cada pasta em um serviço e a API em funções sem processo contínuo, o que não serve para o PGlite em disco. A sugestão automática também tratava pacotes internos (`ui`, `testes-e2e`) como aplicações |
+| Um projeto da Vercel por pasta                           | Um domínio por projeto, contrariando a [ADR 0002](0002-um-dominio-com-pastas.md)                                                                                                                                    |
+| Hospedagem paga sem hibernação                           | Custo mensal desnecessário para o MVP                                                                                                                                                                               |
 
 ## Consequências
 

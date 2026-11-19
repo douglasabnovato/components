@@ -19,11 +19,11 @@ A composição (`src/app.ts`) é separada da inicialização (`src/servidor.ts`)
 
 ## Alternativas consideradas
 
-| Alternativa | Por que não |
-| --- | --- |
-| Dois serviços (API e Formulários separados) | Dois serviços gratuitos para manter, cada um hibernando por conta própria |
+| Alternativa                                             | Por que não                                                                  |
+| ------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| Dois serviços (API e Formulários separados)             | Dois serviços gratuitos para manter, cada um hibernando por conta própria    |
 | `react-router-serve` para o Formulários e a API à parte | Mesmo problema de dois processos; o servidor do React Router não monta a API |
-| Reescrever a API como funções da Vercel | O PGlite precisa de um processo contínuo com o banco aberto |
+| Reescrever a API como funções da Vercel                 | O PGlite precisa de um processo contínuo com o banco aberto                  |
 
 ## Consequências
 
