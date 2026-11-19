@@ -4,8 +4,8 @@ Testes do **ecossistema** com Playwright: verificam o comportamento entre projet
 
 ## O que testa
 
-| Teste | Arquivo | Casos |
-| --- | --- | --- |
+| Teste                           | Arquivo                                | Casos                                                                                                                                          |
+| ------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | T-01 · Navegação do ecossistema | `testes/navegacao/ecossistema.spec.ts` | Hub carrega sem erros; toda âncora interna tem destino; há link para os 8 filhos; cada filho abre pelo hub e volta para a sua seção (11 casos) |
 
 O gabarito é o mapa do ecossistema (`@components/ui/ecossistema`): nenhum endereço é escrito à mão. Ao acrescentar um filho no mapa, ele passa a ser testado automaticamente.
@@ -20,11 +20,11 @@ Na primeira vez, instale o navegador:
 pnpm --filter @components/testes-e2e exec playwright install chromium
 ```
 
-| Contra | Comando | Observação |
-| --- | --- | --- |
-| Desenvolvimento | `pnpm test:navegacao` | Sobe a API, o hub e os 8 filhos sozinho; reaproveita os que já estiverem rodando |
-| Ensaio de produção | `URL_BASE=http://localhost:3333/` e `pnpm test:navegacao` | Com o `pnpm ensaio:producao` rodando em outro terminal |
-| Produção | `URL_BASE=https://components-dusky-nine.vercel.app/` e `pnpm test:navegacao` | Acordar o Render antes |
+| Contra             | Comando                                                                      | Observação                                                                       |
+| ------------------ | ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Desenvolvimento    | `pnpm test:navegacao`                                                        | Sobe a API, o hub e os 8 filhos sozinho; reaproveita os que já estiverem rodando |
+| Ensaio de produção | `URL_BASE=http://localhost:3333/` e `pnpm test:navegacao`                    | Com o `pnpm ensaio:producao` rodando em outro terminal                           |
+| Produção           | `URL_BASE=https://components-dusky-nine.vercel.app/` e `pnpm test:navegacao` | Acordar o Render antes                                                           |
 
 No PowerShell:
 
@@ -35,14 +35,14 @@ Remove-Item Env:URL_BASE
 
 ## Configuração
 
-| Item | Valor |
-| --- | --- |
-| Navegador | Chromium, com movimento reduzido |
-| Paralelismo | Todos os testes em paralelo; 2 workers no CI |
-| Repetição | 1 nova tentativa no CI, nenhuma local |
-| Relatórios | `list` local; `github` e `html` no CI (guardados como artefato em caso de falha) |
-| Rastreamento | Trace guardado só em falha |
-| `CAMINHO_CHROMIUM` | Opcional: usar outro executável do Chromium |
+| Item               | Valor                                                                            |
+| ------------------ | -------------------------------------------------------------------------------- |
+| Navegador          | Chromium, com movimento reduzido                                                 |
+| Paralelismo        | Todos os testes em paralelo; 2 workers no CI                                     |
+| Repetição          | 1 nova tentativa no CI, nenhuma local                                            |
+| Relatórios         | `list` local; `github` e `html` no CI (guardados como artefato em caso de falha) |
+| Rastreamento       | Trace guardado só em falha                                                       |
+| `CAMINHO_CHROMIUM` | Opcional: usar outro executável do Chromium                                      |
 
 ## Acrescentar um teste
 

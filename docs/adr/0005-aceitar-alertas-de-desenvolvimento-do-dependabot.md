@@ -15,9 +15,9 @@ Regra para os alertas, ordem do responsável repassada pelo DG líder em 16/11/2
 
 ## Decisão
 
-| Alerta | Pacote | Severidade | Quem o puxa | Por que não chega à produção |
-|---|---|---|---|---|
-| #5 | `minimatch` 10.2.6 (GHSA-g3hv-75wg-m249) | média | `typescript-eslint` → `@typescript-eslint/typescript-estree` 8.70.1, dependência de desenvolvimento da raiz do monorepo | É do lint (`pnpm lint`), que roda na máquina de quem desenvolve e no CI. Nenhum pacote de `apps/` ou `packages/` depende do `typescript-eslint`, e o build não leva o lint. A correção só existe no `minimatch` 11. O `@typescript-eslint/typescript-estree` 8.73.0, publicado em 16/11/2026 às 14h06, já pede `^11.0.1`; até a versão anterior (8.72.2) pedia `^10.2.2`. |
+| Alerta | Pacote                                   | Severidade | Quem o puxa                                                                                                             | Por que não chega à produção                                                                                                                                                                                                                                                                                                                                              |
+| ------ | ---------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| #5     | `minimatch` 10.2.6 (GHSA-g3hv-75wg-m249) | média      | `typescript-eslint` → `@typescript-eslint/typescript-estree` 8.70.1, dependência de desenvolvimento da raiz do monorepo | É do lint (`pnpm lint`), que roda na máquina de quem desenvolve e no CI. Nenhum pacote de `apps/` ou `packages/` depende do `typescript-eslint`, e o build não leva o lint. A correção só existe no `minimatch` 11. O `@typescript-eslint/typescript-estree` 8.73.0, publicado em 16/11/2026 às 14h06, já pede `^11.0.1`; até a versão anterior (8.72.2) pedia `^10.2.2`. |
 
 Prova, em 16/11/2026, no clone de `developer/sprint-2026-11-19`:
 
@@ -29,10 +29,10 @@ Não se fecha nem se dispensa alerta pela API. Esta ADR só registra a decisão.
 
 ## Alternativas consideradas
 
-| Alternativa | Por que não |
-| --- | --- |
+| Alternativa                                                         | Por que não                                                                                            |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
 | `pnpm.overrides` do `minimatch` para a 11 só no `typescript-estree` | Força uma versão maior que o `typescript-eslint` não declara; o ganho é só no lint, sem efeito no site |
-| Tirar o `typescript-eslint` | Perde as regras de TypeScript no lint de todo o monorepo |
+| Tirar o `typescript-eslint`                                         | Perde as regras de TypeScript no lint de todo o monorepo                                               |
 
 ## Consequências
 

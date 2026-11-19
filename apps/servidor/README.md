@@ -23,19 +23,19 @@ O servidor sobe em `http://localhost:3333`, ou na porta definida em `PORT`.
 
 ## Rotas
 
-| Caminho | Quem responde | Observação |
-| --- | --- | --- |
-| `/api/*` | API (`@components/api`) | `GET /api/saude` consulta o banco e responde `{"ok":true,"banco":"ok"}` (503 se o banco não responder); rota inexistente → 404 em JSON |
-| `/formularios/assets/*` e demais arquivos | `apps/formularios/build/client` | Arquivos estáticos do Formulários |
-| `/formularios` e `/formularios/*` | SSR do React Router (`build/server`) | Responde 503 se o build não existir |
-| `/` e `/<filho>/*` | Pasta `publicar/` | **Só no ensaio**; rota interna de filho devolve o `index.html` da pasta, caminho desconhecido na raiz devolve 404 |
+| Caminho                                   | Quem responde                        | Observação                                                                                                                             |
+| ----------------------------------------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `/api/*`                                  | API (`@components/api`)              | `GET /api/saude` consulta o banco e responde `{"ok":true,"banco":"ok"}` (503 se o banco não responder); rota inexistente → 404 em JSON |
+| `/formularios/assets/*` e demais arquivos | `apps/formularios/build/client`      | Arquivos estáticos do Formulários                                                                                                      |
+| `/formularios` e `/formularios/*`         | SSR do React Router (`build/server`) | Responde 503 se o build não existir                                                                                                    |
+| `/` e `/<filho>/*`                        | Pasta `publicar/`                    | **Só no ensaio**; rota interna de filho devolve o `index.html` da pasta, caminho desconhecido na raiz devolve 404                      |
 
 ## Modos
 
-| Modo | Comando | Uso |
-| --- | --- | --- |
-| Produção | `pnpm start` (`node --import tsx src/servidor.ts`) | Render, com o Start Command `cd apps/servidor && node --max-old-space-size=200 --import tsx src/servidor.ts` |
-| Ensaio | `pnpm ensaio:producao` (`node --import tsx src/servidor.ts --ensaio`) | Validar localmente antes de publicar; o T-01 pode rodar contra ele com `URL_BASE=http://localhost:3333/` |
+| Modo     | Comando                                                               | Uso                                                                                                          |
+| -------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Produção | `pnpm start` (`node --import tsx src/servidor.ts`)                    | Render, com o Start Command `cd apps/servidor && node --max-old-space-size=200 --import tsx src/servidor.ts` |
+| Ensaio   | `pnpm ensaio:producao` (`node --import tsx src/servidor.ts --ensaio`) | Validar localmente antes de publicar; o T-01 pode rodar contra ele com `URL_BASE=http://localhost:3333/`     |
 
 ## Memória
 
@@ -43,14 +43,14 @@ O servidor roda num único processo Node (`node --import tsx`, sem processos int
 
 ## Variáveis de ambiente
 
-| Variável | Padrão | Função |
-| --- | --- | --- |
-| `PORT` | — | Porta do provedor; tem prioridade |
-| `PORTA` | 3333 | Porta alternativa |
-| `PASTA_DADOS` | `apps/api/.dados` | Pasta do banco PGlite |
-| `ORIGENS` | Portas de desenvolvimento | Origens liberadas no CORS da API, separadas por vírgula |
-| `SERVIR_ESTATICOS` | — | `1` equivale a `--ensaio` |
-| `NODE_ENV` | `production` | Modo do React Router |
+| Variável           | Padrão                    | Função                                                  |
+| ------------------ | ------------------------- | ------------------------------------------------------- |
+| `PORT`             | —                         | Porta do provedor; tem prioridade                       |
+| `PORTA`            | 3333                      | Porta alternativa                                       |
+| `PASTA_DADOS`      | `apps/api/.dados`         | Pasta do banco PGlite                                   |
+| `ORIGENS`          | Portas de desenvolvimento | Origens liberadas no CORS da API, separadas por vírgula |
+| `SERVIR_ESTATICOS` | —                         | `1` equivale a `--ensaio`                               |
+| `NODE_ENV`         | `production`              | Modo do React Router                                    |
 
 ## Estrutura
 

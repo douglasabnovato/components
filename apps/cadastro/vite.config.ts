@@ -14,7 +14,7 @@ export default defineConfig(({ command, isPreview }) => ({
   preview: { port: 4172, proxy: proxyDaApi() },
   test: {
     environment: 'jsdom',
-        testTimeout: 20_000,
+    testTimeout: 20_000,
     hookTimeout: 30_000,
     globals: true,
     setupFiles: ['./src/testes/setup.ts'],

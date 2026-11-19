@@ -16,10 +16,10 @@ O hub precisa levar a 8 filhos, e os filhos precisam voltar ao hub e, em dois ca
 
 ## Alternativas consideradas
 
-| Alternativa | Por que não |
-| --- | --- |
+| Alternativa                          | Por que não                                                                          |
+| ------------------------------------ | ------------------------------------------------------------------------------------ |
 | Um endereço (subdomínio) por projeto | 9 publicações para manter; qualquer uma fora do ar quebra um link do hub; exige CORS |
-| Tudo num único app React | Perde a independência e a variedade de stacks, que são o propósito do projeto |
+| Tudo num único app React             | Perde a independência e a variedade de stacks, que são o propósito do projeto        |
 
 ## Consequências
 

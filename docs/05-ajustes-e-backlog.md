@@ -7,108 +7,108 @@ Registro dos ajustes identificados. Cada item pode virar uma issue no GitHub, co
 
 ## Fase 0 · Documentação
 
-| ID | Ajuste | Prioridade | Pronto quando | Status |
-| --- | --- | --- | --- | --- |
-| A-00 | Confirmar a branch de trabalho | P0 | `feature/spa-models` com conteúdo idêntico ao da `main` | Feito |
-| D-01 | Documentação em `docs/` | P0 | Estado atual, planos, hospedagem, backlog e ADRs | Feito |
-| D-02 | Atualização da documentação após a publicação | P1 | Docs, ADRs, READMEs de pacote e readme da raiz refletem o estado de 26/10; plano de próximos passos ([06](06-proximos-passos.md)) | Em andamento |
+| ID   | Ajuste                                        | Prioridade | Pronto quando                                                                                                                     | Status       |
+| ---- | --------------------------------------------- | ---------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| A-00 | Confirmar a branch de trabalho                | P0         | `feature/spa-models` com conteúdo idêntico ao da `main`                                                                           | Feito        |
+| D-01 | Documentação em `docs/`                       | P0         | Estado atual, planos, hospedagem, backlog e ADRs                                                                                  | Feito        |
+| D-02 | Atualização da documentação após a publicação | P1         | Docs, ADRs, READMEs de pacote e readme da raiz refletem o estado de 26/10; plano de próximos passos ([06](06-proximos-passos.md)) | Em andamento |
 
 ## Fase 1 · Rede de segurança
 
-| ID | Ajuste | Prioridade | Pronto quando | Status |
-| --- | --- | --- | --- | --- |
-| A-01 | Corrigir `engines`, criar `.node-version`, atualizar README | P0 | Os três indicam o mesmo Node mínimo (24.15.0) | Feito |
-| A-02 | Atualizar `vite` e `jsdom` no catálogo | P0 | `pnpm audit` sem vulnerabilidades altas; `pnpm verificar` verde | Feito |
-| A-03 | Teste de navegação do ecossistema (T-01) | P0 | 8 de 8 filhos abrem pelo hub e voltam, sem erros | Feito |
-| A-04 | CI no GitHub Actions | P0 | Verificação e navegação rodam em todo PR; execução verde na `main` | Em andamento |
+| ID   | Ajuste                                                      | Prioridade | Pronto quando                                                      | Status       |
+| ---- | ----------------------------------------------------------- | ---------- | ------------------------------------------------------------------ | ------------ |
+| A-01 | Corrigir `engines`, criar `.node-version`, atualizar README | P0         | Os três indicam o mesmo Node mínimo (24.15.0)                      | Feito        |
+| A-02 | Atualizar `vite` e `jsdom` no catálogo                      | P0         | `pnpm audit` sem vulnerabilidades altas; `pnpm verificar` verde    | Feito        |
+| A-03 | Teste de navegação do ecossistema (T-01)                    | P0         | 8 de 8 filhos abrem pelo hub e voltam, sem erros                   | Feito        |
+| A-04 | CI no GitHub Actions                                        | P0         | Verificação e navegação rodam em todo PR; execução verde na `main` | Em andamento |
 
 ## Fase 2 · Publicação
 
-| ID | Ajuste | Prioridade | Pronto quando | Status |
-| --- | --- | --- | --- | --- |
-| A-05 | API ler `PORT` | P0 | Sobe na porta definida pelo provedor | Feito |
-| A-06 | Criar `apps/servidor` (com ensaio de produção local) | P0 | API em `/api` e SSR em `/formularios/` num único processo | Feito |
-| A-07 | Script `montar-publicacao.mjs` | P0 | Pasta `publicar/` com hub na raiz e filhos nas pastas | Feito |
-| A-08 | `vercel.json` | P0 | Rotas internas e encaminhamentos funcionando em produção | Em andamento |
-| A-09 | Deploy no Render | P0 | `/api/saude` responde pelo Render e pela Vercel | A fazer |
-| A-10 | Deploy na Vercel | P0 | Hub publicado | Feito |
-| A-11 | Fumaça em produção (T-05) | P0 | T-01 verde contra a URL publicada | A fazer |
-| A-38 | Servidor dentro de 512 MB no Render | P0 | Banco preparado no build, Postgres em modo econômico, processo único e log de memória; serviço Live sem `Out of memory` | Em andamento |
+| ID   | Ajuste                                               | Prioridade | Pronto quando                                                                                                           | Status       |
+| ---- | ---------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------- | ------------ |
+| A-05 | API ler `PORT`                                       | P0         | Sobe na porta definida pelo provedor                                                                                    | Feito        |
+| A-06 | Criar `apps/servidor` (com ensaio de produção local) | P0         | API em `/api` e SSR em `/formularios/` num único processo                                                               | Feito        |
+| A-07 | Script `montar-publicacao.mjs`                       | P0         | Pasta `publicar/` com hub na raiz e filhos nas pastas                                                                   | Feito        |
+| A-08 | `vercel.json`                                        | P0         | Rotas internas e encaminhamentos funcionando em produção                                                                | Em andamento |
+| A-09 | Deploy no Render                                     | P0         | `/api/saude` responde pelo Render e pela Vercel                                                                         | A fazer      |
+| A-10 | Deploy na Vercel                                     | P0         | Hub publicado                                                                                                           | Feito        |
+| A-11 | Fumaça em produção (T-05)                            | P0         | T-01 verde contra a URL publicada                                                                                       | A fazer      |
+| A-38 | Servidor dentro de 512 MB no Render                  | P0         | Banco preparado no build, Postgres em modo econômico, processo único e log de memória; serviço Live sem `Out of memory` | Em andamento |
 
 ## Fase 3 · Clicáveis e qualidade
 
-| ID | Ajuste | Prioridade | Pronto quando | Status |
-| --- | --- | --- | --- | --- |
-| A-12 | Clicáveis por projeto (T-02) | P0 | Verde nos 8 filhos | A fazer |
-| A-13 | Corrigir o que T-01 e T-02 acusarem | P0 | Testes verdes | A fazer |
-| A-14 | Testes do hub (T-04) | P1 | Seções, demos e links cobertos | A fazer |
-| A-15 | Fluxos principais (T-03) | P1 | Um fluxo por filho | A fazer |
-| A-16 | `strictPort: true` no hub | P1 | Hub não muda de porta silenciosamente | A fazer |
-| A-17 | Flix usar `enderecoDoHub(1)` | P1 | Todos os filhos usam a fonte única | A fazer |
-| A-18 | Mover `1-flix` para `apps/flix` | P2 | Todos os apps em `apps/` | A fazer |
-| A-19 | Remover ignorados órfãos no ESLint e Prettier | P2 | Sem pastas inexistentes nas configurações | A fazer |
-| A-20 | Carregamento sob demanda no hub | P2 | JavaScript inicial bem abaixo de 685 kB | A fazer |
-| A-21 | Fontes só com alfabeto latino | P2 | Build sem cirílico, grego e vietnamita | A fazer |
-| A-26 | Título e descrição do hub com 8 projetos | P1 | `index.html` do hub cita 8 projetos e a Trilha | A fazer |
-| A-32 | Acessibilidade nos testes de navegador | P2 | Verificação axe nas páginas do T-01 | A fazer |
-| A-33 | Orçamento de desempenho no CI | P2 | CI falha acima de um limite de JavaScript inicial | A fazer |
-| A-25 | Migrar para o ESLint 10 | P2 | `pnpm install` sem aviso de ESLint descontinuado; `pnpm lint` verde | A fazer |
+| ID   | Ajuste                                        | Prioridade | Pronto quando                                                       | Status  |
+| ---- | --------------------------------------------- | ---------- | ------------------------------------------------------------------- | ------- |
+| A-12 | Clicáveis por projeto (T-02)                  | P0         | Verde nos 8 filhos                                                  | A fazer |
+| A-13 | Corrigir o que T-01 e T-02 acusarem           | P0         | Testes verdes                                                       | A fazer |
+| A-14 | Testes do hub (T-04)                          | P1         | Seções, demos e links cobertos                                      | A fazer |
+| A-15 | Fluxos principais (T-03)                      | P1         | Um fluxo por filho                                                  | A fazer |
+| A-16 | `strictPort: true` no hub                     | P1         | Hub não muda de porta silenciosamente                               | A fazer |
+| A-17 | Flix usar `enderecoDoHub(1)`                  | P1         | Todos os filhos usam a fonte única                                  | A fazer |
+| A-18 | Mover `1-flix` para `apps/flix`               | P2         | Todos os apps em `apps/`                                            | A fazer |
+| A-19 | Remover ignorados órfãos no ESLint e Prettier | P2         | Sem pastas inexistentes nas configurações                           | A fazer |
+| A-20 | Carregamento sob demanda no hub               | P2         | JavaScript inicial bem abaixo de 685 kB                             | A fazer |
+| A-21 | Fontes só com alfabeto latino                 | P2         | Build sem cirílico, grego e vietnamita                              | A fazer |
+| A-26 | Título e descrição do hub com 8 projetos      | P1         | `index.html` do hub cita 8 projetos e a Trilha                      | A fazer |
+| A-32 | Acessibilidade nos testes de navegador        | P2         | Verificação axe nas páginas do T-01                                 | A fazer |
+| A-33 | Orçamento de desempenho no CI                 | P2         | CI falha acima de um limite de JavaScript inicial                   | A fazer |
+| A-25 | Migrar para o ESLint 10                       | P2         | `pnpm install` sem aviso de ESLint descontinuado; `pnpm lint` verde | A fazer |
 
 ## Fase 4 · Documentação e processo
 
-| ID | Ajuste | Prioridade | Pronto quando | Status |
-| --- | --- | --- | --- | --- |
-| A-22 | ADRs 0001 a 0004 | P1 | Arquivos em `docs/adr/` | Feito |
-| A-23 | `CONTRIBUTING.md` | P1 | Fluxo de branches e Conventional Commits documentados | A fazer |
-| A-24 | `CLAUDE.md` do projeto | P2 | Contexto e regras para o Claude Code | A fazer |
-| A-27 | Proteger a branch `main` | P1 | Merge exige o job "Verificação e navegação" verde | A fazer |
-| A-35 | Modelo de pull request | P2 | `.github/pull_request_template.md` com checklist de verificação | A fazer |
+| ID   | Ajuste                   | Prioridade | Pronto quando                                                   | Status  |
+| ---- | ------------------------ | ---------- | --------------------------------------------------------------- | ------- |
+| A-22 | ADRs 0001 a 0004         | P1         | Arquivos em `docs/adr/`                                         | Feito   |
+| A-23 | `CONTRIBUTING.md`        | P1         | Fluxo de branches e Conventional Commits documentados           | A fazer |
+| A-24 | `CLAUDE.md` do projeto   | P2         | Contexto e regras para o Claude Code                            | A fazer |
+| A-27 | Proteger a branch `main` | P1         | Merge exige o job "Verificação e navegação" verde               | A fazer |
+| A-35 | Modelo de pull request   | P2         | `.github/pull_request_template.md` com checklist de verificação | A fazer |
 
 ## Fase 5 · Operação e evolução
 
 Itens detalhados em [06 · Próximos passos](06-proximos-passos.md).
 
-| ID | Ajuste | Prioridade | Pronto quando | Status |
-| --- | --- | --- | --- | --- |
-| A-28 | Fumaça automática após cada deploy | P2 | Workflow roda o T-01 contra produção depois do deploy | A fazer |
-| A-29 | Monitoramento de disponibilidade | P2 | Verificação periódica de `/` e `/api/saude` com alerta | A fazer |
-| A-30 | Atualização automática de dependências e audit no CI | P2 | Dependabot ou Renovate ativo; `pnpm audit --audit-level high` no CI | A fazer |
-| A-31 | Cabeçalhos de segurança na Vercel | P2 | Cabeçalhos no `vercel.json` sem quebrar os filhos | A fazer |
-| A-34 | Captura de erros em produção | P2 | Erros do navegador e do servidor visíveis num painel | A fazer |
-| A-36 | Domínio mais legível na Vercel | P2 | Domínio escolhido, refletido no `ORIGENS` e na documentação | A fazer |
-| A-37 | Banco persistente (condicional) | P2 | Só se a persistência virar requisito; decisão em ADR | A fazer |
+| ID   | Ajuste                                               | Prioridade | Pronto quando                                                       | Status  |
+| ---- | ---------------------------------------------------- | ---------- | ------------------------------------------------------------------- | ------- |
+| A-28 | Fumaça automática após cada deploy                   | P2         | Workflow roda o T-01 contra produção depois do deploy               | A fazer |
+| A-29 | Monitoramento de disponibilidade                     | P2         | Verificação periódica de `/` e `/api/saude` com alerta              | A fazer |
+| A-30 | Atualização automática de dependências e audit no CI | P2         | Dependabot ou Renovate ativo; `pnpm audit --audit-level high` no CI | A fazer |
+| A-31 | Cabeçalhos de segurança na Vercel                    | P2         | Cabeçalhos no `vercel.json` sem quebrar os filhos                   | A fazer |
+| A-34 | Captura de erros em produção                         | P2         | Erros do navegador e do servidor visíveis num painel                | A fazer |
+| A-36 | Domínio mais legível na Vercel                       | P2         | Domínio escolhido, refletido no `ORIGENS` e na documentação         | A fazer |
+| A-37 | Banco persistente (condicional)                      | P2         | Só se a persistência virar requisito; decisão em ADR                | A fazer |
 
 ## Fase 6 · Revisão independente (27/10/2026)
 
 Itens propostos na [revisão independente](claudeia/01-relatorio.md); detalhes e critérios em [claudeia/02](claudeia/02-plano-e-arquitetura.md).
 
-| ID | Ajuste | Prioridade | Pronto quando | Status |
-| --- | --- | --- | --- | --- |
-| A-39 | Teste de memória da subida do servidor no CI | P1 | CI sobe `apps/servidor` com banco preparado e falha se o RSS em `porta aberta` passar de um limite (ex.: 400 MB) | A fazer |
-| A-40 | Plano B do A-38 registrado em ADR | P1 | ADR 0005 com as alternativas (servidor compilado, Postgres gerenciado, outro provedor) e o gatilho de troca | A fazer |
-| A-41 | Confirmar o tempo-limite do repasse da Vercel com o Render dormindo | P1 | Medido: primeira chamada a `/api/saude` e `/formularios/` pela Vercel com o Render dormindo; resultado registrado no 04 | A fazer |
-| A-42 | Aviso de "servidor acordando" nas telas que usam o Render | P2 | Tarefas, Cadastro (modo API) e acesso ao Formulários informam a espera em vez de erro seco; decisão de produto | A fazer |
-| A-43 | `pnpm format:check` no `verificar` ou no CI | P2 | CI falha com arquivo fora do Prettier | A fazer |
-| A-44 | ESLint também em `*.js` e `*.mjs` | P2 | `scripts/montar-publicacao.mjs` e `eslint.config.js` cobertos pelo lint | A fazer |
-| A-45 | Metadados de compartilhamento do hub | P2 | `index.html` do hub com Open Graph, Twitter card e `canonical`; decisão de produto (texto e imagem) | A fazer |
-| A-46 | Limite de corpo e de taxa na API pública | P2 | `POST`/`PUT`/`DELETE` com limite de tamanho e de requisições por IP, sem afetar o uso normal das demos | A fazer |
-| A-47 | Dados de visitantes visíveis a outros visitantes no site publicado | P1 | Decisão de produto registrada: Formulários (`/formularios/mensagens`) e Cadastro mantêm a demonstração, mas avisam para não usar dados reais ou isolam o que cada visitante vê (por exemplo, por sessão) | A fazer |
+| ID   | Ajuste                                                              | Prioridade | Pronto quando                                                                                                                                                                                            | Status  |
+| ---- | ------------------------------------------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| A-39 | Teste de memória da subida do servidor no CI                        | P1         | CI sobe `apps/servidor` com banco preparado e falha se o RSS em `porta aberta` passar de um limite (ex.: 400 MB)                                                                                         | A fazer |
+| A-40 | Plano B do A-38 registrado em ADR                                   | P1         | ADR 0005 com as alternativas (servidor compilado, Postgres gerenciado, outro provedor) e o gatilho de troca                                                                                              | A fazer |
+| A-41 | Confirmar o tempo-limite do repasse da Vercel com o Render dormindo | P1         | Medido: primeira chamada a `/api/saude` e `/formularios/` pela Vercel com o Render dormindo; resultado registrado no 04                                                                                  | A fazer |
+| A-42 | Aviso de "servidor acordando" nas telas que usam o Render           | P2         | Tarefas, Cadastro (modo API) e acesso ao Formulários informam a espera em vez de erro seco; decisão de produto                                                                                           | A fazer |
+| A-43 | `pnpm format:check` no `verificar` ou no CI                         | P2         | CI falha com arquivo fora do Prettier                                                                                                                                                                    | A fazer |
+| A-44 | ESLint também em `*.js` e `*.mjs`                                   | P2         | `scripts/montar-publicacao.mjs` e `eslint.config.js` cobertos pelo lint                                                                                                                                  | A fazer |
+| A-45 | Metadados de compartilhamento do hub                                | P2         | `index.html` do hub com Open Graph, Twitter card e `canonical`; decisão de produto (texto e imagem)                                                                                                      | A fazer |
+| A-46 | Limite de corpo e de taxa na API pública                            | P2         | `POST`/`PUT`/`DELETE` com limite de tamanho e de requisições por IP, sem afetar o uso normal das demos                                                                                                   | A fazer |
+| A-47 | Dados de visitantes visíveis a outros visitantes no site publicado  | P1         | Decisão de produto registrada: Formulários (`/formularios/mensagens`) e Cadastro mantêm a demonstração, mas avisam para não usar dados reais ou isolam o que cada visitante vê (por exemplo, por sessão) | A fazer |
 
 ## Histórico
 
-| Data | Ajuste |
-| --- | --- |
-| 27/10/2026 | Revisão independente (`docs/claudeia/`): itens A-39 a A-47 propostos; contagem de testes (46) e situação do Render (serviço criado, A-38) corrigidas em 01, 03 e 04; indentação do `apps/hub/vite.config.ts` corrigida. Nenhum status existente alterado |
+| Data       | Ajuste                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 27/10/2026 | Revisão independente (`docs/claudeia/`): itens A-39 a A-47 propostos; contagem de testes (46) e situação do Render (serviço criado, A-38) corrigidas em 01, 03 e 04; indentação do `apps/hub/vite.config.ts` corrigida. Nenhum status existente alterado                                                                                                                                                                                                                                                                                                                                              |
 | 26/10/2026 | A-38: primeiro deploy no Render estourou 512 MB na subida (PGlite com `initdb` a cada início). Banco preparado no build (`banco:preparar`), Postgres em modo econômico (`memoriaReduzida`), servidor em processo único e log de memória por etapa. A primeira versão usava `initialMemory` de 64 MB, abaixo do piso de 128 MB do `pglite.wasm` (`LinkError`); opção removida. O teste novo mostrou que o PGlite ignora `-c shared_buffers` na partida (continuava 128MB); os parâmetros passam a ser gravados com `ALTER SYSTEM` no preparo. Medição local: 229 MB no processo antes de abrir o banco |
-| 26/10/2026 | Render: `corepack enable` falha (pnpm do Render em `/usr/bin`, somente leitura); o build passa a chamar `corepack pnpm` |
-| 26/10/2026 | Documentação atualizada (D-02): estado atual, arquitetura vigente, guia de operação da hospedagem, próximos passos (06), ADR 0003 aceita, ADR 0004 e READMEs de `servidor`, `testes-e2e` e `ui`. Removidos da raiz os arquivos de diagnóstico da Fase 0 |
-| 26/10/2026 | A-10 feito: projeto `components` na Vercel (preset Other), publicado em https://components-dusky-nine.vercel.app. Parte dinâmica aguarda o A-09 |
-| 26/10/2026 | PR #9 (`feature/spa-models` → `developer-mvp`) e PR #10 (`developer-mvp` → `main`) mesclados: 35 arquivos na `main` |
-| 26/10/2026 | A-05 a A-07 verificados no ensaio de produção: `pnpm ensaio:producao` e T-01 com `URL_BASE` em 11 de 11 (26 s). A-08 fica em andamento até o deploy na Vercel (A-10) |
-| 26/10/2026 | A-03 verificado: `pnpm test:navegacao` com 11 de 11 testes passando em desenvolvimento (1,9 min) |
-| 24/10/2026 | A-05 a A-08 escritos: API lê `PORT`, `apps/servidor` (com `pnpm ensaio:producao`), `scripts/montar-publicacao.mjs` e `vercel.json`; aguardando verificação |
-| 24/10/2026 | A-03 e A-04 escritos: pacote `packages/testes-e2e` (T-01) e `.github/workflows/ci.yml`; aguardando verificação |
-| 24/10/2026 | A-01 e A-02 verificados (`pnpm install`, `pnpm verificar`, `pnpm audit --audit-level high`) |
-| 24/10/2026 | Node do ambiente local atualizado para 24.22.1 (o 24.14.0 era incompatível com o `jsdom`) |
-| 24/10/2026 | Branch `feature/spa-models` confirmada com conteúdo idêntico ao da `main` |
-| 24/10/2026 | Documentação inicial criada em `docs/` |
+| 26/10/2026 | Render: `corepack enable` falha (pnpm do Render em `/usr/bin`, somente leitura); o build passa a chamar `corepack pnpm`                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| 26/10/2026 | Documentação atualizada (D-02): estado atual, arquitetura vigente, guia de operação da hospedagem, próximos passos (06), ADR 0003 aceita, ADR 0004 e READMEs de `servidor`, `testes-e2e` e `ui`. Removidos da raiz os arquivos de diagnóstico da Fase 0                                                                                                                                                                                                                                                                                                                                               |
+| 26/10/2026 | A-10 feito: projeto `components` na Vercel (preset Other), publicado em https://components-dusky-nine.vercel.app. Parte dinâmica aguarda o A-09                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| 26/10/2026 | PR #9 (`feature/spa-models` → `developer-mvp`) e PR #10 (`developer-mvp` → `main`) mesclados: 35 arquivos na `main`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| 26/10/2026 | A-05 a A-07 verificados no ensaio de produção: `pnpm ensaio:producao` e T-01 com `URL_BASE` em 11 de 11 (26 s). A-08 fica em andamento até o deploy na Vercel (A-10)                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| 26/10/2026 | A-03 verificado: `pnpm test:navegacao` com 11 de 11 testes passando em desenvolvimento (1,9 min)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| 24/10/2026 | A-05 a A-08 escritos: API lê `PORT`, `apps/servidor` (com `pnpm ensaio:producao`), `scripts/montar-publicacao.mjs` e `vercel.json`; aguardando verificação                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 24/10/2026 | A-03 e A-04 escritos: pacote `packages/testes-e2e` (T-01) e `.github/workflows/ci.yml`; aguardando verificação                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 24/10/2026 | A-01 e A-02 verificados (`pnpm install`, `pnpm verificar`, `pnpm audit --audit-level high`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| 24/10/2026 | Node do ambiente local atualizado para 24.22.1 (o 24.14.0 era incompatível com o `jsdom`)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 24/10/2026 | Branch `feature/spa-models` confirmada com conteúdo idêntico ao da `main`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| 24/10/2026 | Documentação inicial criada em `docs/`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |

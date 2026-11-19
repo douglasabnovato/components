@@ -17,11 +17,11 @@ Monorepo com **pnpm workspaces**, usando:
 
 ## Alternativas consideradas
 
-| Alternativa | Por que não |
-| --- | --- |
-| npm workspaces | Não tem catálogo de versões nem execução paralela nativa |
-| Repositórios separados | Duplicação de configuração e versões divergentes |
-| Turborepo ou Nx | Úteis para cache de build em escala; desnecessários no tamanho atual |
+| Alternativa            | Por que não                                                          |
+| ---------------------- | -------------------------------------------------------------------- |
+| npm workspaces         | Não tem catálogo de versões nem execução paralela nativa             |
+| Repositórios separados | Duplicação de configuração e versões divergentes                     |
+| Turborepo ou Nx        | Úteis para cache de build em escala; desnecessários no tamanho atual |
 
 ## Consequências
 
