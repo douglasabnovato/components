@@ -8,11 +8,20 @@
 
 **Finalizado:** sim
 
+## Produto
+
+- **Problema:** quem avalia quer ver, num só lugar e sem instalar nada, 8 projetos React funcionando com dados e regras reais.
+- **Público:** quem avalia o portfólio.
+- **Hipótese:** acreditamos que mostrar os 8 projetos funcionando num só lugar fará quem avalia abrir ao menos 2 deles na mesma visita. Saberemos quando o painel do GoatCounter (`douglasabnovato`) mostrar essa razão.
+- **Métrica:** eventos `abrir-filho-N` divididos pelas visitas em `/`, medido por GoatCounter (falta a conta, #27) — meta: 2 ou mais (o dobro), na primeira semana com dados.
+
 **Problema e público:** quem avalia o portfólio quer ver, num só lugar, 8 projetos React funcionando com dados e regras reais, sem instalar nada.
 
 **Hipótese:** acreditamos que mostrar os 8 projetos funcionando num só lugar fará quem avalia abrir ao menos 2 deles na mesma visita. **Meta:** na primeira semana com dados, eventos `abrir-filho-N` em número igual ou maior que o dobro das visitas em `/`. **Saberemos quando** o painel do GoatCounter (`douglasabnovato`) mostrar essa razão, que depende da conta (#27).
 
 **Fora do MVP:** novas aplicações, conta única entre as aplicações, publicação do pacote de interface, banco persistente no Render (o disco gratuito volta aos dados de exemplo) e domínio próprio ou plano pago.
+
+## Critérios
 
 | #   | Critério                   | Situação em 16/11/2026 | Evidência ou o que falta                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | Issue             |
 | --- | -------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
@@ -37,6 +46,7 @@
 
 Registro das avaliações anteriores, em texto. O estado vale só na tabela do topo.
 
+- 20/11/2026: bloco Produto padronizado, sem mudar critérios.
 - 17/11/2026: limpeza, sem reavaliar critério. As tabelas antigas viraram as linhas abaixo, para o arquivo ter uma tabela de critérios só, um resumo e um finalizado.
 - 16/11/2026, 14h39 (ADR 0005): 9 de 12 para 10 de 12, finalizado de não para sim. O alerta do `minimatch` (#46), só de desenvolvimento, foi registrado na ADR 0005 por ordem do responsável, e o 9 passou a Atende.
 - 16/11/2026, 12h04: 9 de 12, finalizado de sim para não. Com os alertas do Dependabot ligados (antes 403, #41), restou 1 aberto (`minimatch`, #46) sem decisão, e o 9 seguiu Parcial.
