@@ -1,7 +1,7 @@
 /*
  * Testes da busca do perfil no GitHub, sem rede: o fetch é injetado.
  * O e2e de navegação simula a API (packages/testes-e2e/suporte/teste.ts);
- * aqui ficam as respostas que ele não cobre: 404, 403 e o cache.
+ * aqui ficam as respostas que ele não cobre: 404, 403, sem rede, cancelamento e o cache.
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { buscarPerfil, limparCachePerfis } from './github'
@@ -59,6 +59,20 @@ describe('buscarPerfil', () => {
     await buscarPerfil('pessoa-ficticia', undefined, buscar)
     await buscarPerfil('Pessoa-Ficticia', undefined, buscar)
     expect(buscar).toHaveBeenCalledTimes(1)
+  })
+
+  it('sem rede, troca o "Failed to fetch" pela mensagem amigável (#66)', async () => {
+    const buscar = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'))
+    await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).rejects.toThrow(
+      'Não foi possível falar com o GitHub agora.',
+    )
+  })
+
+  it('deixa o cancelamento seguir como AbortError, para o hook ignorar', async () => {
+    const buscar = vi.fn().mockRejectedValue(new DOMException('cancelado', 'AbortError'))
+    await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).rejects.toMatchObject({
+      name: 'AbortError',
+    })
   })
 })
 /* Fim dos testes do perfil do GitHub. */

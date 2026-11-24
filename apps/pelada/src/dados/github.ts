@@ -15,6 +15,8 @@ export type EstadoPerfil =
 
 const cache = new Map<string, Perfil>()
 
+const MENSAGEM_SEM_GITHUB = 'Não foi possível falar com o GitHub agora.'
+
 /* Limpa o cache (usado nos testes). */
 export function limparCachePerfis() {
   cache.clear()
@@ -28,12 +30,20 @@ export async function buscarPerfil(
 ): Promise<Perfil> {
   const guardado = cache.get(usuario.toLowerCase())
   if (guardado) return guardado
-  const resposta = await buscar(`https://api.github.com/users/${encodeURIComponent(usuario)}`, {
-    signal: sinal,
-    headers: { Accept: 'application/vnd.github+json' },
-  })
+  let resposta: Response
+  try {
+    resposta = await buscar(`https://api.github.com/users/${encodeURIComponent(usuario)}`, {
+      signal: sinal,
+      headers: { Accept: 'application/vnd.github+json' },
+    })
+  } catch (falha) {
+    /* O cancelamento segue para o hook, que o ignora. Sem rede, DNS ou CORS, o fetch
+       rejeita com TypeError ("Failed to fetch"): a tela mostra a mensagem amigável. */
+    if (falha instanceof DOMException && falha.name === 'AbortError') throw falha
+    throw new Error(MENSAGEM_SEM_GITHUB, { cause: falha })
+  }
   if (resposta.status === 404) throw new Error(`O usuário @${usuario} não existe no GitHub.`)
-  if (!resposta.ok) throw new Error('Não foi possível falar com o GitHub agora.')
+  if (!resposta.ok) throw new Error(MENSAGEM_SEM_GITHUB)
   const dados = (await resposta.json()) as {
     login: string
     name: string | null
