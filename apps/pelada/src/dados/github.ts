@@ -11,7 +11,7 @@ export type EstadoPerfil =
   | { tipo: 'vazio' }
   | { tipo: 'carregando' }
   | { tipo: 'pronto'; perfil: Perfil }
-  | { tipo: 'erro'; mensagem: string }
+  | { tipo: 'erro'; mensagem: string; causa: CausaDoErro }
 
 const cache = new Map<string, Perfil>()
 
@@ -22,9 +22,21 @@ const MENSAGEM_SEM_CONEXAO = 'Sem conexão. Confira a internet e tente de novo.'
 export const MENSAGEM_LIMITE = 'O GitHub limitou as consultas. Tente daqui a alguns minutos.'
 const INICIO_LIMITE = 'O GitHub limitou as consultas.'
 
-/* A mensagem é de limite (para o Organizador deixar o "Tentar de novo" secundário)? */
-export function ehLimite(mensagem: string) {
-  return mensagem.startsWith(INICIO_LIMITE)
+/*
+ * A causa do erro vai junto da mensagem (nota 0 da R19 do #70): o Organizador decide o estilo do
+ * "Tentar de novo" pela causa, e não pelo texto, que pode mudar sem querer.
+ */
+export type CausaDoErro = 'rede' | 'limite' | 'inexistente' | 'api' | 'outra'
+
+export class ErroDoPerfil extends Error {
+  constructor(
+    mensagem: string,
+    readonly causa: CausaDoErro,
+    opcoes?: ErrorOptions,
+  ) {
+    super(mensagem, opcoes)
+    this.name = 'ErroDoPerfil'
+  }
 }
 
 /*
@@ -75,12 +87,13 @@ export async function buscarPerfil(
     /* O cancelamento segue para o hook, que o ignora. Sem rede, DNS ou CORS, o fetch
        rejeita com TypeError ("Failed to fetch"): a tela mostra a mensagem amigável. */
     if (falha instanceof DOMException && falha.name === 'AbortError') throw falha
-    throw new Error(MENSAGEM_SEM_CONEXAO, { cause: falha })
+    throw new ErroDoPerfil(MENSAGEM_SEM_CONEXAO, 'rede', { cause: falha })
   }
-  if (resposta.status === 404) throw new Error(`O usuário @${usuario} não existe no GitHub.`)
+  if (resposta.status === 404)
+    throw new ErroDoPerfil(`O usuário @${usuario} não existe no GitHub.`, 'inexistente')
   if (resposta.status === 403 || resposta.status === 429)
-    throw new Error(mensagemDeLimite(resposta))
-  if (!resposta.ok) throw new Error(MENSAGEM_SEM_GITHUB)
+    throw new ErroDoPerfil(mensagemDeLimite(resposta), 'limite')
+  if (!resposta.ok) throw new ErroDoPerfil(MENSAGEM_SEM_GITHUB, 'api')
   const dados = (await resposta.json()) as {
     login: string
     name: string | null
@@ -121,7 +134,8 @@ export function usePerfilGithub(usuario: string): {
       .catch((erro: unknown) => {
         if (controle.signal.aborted) return
         const mensagem = erro instanceof Error ? erro.message : 'Erro inesperado.'
-        setResposta({ usuario, tentativa, estado: { tipo: 'erro', mensagem } })
+        const causa = erro instanceof ErroDoPerfil ? erro.causa : 'outra'
+        setResposta({ usuario, tentativa, estado: { tipo: 'erro', mensagem, causa } })
       })
     return () => controle.abort()
   }, [usuario, tentativa])

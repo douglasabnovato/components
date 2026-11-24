@@ -4,7 +4,7 @@
  */
 import { Campo } from '@components/ui'
 import { useEffect, useId, useRef, useState, type FormEvent, type MouseEvent } from 'react'
-import { ehLimite, usePerfilGithub } from '../../dados/github'
+import { usePerfilGithub } from '../../dados/github'
 import styles from './Organizador.module.css'
 
 type Props = { usuario: string; aoTrocar: (usuario: string) => void }
@@ -86,7 +86,7 @@ export function Organizador({ usuario, aoTrocar }: Props) {
           type="button"
           /* Ação principal sem rede e no 5xx; secundária no limite, que pede espera (#69). */
           className={
-            perfil.tipo === 'erro' && ehLimite(perfil.mensagem)
+            perfil.tipo === 'erro' && perfil.causa === 'limite'
               ? styles.trocar
               : [styles.salvar, styles.tentar].join(' ')
           }
