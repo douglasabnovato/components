@@ -20,6 +20,32 @@ const MENSAGEM_SEM_GITHUB = 'Não foi possível falar com o GitHub agora.'
 const MENSAGEM_SEM_CONEXAO = 'Sem conexão. Confira a internet e tente de novo.'
 /* 403 e 429: o limite da API sem token (60 por hora por IP). */
 export const MENSAGEM_LIMITE = 'O GitHub limitou as consultas. Tente daqui a alguns minutos.'
+const INICIO_LIMITE = 'O GitHub limitou as consultas.'
+
+/* A mensagem é de limite (para o Organizador deixar o "Tentar de novo" secundário)? */
+export function ehLimite(mensagem: string) {
+  return mensagem.startsWith(INICIO_LIMITE)
+}
+
+/*
+ * Mensagem do limite com a hora em que ele libera (achado 3 da R19 do #69): o GitHub manda
+ * X-RateLimit-Reset (segundos desde 1970) e, às vezes, Retry-After (segundos). Sem os dois,
+ * ou com uma hora que já passou, fica a frase genérica.
+ */
+export function mensagemDeLimite(resposta: Response, agora = new Date()): string {
+  const reset = Number(resposta.headers.get('x-ratelimit-reset'))
+  const depois = Number(resposta.headers.get('retry-after'))
+  const libera =
+    reset > 0
+      ? new Date(reset * 1000)
+      : depois > 0
+        ? new Date(agora.getTime() + depois * 1000)
+        : null
+  if (!libera || libera.getTime() <= agora.getTime()) return MENSAGEM_LIMITE
+  const hh = String(libera.getHours()).padStart(2, '0')
+  const mm = String(libera.getMinutes()).padStart(2, '0')
+  return `${INICIO_LIMITE} Tente de novo depois das ${hh}h${mm}.`
+}
 
 /* Limpa o cache (usado nos testes). */
 export function limparCachePerfis() {
@@ -47,7 +73,8 @@ export async function buscarPerfil(
     throw new Error(MENSAGEM_SEM_CONEXAO, { cause: falha })
   }
   if (resposta.status === 404) throw new Error(`O usuário @${usuario} não existe no GitHub.`)
-  if (resposta.status === 403 || resposta.status === 429) throw new Error(MENSAGEM_LIMITE)
+  if (resposta.status === 403 || resposta.status === 429)
+    throw new Error(mensagemDeLimite(resposta))
   if (!resposta.ok) throw new Error(MENSAGEM_SEM_GITHUB)
   const dados = (await resposta.json()) as {
     login: string

@@ -4,7 +4,13 @@
  * aqui ficam as respostas que ele não cobre: 404, 403, sem rede, cancelamento e o cache.
  */
 import { beforeEach, describe, expect, it, vi } from 'vitest'
-import { buscarPerfil, limparCachePerfis } from './github'
+import {
+  buscarPerfil,
+  ehLimite,
+  limparCachePerfis,
+  MENSAGEM_LIMITE,
+  mensagemDeLimite,
+} from './github'
 
 const resposta = (status: number, corpo: unknown = {}) =>
   new Response(JSON.stringify(corpo), { status, headers: { 'Content-Type': 'application/json' } })
@@ -83,3 +89,40 @@ describe('buscarPerfil', () => {
   })
 })
 /* Fim dos testes do perfil do GitHub. */
+
+describe('mensagem do limite com a hora em que libera (R19 do #69)', () => {
+  const agora = new Date(2026, 10, 24, 14, 0, 0)
+  const comCabecalhos = (h: Record<string, string>) =>
+    new Response('{}', { status: 403, headers: h })
+  const horaLocal = (d: Date) =>
+    `${String(d.getHours()).padStart(2, '0')}h${String(d.getMinutes()).padStart(2, '0')}`
+
+  it('usa o X-RateLimit-Reset', () => {
+    const libera = new Date(2026, 10, 24, 14, 32, 0)
+    const r = comCabecalhos({ 'X-RateLimit-Reset': String(libera.getTime() / 1000) })
+    expect(mensagemDeLimite(r, agora)).toBe(
+      `O GitHub limitou as consultas. Tente de novo depois das ${horaLocal(libera)}.`,
+    )
+  })
+
+  it('usa o Retry-After quando não há X-RateLimit-Reset', () => {
+    const r = comCabecalhos({ 'Retry-After': '600' })
+    expect(mensagemDeLimite(r, agora)).toBe(
+      `O GitHub limitou as consultas. Tente de novo depois das ${horaLocal(new Date(agora.getTime() + 600_000))}.`,
+    )
+  })
+
+  it('sem cabeçalho, ou com hora que já passou, fica a frase genérica', () => {
+    expect(mensagemDeLimite(comCabecalhos({}), agora)).toBe(MENSAGEM_LIMITE)
+    const passado = String(new Date(2026, 10, 24, 13, 0, 0).getTime() / 1000)
+    expect(mensagemDeLimite(comCabecalhos({ 'X-RateLimit-Reset': passado }), agora)).toBe(
+      MENSAGEM_LIMITE,
+    )
+  })
+
+  it('reconhece as 2 frases de limite', () => {
+    expect(ehLimite(MENSAGEM_LIMITE)).toBe(true)
+    expect(ehLimite('O GitHub limitou as consultas. Tente de novo depois das 14h32.')).toBe(true)
+    expect(ehLimite('Sem conexão. Confira a internet e tente de novo.')).toBe(false)
+  })
+})
