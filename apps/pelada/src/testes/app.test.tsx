@@ -68,6 +68,57 @@ describe('Início', () => {
     ).toBeInTheDocument()
   })
 
+  it('sem conexão, avisa e busca de novo pelo "Tentar de novo" (#68)', async () => {
+    const fetchNormal = globalThis.fetch
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockRejectedValueOnce(new TypeError('Failed to fetch'))
+        .mockImplementation((...args: Parameters<typeof fetch>) => fetchNormal(...args)),
+    )
+    const { usuario } = abrir()
+    expect(
+      await screen.findByText('Sem conexão. Confira a internet e tente de novo.'),
+    ).toBeInTheDocument()
+    await usuario.click(screen.getByRole('button', { name: 'Tentar de novo' }))
+    expect(await screen.findByText('Douglas Novato')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Tentar de novo' })).not.toBeInTheDocument()
+  })
+
+  it('pelo teclado, o foco não se perde ao tentar de novo (#69)', async () => {
+    const fetchNormal = globalThis.fetch
+    let soltar: () => void = () => {}
+    const segura = new Promise<void>((ok) => (soltar = ok))
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockRejectedValueOnce(new TypeError('Failed to fetch'))
+        .mockImplementationOnce(async () => {
+          await segura
+          throw new TypeError('Failed to fetch')
+        })
+        .mockImplementation((...args: Parameters<typeof fetch>) => fetchNormal(...args)),
+    )
+    const { usuario } = abrir()
+    const botao = await screen.findByRole('button', { name: 'Tentar de novo' })
+    botao.focus()
+    await usuario.keyboard('{Enter}')
+    // Durante a nova tentativa, o botão continua montado e com o foco.
+    const tentando = screen.getByRole('button', { name: 'Tentando…' })
+    expect(tentando).toHaveAttribute('aria-disabled', 'true')
+    expect(document.activeElement).toBe(tentando)
+    soltar()
+    // Falhou de novo: o foco fica no botão.
+    const deNovo = await screen.findByRole('button', { name: 'Tentar de novo' })
+    expect(document.activeElement).toBe(deNovo)
+    await usuario.keyboard('{Enter}')
+    // Deu certo: o botão some, e o foco vai para o título do cartão.
+    expect(await screen.findByText('Douglas Novato')).toBeInTheDocument()
+    expect(document.activeElement).toBe(screen.getByRole('heading', { name: 'Organizador' }))
+  })
+
   it('não tem violações do axe', async () => {
     const { container } = abrir()
     await screen.findByText('Douglas Novato')
