@@ -6,7 +6,7 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import {
   buscarPerfil,
-  ehLimite,
+  ErroDoPerfil,
   limparCachePerfis,
   MENSAGEM_LIMITE,
   mensagemDeLimite,
@@ -148,9 +148,24 @@ describe('mensagem do limite com a hora em que libera (R19 do #69 e do #70)', ()
     ).toBe(MENSAGEM_LIMITE)
   })
 
-  it('reconhece as 2 frases de limite', () => {
-    expect(ehLimite(MENSAGEM_LIMITE)).toBe(true)
-    expect(ehLimite('O GitHub limitou as consultas. Tente de novo depois das 14h32.')).toBe(true)
-    expect(ehLimite('Sem conexão. Confira a internet e tente de novo.')).toBe(false)
+  it('cada erro leva a causa, e o estilo do botão não depende do texto (nota 0 da R19 do #70)', async () => {
+    const causa = async (buscar: typeof fetch) => {
+      limparCachePerfis()
+      try {
+        await buscarPerfil('pessoa-ficticia', undefined, buscar)
+      } catch (e) {
+        return e instanceof ErroDoPerfil ? e.causa : 'não é ErroDoPerfil'
+      }
+      return 'sem erro'
+    }
+    expect(await causa(vi.fn().mockRejectedValue(new TypeError('Failed to fetch')))).toBe('rede')
+    expect(await causa(vi.fn().mockResolvedValue(comCabecalhos({})))).toBe('limite')
+    expect(await causa(vi.fn().mockResolvedValue(new Response('{}', { status: 429 })))).toBe(
+      'limite',
+    )
+    expect(await causa(vi.fn().mockResolvedValue(new Response('{}', { status: 404 })))).toBe(
+      'inexistente',
+    )
+    expect(await causa(vi.fn().mockResolvedValue(new Response('{}', { status: 502 })))).toBe('api')
   })
 })
