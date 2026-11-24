@@ -3,8 +3,8 @@
  * (foto, nome e link) e um formulário curto para trocar o usuário.
  */
 import { Campo } from '@components/ui'
-import { useId, useState, type FormEvent } from 'react'
-import { usePerfilGithub } from '../../dados/github'
+import { useEffect, useId, useRef, useState, type FormEvent, type MouseEvent } from 'react'
+import { MENSAGEM_LIMITE, usePerfilGithub } from '../../dados/github'
 import styles from './Organizador.module.css'
 
 type Props = { usuario: string; aoTrocar: (usuario: string) => void }
@@ -15,17 +15,42 @@ export function Organizador({ usuario, aoTrocar }: Props) {
   const [editando, setEditando] = useState(false)
   const [texto, setTexto] = useState(usuario)
   const id = useId()
+  /*
+   * Nova tentativa pelo botão (#69): enquanto ela carrega, o botão fica montado, com
+   * aria-disabled e "Tentando…", para o foco do teclado não cair no body. "Tentando" é
+   * derivado: houve clique no botão e o perfil está carregando.
+   */
+  const [pediuDeNovo, setPediuDeNovo] = useState(false)
+  const tentando = pediuDeNovo && perfil.tipo === 'carregando'
+  const focoAoTerminar = useRef(false)
+  const titulo = useRef<HTMLHeadingElement>(null)
+
+  useEffect(() => {
+    if (perfil.tipo === 'carregando' || !focoAoTerminar.current) return
+    focoAoTerminar.current = false
+    /* Deu certo: o botão some, e o foco vai para o título do cartão. Deu erro: o foco fica no botão. */
+    if (perfil.tipo === 'pronto') titulo.current?.focus()
+  }, [perfil.tipo])
+
+  /* Refaz a busca; enquanto tenta, o botão ignora cliques. */
+  function tentarAgora(evento: MouseEvent<HTMLButtonElement>) {
+    if (tentando) return
+    focoAoTerminar.current = document.activeElement === evento.currentTarget
+    setPediuDeNovo(true)
+    tentarDeNovo()
+  }
 
   /* Salva o novo usuário e fecha o formulário. */
   function salvar(evento: FormEvent) {
     evento.preventDefault()
+    setPediuDeNovo(false)
     aoTrocar(texto)
     setEditando(false)
   }
 
   return (
     <section className={styles.cartao} aria-labelledby={`${id}-titulo`}>
-      <h2 id={`${id}-titulo`} className={styles.rotulo}>
+      <h2 id={`${id}-titulo`} className={styles.rotulo} ref={titulo} tabIndex={-1}>
         Organizador
       </h2>
       <div className={styles.perfil} aria-live="polite" aria-busy={perfil.tipo === 'carregando'}>
@@ -56,9 +81,19 @@ export function Organizador({ usuario, aoTrocar }: Props) {
         {perfil.tipo === 'erro' ? <p className={styles.erro}>{perfil.mensagem}</p> : null}
         {perfil.tipo === 'vazio' ? <p>Sem organizador definido.</p> : null}
       </div>
-      {perfil.tipo === 'erro' && !editando ? (
-        <button type="button" className={styles.trocar} onClick={tentarDeNovo}>
-          Tentar de novo
+      {(perfil.tipo === 'erro' || tentando) && !editando ? (
+        <button
+          type="button"
+          /* Ação principal sem rede e no 5xx; secundária no limite, que pede espera (#69). */
+          className={
+            perfil.tipo === 'erro' && perfil.mensagem === MENSAGEM_LIMITE
+              ? styles.trocar
+              : [styles.salvar, styles.tentar].join(' ')
+          }
+          aria-disabled={tentando}
+          onClick={tentarAgora}
+        >
+          {tentando ? 'Tentando…' : 'Tentar de novo'}
         </button>
       ) : null}
       {editando ? (

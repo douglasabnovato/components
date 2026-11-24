@@ -19,7 +19,7 @@ const MENSAGEM_SEM_GITHUB = 'Não foi possível falar com o GitHub agora.'
 /* Sem rede, a causa provável é a conexão da pessoa (#68). */
 const MENSAGEM_SEM_CONEXAO = 'Sem conexão. Confira a internet e tente de novo.'
 /* 403 e 429: o limite da API sem token (60 por hora por IP). */
-const MENSAGEM_LIMITE = 'O GitHub limitou as consultas. Tente daqui a alguns minutos.'
+export const MENSAGEM_LIMITE = 'O GitHub limitou as consultas. Tente daqui a alguns minutos.'
 
 /* Limpa o cache (usado nos testes). */
 export function limparCachePerfis() {
