@@ -27,22 +27,31 @@ describe('buscarPerfil', () => {
       avatar: 'https://avatars.githubusercontent.com/u/0',
       url: 'https://github.com/pessoa-ficticia',
     })
-    expect(buscar).toHaveBeenCalledWith('https://api.github.com/users/pessoa-ficticia', expect.anything())
+    expect(buscar).toHaveBeenCalledWith(
+      'https://api.github.com/users/pessoa-ficticia',
+      expect.anything(),
+    )
   })
 
   it('usa o login quando o perfil não tem nome', async () => {
     const buscar = vi.fn().mockResolvedValue(resposta(200, { ...perfilFicticio, name: null }))
-    await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).resolves.toMatchObject({ nome: 'pessoa-ficticia' })
+    await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).resolves.toMatchObject({
+      nome: 'pessoa-ficticia',
+    })
   })
 
   it('diz que o usuário não existe quando a API responde 404', async () => {
     const buscar = vi.fn().mockResolvedValue(resposta(404))
-    await expect(buscarPerfil('ninguem', undefined, buscar)).rejects.toThrow('O usuário @ninguem não existe no GitHub.')
+    await expect(buscarPerfil('ninguem', undefined, buscar)).rejects.toThrow(
+      'O usuário @ninguem não existe no GitHub.',
+    )
   })
 
   it('dá a mensagem amigável quando a API recusa (403, limite sem token)', async () => {
     const buscar = vi.fn().mockResolvedValue(resposta(403, { message: 'API rate limit exceeded' }))
-    await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).rejects.toThrow('Não foi possível falar com o GitHub agora.')
+    await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).rejects.toThrow(
+      'Não foi possível falar com o GitHub agora.',
+    )
   })
 
   it('não repete a busca do mesmo usuário (cache sem diferença de maiúsculas)', async () => {
