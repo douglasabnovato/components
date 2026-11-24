@@ -90,34 +90,62 @@ describe('buscarPerfil', () => {
 })
 /* Fim dos testes do perfil do GitHub. */
 
-describe('mensagem do limite com a hora em que libera (R19 do #69)', () => {
+describe('mensagem do limite com a hora em que libera (R19 do #69 e do #70)', () => {
   const agora = new Date(2026, 10, 24, 14, 0, 0)
   const comCabecalhos = (h: Record<string, string>) =>
     new Response('{}', { status: 403, headers: h })
-  const horaLocal = (d: Date) =>
-    `${String(d.getHours()).padStart(2, '0')}h${String(d.getMinutes()).padStart(2, '0')}`
+  const horaLocal = (d: Date) => {
+    const r = new Date(Math.ceil(d.getTime() / 60_000) * 60_000)
+    return `${String(r.getHours()).padStart(2, '0')}h${String(r.getMinutes()).padStart(2, '0')}`
+  }
+  const seg = (d: Date) => String(d.getTime() / 1000)
 
-  it('usa o X-RateLimit-Reset', () => {
-    const libera = new Date(2026, 10, 24, 14, 32, 0)
-    const r = comCabecalhos({ 'X-RateLimit-Reset': String(libera.getTime() / 1000) })
-    expect(mensagemDeLimite(r, agora)).toBe(
-      `O GitHub limitou as consultas. Tente de novo depois das ${horaLocal(libera)}.`,
-    )
-  })
-
-  it('usa o Retry-After quando não há X-RateLimit-Reset', () => {
-    const r = comCabecalhos({ 'Retry-After': '600' })
+  it('usa primeiro o Retry-After, mesmo com o X-RateLimit-Reset', () => {
+    const r = comCabecalhos({
+      'Retry-After': '600',
+      'X-RateLimit-Remaining': '0',
+      'X-RateLimit-Reset': seg(new Date(2026, 10, 24, 15, 0, 0)),
+    })
     expect(mensagemDeLimite(r, agora)).toBe(
       `O GitHub limitou as consultas. Tente de novo depois das ${horaLocal(new Date(agora.getTime() + 600_000))}.`,
     )
   })
 
+  it('usa o X-RateLimit-Reset só com X-RateLimit-Remaining em 0', () => {
+    const libera = new Date(2026, 10, 24, 14, 32, 0)
+    const r = comCabecalhos({ 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': seg(libera) })
+    expect(mensagemDeLimite(r, agora)).toBe(
+      `O GitHub limitou as consultas. Tente de novo depois das ${horaLocal(libera)}.`,
+    )
+  })
+
+  it('ignora o X-RateLimit-Reset quando ainda restam consultas (403 que não é do limite por hora)', () => {
+    const r = comCabecalhos({
+      'X-RateLimit-Remaining': '42',
+      'X-RateLimit-Reset': seg(new Date(2026, 10, 24, 14, 32, 0)),
+    })
+    expect(mensagemDeLimite(r, agora)).toBe(MENSAGEM_LIMITE)
+  })
+
+  it('arredonda para o minuto seguinte: libera às 14:32:40, diz 14h33', () => {
+    const r = comCabecalhos({
+      'X-RateLimit-Remaining': '0',
+      'X-RateLimit-Reset': seg(new Date(2026, 10, 24, 14, 32, 40)),
+    })
+    expect(mensagemDeLimite(r, agora)).toBe(
+      `O GitHub limitou as consultas. Tente de novo depois das ${horaLocal(new Date(2026, 10, 24, 14, 33, 0))}.`,
+    )
+  })
+
   it('sem cabeçalho, ou com hora que já passou, fica a frase genérica', () => {
     expect(mensagemDeLimite(comCabecalhos({}), agora)).toBe(MENSAGEM_LIMITE)
-    const passado = String(new Date(2026, 10, 24, 13, 0, 0).getTime() / 1000)
-    expect(mensagemDeLimite(comCabecalhos({ 'X-RateLimit-Reset': passado }), agora)).toBe(
-      MENSAGEM_LIMITE,
-    )
+    const passado = seg(new Date(2026, 10, 24, 13, 0, 0))
+    expect(
+      mensagemDeLimite(
+        comCabecalhos({ 'X-RateLimit-Remaining': '0', 'X-RateLimit-Reset': passado }),
+        agora,
+      ),
+    ).toBe(MENSAGEM_LIMITE)
   })
 
   it('reconhece as 2 frases de limite', () => {

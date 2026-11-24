@@ -28,22 +28,27 @@ export function ehLimite(mensagem: string) {
 }
 
 /*
- * Mensagem do limite com a hora em que ele libera (achado 3 da R19 do #69): o GitHub manda
- * X-RateLimit-Reset (segundos desde 1970) e, às vezes, Retry-After (segundos). Sem os dois,
- * ou com uma hora que já passou, fica a frase genérica.
+ * Mensagem do limite com a hora em que ele libera (achado 3 da R19 do #69). Ordem (R19 do #70):
+ * 1. Retry-After (segundos), que o GitHub manda no limite secundário e no 429;
+ * 2. X-RateLimit-Reset (segundos desde 1970), só com X-RateLimit-Remaining em 0: o GitHub manda o
+ *    Reset em toda resposta, também num 403 que não é do limite por hora.
+ * Sem os dois, ou com hora que já passou, fica a frase genérica. A hora é arredondada para o minuto
+ * seguinte, para quem tentar "às 10h47" não falhar de novo às 10:47:10.
  */
 export function mensagemDeLimite(resposta: Response, agora = new Date()): string {
-  const reset = Number(resposta.headers.get('x-ratelimit-reset'))
   const depois = Number(resposta.headers.get('retry-after'))
+  const restantes = resposta.headers.get('x-ratelimit-remaining')
+  const reset = Number(resposta.headers.get('x-ratelimit-reset'))
   const libera =
-    reset > 0
-      ? new Date(reset * 1000)
-      : depois > 0
-        ? new Date(agora.getTime() + depois * 1000)
+    depois > 0
+      ? new Date(agora.getTime() + depois * 1000)
+      : restantes === '0' && reset > 0
+        ? new Date(reset * 1000)
         : null
   if (!libera || libera.getTime() <= agora.getTime()) return MENSAGEM_LIMITE
-  const hh = String(libera.getHours()).padStart(2, '0')
-  const mm = String(libera.getMinutes()).padStart(2, '0')
+  const arredondada = new Date(Math.ceil(libera.getTime() / 60_000) * 60_000)
+  const hh = String(arredondada.getHours()).padStart(2, '0')
+  const mm = String(arredondada.getMinutes()).padStart(2, '0')
   return `${INICIO_LIMITE} Tente de novo depois das ${hh}h${mm}.`
 }
 
