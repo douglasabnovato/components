@@ -8,7 +8,38 @@ import { expect, test as base } from '@playwright/test'
 /* Padrões de mensagens que não indicam defeito (vazio por enquanto). */
 const IGNORADOS: RegExp[] = []
 
-export const test = base.extend<{ errosDaPagina: string[] }>({
+/*
+ * A Lista da Pelada busca o perfil do organizador em api.github.com. Sem token,
+ * a API limita a 60 pedidos por hora por IP, e o runner do CI às vezes recebe
+ * 403: a página registra o erro de recurso e o teste falha sem defeito no app.
+ * Nos testes, a API e os avatares respondem com um perfil fictício e fixo.
+ */
+const PIXEL_PNG = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+  'base64',
+)
+
+export const test = base.extend<{ apiDoGitHubSimulada: void; errosDaPagina: string[] }>({
+  apiDoGitHubSimulada: [
+    async ({ page }, usar) => {
+      await page.route('https://api.github.com/users/**', (rota) => {
+        const usuario = decodeURIComponent(new URL(rota.request().url()).pathname.split('/').pop() ?? 'pessoa')
+        return rota.fulfill({
+          json: {
+            login: usuario,
+            name: 'Pessoa Fictícia',
+            avatar_url: 'https://avatars.githubusercontent.com/u/0',
+            html_url: `https://github.com/${usuario}`,
+          },
+        })
+      })
+      await page.route('https://avatars.githubusercontent.com/**', (rota) =>
+        rota.fulfill({ contentType: 'image/png', body: PIXEL_PNG }),
+      )
+      await usar()
+    },
+    { auto: true },
+  ],
   errosDaPagina: [
     async ({ page }, usar) => {
       const erros: string[] = []
