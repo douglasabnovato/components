@@ -68,6 +68,24 @@ describe('Início', () => {
     ).toBeInTheDocument()
   })
 
+  it('sem conexão, avisa e busca de novo pelo "Tentar de novo" (#68)', async () => {
+    const fetchNormal = globalThis.fetch
+    vi.stubGlobal(
+      'fetch',
+      vi
+        .fn()
+        .mockRejectedValueOnce(new TypeError('Failed to fetch'))
+        .mockImplementation((...args: Parameters<typeof fetch>) => fetchNormal(...args)),
+    )
+    const { usuario } = abrir()
+    expect(
+      await screen.findByText('Sem conexão. Confira a internet e tente de novo.'),
+    ).toBeInTheDocument()
+    await usuario.click(screen.getByRole('button', { name: 'Tentar de novo' }))
+    expect(await screen.findByText('Douglas Novato')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Tentar de novo' })).not.toBeInTheDocument()
+  })
+
   it('não tem violações do axe', async () => {
     const { container } = abrir()
     await screen.findByText('Douglas Novato')

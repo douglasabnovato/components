@@ -11,7 +11,7 @@ type Props = { usuario: string; aoTrocar: (usuario: string) => void }
 
 /* Mostra o estado da busca do perfil e permite trocar o usuário. */
 export function Organizador({ usuario, aoTrocar }: Props) {
-  const perfil = usePerfilGithub(usuario)
+  const { estado: perfil, tentarDeNovo } = usePerfilGithub(usuario)
   const [editando, setEditando] = useState(false)
   const [texto, setTexto] = useState(usuario)
   const id = useId()
@@ -56,6 +56,11 @@ export function Organizador({ usuario, aoTrocar }: Props) {
         {perfil.tipo === 'erro' ? <p className={styles.erro}>{perfil.mensagem}</p> : null}
         {perfil.tipo === 'vazio' ? <p>Sem organizador definido.</p> : null}
       </div>
+      {perfil.tipo === 'erro' && !editando ? (
+        <button type="button" className={styles.trocar} onClick={tentarDeNovo}>
+          Tentar de novo
+        </button>
+      ) : null}
       {editando ? (
         <form className={styles.form} onSubmit={salvar}>
           <Campo rotulo="Usuário do GitHub" htmlFor={`${id}-usuario`}>

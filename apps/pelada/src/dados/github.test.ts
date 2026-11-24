@@ -47,10 +47,10 @@ describe('buscarPerfil', () => {
     )
   })
 
-  it('dá a mensagem amigável quando a API recusa (403, limite sem token)', async () => {
+  it('avisa do limite quando a API recusa (403, sem token) (#68)', async () => {
     const buscar = vi.fn().mockResolvedValue(resposta(403, { message: 'API rate limit exceeded' }))
     await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).rejects.toThrow(
-      'Não foi possível falar com o GitHub agora.',
+      'O GitHub limitou as consultas. Tente daqui a alguns minutos.',
     )
   })
 
@@ -61,10 +61,10 @@ describe('buscarPerfil', () => {
     expect(buscar).toHaveBeenCalledTimes(1)
   })
 
-  it('sem rede, troca o "Failed to fetch" pela mensagem amigável (#66)', async () => {
+  it('sem rede, troca o "Failed to fetch" por "Sem conexão" (#66, #68)', async () => {
     const buscar = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'))
     await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).rejects.toThrow(
-      'Não foi possível falar com o GitHub agora.',
+      'Sem conexão. Confira a internet e tente de novo.',
     )
   })
 
@@ -73,6 +73,13 @@ describe('buscarPerfil', () => {
     await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).rejects.toMatchObject({
       name: 'AbortError',
     })
+  })
+
+  it('com 5xx, diz que não conseguiu falar com o GitHub (#68)', async () => {
+    const buscar = vi.fn().mockResolvedValue(resposta(502))
+    await expect(buscarPerfil('pessoa-ficticia', undefined, buscar)).rejects.toThrow(
+      'Não foi possível falar com o GitHub agora.',
+    )
   })
 })
 /* Fim dos testes do perfil do GitHub. */

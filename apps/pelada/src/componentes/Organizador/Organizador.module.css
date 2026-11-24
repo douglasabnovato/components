@@ -67,7 +67,8 @@
 
 .salvar,
 .trocar {
-  min-height: 2.5rem;
+  /* 44 px de alvo de toque (WCAG 2.5.5), também no "Tentar de novo" (#68). */
+  min-height: 2.75rem;
   padding: 0 var(--esp-4);
   border-radius: var(--raio-pilula);
   font-weight: 600;
