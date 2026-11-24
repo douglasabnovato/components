@@ -66,6 +66,10 @@ describe('Início', () => {
     expect(
       await screen.findByText('O usuário @naoexiste não existe no GitHub.'),
     ).toBeInTheDocument()
+    // Tentar de novo ia falhar: o botão some, e o foco vai para "Trocar organizador" (R19 do #71).
+    expect(screen.queryByRole('button', { name: 'Tentar de novo' })).not.toBeInTheDocument()
+    const trocar = screen.getByRole('button', { name: 'Trocar organizador' })
+    await waitFor(() => expect(document.activeElement).toBe(trocar))
   })
 
   it('sem conexão, avisa e busca de novo pelo "Tentar de novo" (#68)', async () => {
