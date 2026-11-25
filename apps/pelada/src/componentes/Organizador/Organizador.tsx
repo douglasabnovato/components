@@ -3,7 +3,7 @@
  * (foto, nome e link) e um formulário curto para trocar o usuário.
  */
 import { Campo } from '@components/ui'
-import { useId, useState, type FormEvent } from 'react'
+import { useEffect, useId, useRef, useState, type FormEvent, type MouseEvent } from 'react'
 import { usePerfilGithub } from '../../dados/github'
 import styles from './Organizador.module.css'
 
@@ -11,21 +11,58 @@ type Props = { usuario: string; aoTrocar: (usuario: string) => void }
 
 /* Mostra o estado da busca do perfil e permite trocar o usuário. */
 export function Organizador({ usuario, aoTrocar }: Props) {
-  const perfil = usePerfilGithub(usuario)
+  const { estado: perfil, tentarDeNovo } = usePerfilGithub(usuario)
   const [editando, setEditando] = useState(false)
   const [texto, setTexto] = useState(usuario)
   const id = useId()
+  /*
+   * Nova tentativa pelo botão (#69): enquanto ela carrega, o botão fica montado, com
+   * aria-disabled e "Tentando…", para o foco do teclado não cair no body. "Tentando" é
+   * derivado: houve clique no botão e o perfil está carregando.
+   */
+  const [pediuDeNovo, setPediuDeNovo] = useState(false)
+  const tentando = pediuDeNovo && perfil.tipo === 'carregando'
+  const focoAoTerminar = useRef(false)
+  const titulo = useRef<HTMLHeadingElement>(null)
+  /* Perfil inexistente (404): tentar de novo vai falhar; a saída é trocar o organizador (R19 do #71). */
+  const inexistente = perfil.tipo === 'erro' && perfil.causa === 'inexistente'
+  const trocar = useRef<HTMLButtonElement>(null)
+  const focoNoTrocar = useRef(false)
+
+  useEffect(() => {
+    if (perfil.tipo === 'carregando' || !focoAoTerminar.current) return
+    focoAoTerminar.current = false
+    /* Deu certo: o botão some, e o foco vai para o título do cartão. Deu erro: o foco fica no botão. */
+    if (perfil.tipo === 'pronto') titulo.current?.focus()
+  }, [perfil.tipo])
+
+  /* Depois de um "Salvar" com usuário inexistente, o foco vai para "Trocar organizador", a ação que resolve. */
+  useEffect(() => {
+    if (perfil.tipo === 'carregando' || !focoNoTrocar.current) return
+    focoNoTrocar.current = false
+    if (inexistente) trocar.current?.focus()
+  }, [perfil.tipo, inexistente])
+
+  /* Refaz a busca; enquanto tenta, o botão ignora cliques. */
+  function tentarAgora(evento: MouseEvent<HTMLButtonElement>) {
+    if (tentando) return
+    focoAoTerminar.current = document.activeElement === evento.currentTarget
+    setPediuDeNovo(true)
+    tentarDeNovo()
+  }
 
   /* Salva o novo usuário e fecha o formulário. */
   function salvar(evento: FormEvent) {
     evento.preventDefault()
+    setPediuDeNovo(false)
+    focoNoTrocar.current = true
     aoTrocar(texto)
     setEditando(false)
   }
 
   return (
     <section className={styles.cartao} aria-labelledby={`${id}-titulo`}>
-      <h2 id={`${id}-titulo`} className={styles.rotulo}>
+      <h2 id={`${id}-titulo`} className={styles.rotulo} ref={titulo} tabIndex={-1}>
         Organizador
       </h2>
       <div className={styles.perfil} aria-live="polite" aria-busy={perfil.tipo === 'carregando'}>
@@ -56,6 +93,21 @@ export function Organizador({ usuario, aoTrocar }: Props) {
         {perfil.tipo === 'erro' ? <p className={styles.erro}>{perfil.mensagem}</p> : null}
         {perfil.tipo === 'vazio' ? <p>Sem organizador definido.</p> : null}
       </div>
+      {((perfil.tipo === 'erro' && !inexistente) || tentando) && !editando ? (
+        <button
+          type="button"
+          /* Ação principal sem rede e no 5xx; secundária no limite, que pede espera (#69). */
+          className={
+            perfil.tipo === 'erro' && perfil.causa === 'limite'
+              ? styles.trocar
+              : [styles.salvar, styles.tentar].join(' ')
+          }
+          aria-disabled={tentando}
+          onClick={tentarAgora}
+        >
+          {tentando ? 'Tentando…' : 'Tentar de novo'}
+        </button>
+      ) : null}
       {editando ? (
         <form className={styles.form} onSubmit={salvar}>
           <Campo rotulo="Usuário do GitHub" htmlFor={`${id}-usuario`}>
@@ -78,8 +130,10 @@ export function Organizador({ usuario, aoTrocar }: Props) {
         </form>
       ) : (
         <button
+          ref={trocar}
           type="button"
-          className={styles.trocar}
+          /* Com o perfil inexistente, "Trocar organizador" é a ação principal. */
+          className={inexistente ? [styles.salvar, styles.tentar].join(' ') : styles.trocar}
           onClick={() => {
             setTexto(usuario)
             setEditando(true)
